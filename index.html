@@ -3,34 +3,34 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ALIZÉO — S1·E1 : Le Bouclier</title>
+<title>ALIZÉO — S1·E1 : La Réactance</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Oswald:wght@400;500;600;700&display=swap');
 
 *{margin:0;padding:0;box-sizing:border-box;}
 
 :root{
-  --bg-deep:#12131a;
-  --bg-mid:#1a1b26;
-  --bg-panel:#21222f;
-  --bg-card:#272836;
-  --bg-card-hover:#2e2f42;
-  --border-subtle:#2e2f42;
-  --border-soft:#3a3b52;
-  --border-em:#4a4b6a;
-  --gold:#d4a843;
-  --gold-light:#e8c070;
-  --gold-dim:rgba(212,168,67,.18);
-  --teal:#2dd4a0;
-  --teal-dim:rgba(45,212,160,.14);
-  --red:#e8445a;
-  --red-dim:rgba(232,68,90,.14);
-  --blue:#5ba3e0;
-  --blue-dim:rgba(91,163,224,.14);
-  --txt-hi:#e8e9f2;
-  --txt-med:#b0b1c8;
-  --txt-lo:#72738a;
-  --txt-xlo:#4e4f68;
+  --bg-deep:#f0ece4;
+  --bg-mid:#f8f6f2;
+  --bg-panel:#f2efe8;
+  --bg-card:#ffffff;
+  --bg-card-hover:#faf8f4;
+  --border-subtle:#e0dbd0;
+  --border-soft:#d0c8b8;
+  --border-em:#b8b0a0;
+  --gold:#9a7420;
+  --gold-light:#b8902a;
+  --gold-dim:rgba(154,116,32,.1);
+  --teal:#0d7a6e;
+  --teal-dim:rgba(13,122,110,.07);
+  --red:#c43030;
+  --red-dim:rgba(196,48,48,.07);
+  --blue:#2563a8;
+  --blue-dim:rgba(37,99,168,.07);
+  --txt-hi:#1a1a2e;
+  --txt-med:#4a4a5e;
+  --txt-lo:#8a8a9e;
+  --txt-xlo:#b8b8c8;
   --font-mono:'JetBrains Mono',monospace;
   --font-display:'Oswald',sans-serif;
   --r4:4px; --r8:8px; --r12:12px;
@@ -39,84 +39,107 @@
 
 body{background:var(--bg-deep);color:var(--txt-hi);font-family:var(--font-mono);min-height:100vh;display:flex;justify-content:center;align-items:center;padding:12px;}
 
-/* ── LAYOUT ─────────────────────────────────────── */
-#shell{width:100%;max-width:1100px;background:var(--bg-mid);border:1px solid var(--border-subtle);display:flex;flex-direction:column;box-shadow:0 24px 80px rgba(0,0,0,.55);overflow:hidden;border-radius:var(--r8);}
+#shell{width:100%;max-width:1100px;background:var(--bg-mid);border:1px solid var(--border-subtle);display:flex;flex-direction:column;box-shadow:0 8px 40px rgba(0,0,0,.08);overflow:hidden;border-radius:var(--r8);}
 
 /* ── HUD ─────────────────────────────────────────── */
 #hud{height:44px;display:flex;align-items:center;justify-content:space-between;padding:0 18px;background:var(--bg-panel);border-bottom:1px solid var(--border-subtle);font-size:.6rem;letter-spacing:2px;text-transform:uppercase;position:relative;z-index:80;}
-.hud-ep{color:var(--txt-lo);}
+.hud-ep{color:var(--txt-lo);font-weight:600;}
 .hud-score{font-family:var(--font-display);color:var(--txt-lo);letter-spacing:3px;}
 .hud-score b{color:var(--gold);font-size:1rem;}
 .hud-right{display:flex;align-items:center;gap:16px;}
 .profile-tag{display:flex;align-items:center;gap:8px;background:var(--bg-card);border:1px solid var(--border-soft);padding:4px 10px;border-radius:20px;font-size:.6rem;}
 .profile-name{color:var(--txt-med);}
 .profile-title{color:var(--gold);font-family:var(--font-display);letter-spacing:1px;}
-.hud-status{display:flex;align-items:center;gap:6px;color:var(--gold);}
-.dot{width:7px;height:7px;border-radius:50%;background:var(--gold);animation:pulse 1.6s infinite;}
-@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(212,168,67,.45);}70%{box-shadow:0 0 0 8px transparent;}100%{box-shadow:0 0 0 0 transparent;}}
+.hud-status{display:flex;align-items:center;gap:6px;color:var(--teal);}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--teal);animation:pulse 1.6s infinite;}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(13,122,110,.4);}70%{box-shadow:0 0 0 8px transparent;}100%{box-shadow:0 0 0 0 transparent;}}
 
 /* ── REPUTATION BARS ─────────────────────────────── */
 #rep-bar{height:34px;display:flex;align-items:center;gap:0;padding:0 18px;background:var(--bg-deep);border-bottom:1px solid var(--border-subtle);}
 .rep-item{display:flex;align-items:center;gap:7px;flex:1;padding:0 10px;}
 .rep-item:not(:last-child){border-right:1px solid var(--border-subtle);}
 .rep-label{font-size:.52rem;letter-spacing:1.5px;color:var(--txt-lo);white-space:nowrap;text-transform:uppercase;}
-.rep-track{flex:1;height:4px;background:var(--bg-card);border-radius:2px;overflow:hidden;}
+.rep-track{flex:1;height:4px;background:var(--bg-card);border-radius:2px;overflow:hidden;border:1px solid var(--border-subtle);}
 .rep-fill{height:100%;width:0%;border-radius:2px;transition:width .6s var(--ease-spring);}
 .rep-fill.posture{background:var(--blue);}
 .rep-fill.cadre{background:var(--gold);}
-.rep-fill.integrite{background:var(--teal);}
-.rep-fill.alliance{background:#9b7dd4;}
+.rep-fill.authenticite{background:var(--teal);}
+.rep-fill.connexion{background:#7a5ab8;}
 .rep-val{font-family:var(--font-display);font-size:.62rem;color:var(--txt-lo);min-width:20px;text-align:right;}
 
 /* ── SCÈNE ───────────────────────────────────────── */
 #stage{height:52%;min-height:290px;position:relative;overflow:hidden;background:var(--bg-deep);flex-shrink:0;}
-#stage::after{content:'';position:absolute;inset:0;box-shadow:inset 0 -40px 60px rgba(18,19,26,.8);pointer-events:none;z-index:12;}
+#stage::after{content:'';position:absolute;inset:0;box-shadow:inset 0 -30px 50px rgba(240,236,228,.7);pointer-events:none;z-index:12;}
 .panel{position:absolute;top:0;bottom:0;width:50%;overflow:hidden;transition:filter .35s;}
-#pl{left:0;background:linear-gradient(180deg,#171824,#121318);}
-#pr{right:0;background:linear-gradient(180deg,#141c22,#0f1318);border-left:1px solid var(--border-subtle);}
-.panel.lit{filter:brightness(1.35) saturate(1.1);}
-.panel.dim{filter:brightness(.38) saturate(.5);}
-.ts-label{position:absolute;top:10px;font-size:.52rem;letter-spacing:2px;color:var(--txt-xlo);background:rgba(18,19,26,.75);border:1px solid var(--border-subtle);padding:3px 8px;z-index:15;border-radius:var(--r4);}
+#pl{left:0;background:linear-gradient(180deg,#f5f0e8,#ece6da);}
+#pr{right:0;background:linear-gradient(180deg,#e8f0f4,#dce8f0);border-left:1px solid var(--border-subtle);}
+.panel.lit{filter:brightness(1.05) saturate(1.1);}
+.panel.dim{filter:brightness(.82) saturate(.7);}
+.ts-label{position:absolute;top:10px;font-size:.52rem;letter-spacing:2px;color:var(--txt-xlo);background:rgba(248,246,242,.85);border:1px solid var(--border-subtle);padding:3px 8px;z-index:15;border-radius:var(--r4);}
 #ts-l{left:10px;}#ts-r{right:10px;}
 
 /* ── CHARS ───────────────────────────────────────── */
 .char{position:absolute;z-index:20;transition:opacity .5s,transform .5s;}
 .char svg{width:100%;height:100%;display:block;}
-#c-lucas{left:10%;bottom:14%;width:13%;aspect-ratio:200/240;}
-#c-nadine{right:10%;bottom:14%;width:13%;aspect-ratio:200/240;}
-#c-bruno{left:50%;bottom:1%;width:14%;aspect-ratio:200/240;transform:translateX(-50%) translateY(70px);opacity:0;z-index:30;}
+#c-lucas{left:8%;bottom:12%;width:14%;aspect-ratio:200/260;}
+#c-durand{right:8%;bottom:12%;width:14%;aspect-ratio:200/260;}
+#c-bruno{left:50%;bottom:1%;width:14%;aspect-ratio:200/260;transform:translateX(-50%) translateY(70px);opacity:0;z-index:30;}
 #c-bruno.in{transform:translateX(-50%) translateY(0);opacity:1;}
-#c-roussel{left:50%;bottom:1%;width:18%;aspect-ratio:200/240;transform:translateX(-50%) translateY(80px);opacity:0;z-index:35;}
-#c-roussel.in{transform:translateX(-50%) translateY(0);opacity:1;}
 
-/* Bruno mini-réaction dans coin */
-#bruno-react{position:absolute;bottom:10px;left:10px;width:50px;aspect-ratio:200/240;z-index:50;display:none;transition:transform .25s var(--ease-spring);}
-#bruno-react.show{display:block;}
-#bruno-react.nudge{transform:scale(1.12);}
+/* Respiration idle */
+.char svg{animation:breathe 3.8s ease-in-out infinite;}
+@keyframes breathe{0%,100%{transform:translateY(0) scaleY(1);}50%{transform:translateY(-1.2px) scaleY(1.002);}}
 
-/* Lucas expressions */
-#c-lucas .brows-s,#c-lucas .brows-c,#c-lucas .mouth-sad,#c-lucas .mouth-ok,#c-lucas .sweat{display:none;}
+/* ── MOUTH ANIMATION ────────────────────────────── */
+.mouth-open{display:none !important;}
+.char.speaking .mouth-closed{display:none !important;}
+.char.speaking .mouth-open{display:block !important;}
+.char.speaking .mouth-open ellipse,
+.char.speaking .mouth-open path{animation:mouthPulse .22s ease-in-out infinite alternate;}
+@keyframes mouthPulse{0%{transform:scaleY(.7);transform-origin:center;}100%{transform:scaleY(1.15);transform-origin:center;}}
+
+/* ── EXPRESSIONS LUCAS ──────────────────────────── */
+#c-lucas .brows-s,#c-lucas .brows-c,#c-lucas .mouth-sad,#c-lucas .mouth-ok,#c-lucas .sweat,
+#c-lucas .mouth-think,#c-lucas .brows-think,#c-lucas .arm-gesture,#c-lucas .arm-open{display:none;}
+
 #c-lucas.stressed .brows-n{display:none;}#c-lucas.stressed .brows-s{display:block;}
 #c-lucas.stressed .mouth-n{display:none;}#c-lucas.stressed .mouth-sad{display:block;}
 #c-lucas.stressed .sweat{display:block;}
 #c-lucas.confident .brows-n{display:none;}#c-lucas.confident .brows-c{display:block;}
 #c-lucas.confident .mouth-n{display:none;}#c-lucas.confident .mouth-ok{display:block;}
-/* Nadine */
-#c-nadine .mouth-smile{display:none;}
-#c-nadine.smile .mouth-stern{display:none;}#c-nadine.smile .mouth-smile{display:block;}
+#c-lucas.eager .arm-gesture{display:block;}
+#c-lucas.calm .brows-n{display:none;}#c-lucas.calm .brows-think{display:block;}
+#c-lucas.calm .arm-open{display:block;}
+#c-lucas.calm .mouth-n{display:none;}#c-lucas.calm .mouth-think{display:block;}
 
-/* ── BULLES BD ───────────────────────────────────── */
-.bubble{position:absolute;z-index:45;display:none;width:28%;max-width:300px;background:rgba(26,27,38,.96);border:1.5px solid var(--bc,#444);border-radius:var(--r8);padding:9px 12px;backdrop-filter:blur(4px);}
-.bubble.show{display:block;animation:bpop .15s var(--ease-spring);}
+/* ── EXPRESSIONS DURAND ─────────────────────────── */
+#c-durand .mouth-smile,#c-durand .brows-raised,#c-durand .arms-crossed,
+#c-durand .mouth-think-d,#c-durand .brows-think-d,#c-durand .arms-open-d{display:none;}
+
+#c-durand.skeptical .brows-n{display:none;}#c-durand.skeptical .brows-raised{display:block;}
+#c-durand.resistant .arms-crossed{display:block;}
+#c-durand.resistant .mouth-n{display:none;}#c-durand.resistant .mouth-think-d{display:block;}
+#c-durand.thinking .brows-n{display:none;}#c-durand.thinking .brows-think-d{display:block;}
+#c-durand.thinking .mouth-n{display:none;}#c-durand.thinking .mouth-think-d{display:block;}
+#c-durand.open .arms-crossed{display:none;}#c-durand.open .arms-open-d{display:block;}
+#c-durand.open .mouth-n{display:none;}#c-durand.open .mouth-smile{display:block;}
+
+/* Bruno expressions */
+#c-bruno .mouth-smile-b{display:none;}
+#c-bruno.teaching .mouth-n-b{display:none;}#c-bruno.teaching .mouth-smile-b{display:block;}
+
+/* ── BULLES ─────────────────────────────────────── */
+.bubble{position:absolute;z-index:45;display:none;width:30%;max-width:310px;background:rgba(255,255,255,.96);border:1.5px solid var(--bc,#bbb);border-radius:var(--r8);padding:10px 13px;backdrop-filter:blur(4px);box-shadow:0 2px 12px rgba(0,0,0,.06);}
+.bubble.show{display:block;animation:bpop .18s var(--ease-spring);}
 @keyframes bpop{from{transform:scale(.92);opacity:.3;}to{transform:scale(1);opacity:1;}}
 .b-speaker{font-family:var(--font-display);font-size:.52rem;letter-spacing:2px;margin-bottom:4px;text-transform:uppercase;}
-.b-text{font-size:.72rem;line-height:1.45;color:var(--txt-hi);}
+.b-text{font-size:.72rem;line-height:1.45;color:var(--txt-hi);min-height:1.2em;}
 #bl{left:2%;top:4%;}#br{right:2%;top:4%;}#bc{left:36%;top:3%;}
-#bl::after,#br::after,#bc::after{content:'';position:absolute;bottom:-6px;width:10px;height:10px;background:rgba(26,27,38,.96);border-right:1.5px solid var(--bc,#444);border-bottom:1.5px solid var(--bc,#444);transform:rotate(45deg);}
+#bl::after,#br::after,#bc::after{content:'';position:absolute;bottom:-6px;width:10px;height:10px;background:rgba(255,255,255,.96);border-right:1.5px solid var(--bc,#bbb);border-bottom:1.5px solid var(--bc,#bbb);transform:rotate(45deg);}
 #bl::after{left:28px;}#br::after{right:28px;}#bc::after{left:calc(50% - 5px);}
 
 /* ── VOIX OFF (typewriter) ────────────────────────── */
-#voff{position:absolute;left:50%;transform:translateX(-50%);bottom:8px;width:86%;max-width:820px;background:rgba(18,19,26,.88);border:1px solid var(--border-soft);border-left:3px solid var(--txt-lo);padding:8px 14px;z-index:48;display:none;border-radius:0 var(--r4) var(--r4) 0;}
+#voff{position:absolute;left:50%;transform:translateX(-50%);bottom:8px;width:86%;max-width:820px;background:rgba(248,246,242,.92);border:1px solid var(--border-soft);border-left:3px solid var(--txt-lo);padding:8px 14px;z-index:48;display:none;border-radius:0 var(--r4) var(--r4) 0;box-shadow:0 2px 10px rgba(0,0,0,.04);}
 #voff.show{display:block;}
 #voff::before{content:'NARRATEUR';display:block;font-family:var(--font-display);font-size:.5rem;letter-spacing:3px;color:var(--txt-xlo);margin-bottom:3px;}
 #voff-text{font-size:.74rem;line-height:1.5;color:var(--txt-med);min-height:30px;}
@@ -126,14 +149,15 @@ body{background:var(--bg-deep);color:var(--txt-hi);font-family:var(--font-mono);
 #clicker{position:absolute;inset:0;z-index:50;display:none;cursor:pointer;}
 #clicker.on{display:block;}
 
-/* ── FREEZE OVERLAY (théorie en scène) ───────────── */
-#freeze-overlay{position:absolute;inset:0;background:rgba(12,13,20,.82);z-index:60;display:none;align-items:center;justify-content:center;padding:16px;}
+/* ── FREEZE OVERLAY ─────────────────────────────── */
+#freeze-overlay{position:absolute;inset:0;background:rgba(240,236,228,.88);z-index:60;display:none;align-items:center;justify-content:center;padding:16px;}
 #freeze-overlay.on{display:flex;animation:fadein .3s ease;}
+@keyframes fadein{from{opacity:0;}to{opacity:1;}}
 .freeze-inner{display:flex;gap:16px;width:100%;max-width:900px;align-items:flex-start;}
 .freeze-char{flex:0 0 80px;}
 .freeze-char svg{width:100%;height:auto;display:block;}
-.freeze-bubble{flex:1;background:rgba(26,27,38,.97);border:1.5px solid var(--teal);border-radius:var(--r8);padding:12px 16px;position:relative;}
-.freeze-bubble::before{content:'';position:absolute;left:-8px;top:16px;width:12px;height:12px;background:rgba(26,27,38,.97);border-left:1.5px solid var(--teal);border-bottom:1.5px solid var(--teal);transform:rotate(45deg);}
+.freeze-bubble{flex:1;background:rgba(255,255,255,.98);border:1.5px solid var(--teal);border-radius:var(--r8);padding:12px 16px;position:relative;box-shadow:0 4px 20px rgba(0,0,0,.06);}
+.freeze-bubble::before{content:'';position:absolute;left:-8px;top:16px;width:12px;height:12px;background:rgba(255,255,255,.98);border-left:1.5px solid var(--teal);border-bottom:1.5px solid var(--teal);transform:rotate(45deg);}
 .theory-kicker{font-family:var(--font-display);font-size:.52rem;letter-spacing:3px;color:var(--teal);margin-bottom:4px;}
 .theory-title{font-family:var(--font-display);font-size:.92rem;color:var(--txt-hi);margin-bottom:8px;font-weight:600;}
 .theory-body{font-size:.7rem;line-height:1.55;color:var(--txt-med);}
@@ -141,78 +165,72 @@ body{background:var(--bg-deep);color:var(--txt-hi);font-family:var(--font-mono);
 .theory-body blockquote{border-left:2px solid var(--gold);padding:6px 12px;margin:8px 0;color:var(--gold-light);font-size:.68rem;background:var(--gold-dim);border-radius:0 var(--r4) var(--r4) 0;}
 .dd{border:1px solid;border-radius:var(--r4);padding:7px 11px;margin:6px 0;font-size:.65rem;line-height:1.5;}
 .dd span{font-family:var(--font-display);font-size:.5rem;letter-spacing:2px;display:block;margin-bottom:3px;}
-.dd.dont{border-color:rgba(232,68,90,.4);color:#e8b4bc;background:var(--red-dim);}
+.dd.dont{border-color:rgba(196,48,48,.35);color:#8a4a4a;background:var(--red-dim);}
 .dd.dont span{color:var(--red);}
-.dd.do{border-color:rgba(45,212,160,.4);color:#b4e8d4;background:var(--teal-dim);}
+.dd.do{border-color:rgba(13,122,110,.35);color:#2a6a5e;background:var(--teal-dim);}
 .dd.do span{color:var(--teal);}
 .theory-nav{display:flex;gap:8px;margin-top:10px;}
-.th-btn{background:transparent;border:1px solid var(--border-soft);color:var(--txt-med);padding:6px 16px;font-family:var(--font-display);font-size:.65rem;letter-spacing:2px;cursor:pointer;border-radius:var(--r4);transition:all .15s;}
+.th-btn{background:var(--bg-card);border:1px solid var(--border-soft);color:var(--txt-med);padding:6px 16px;font-family:var(--font-display);font-size:.65rem;letter-spacing:2px;cursor:pointer;border-radius:var(--r4);transition:all .15s;}
 .th-btn:hover{border-color:var(--teal);color:var(--teal);}
 .theory-count{font-size:.55rem;color:var(--txt-xlo);letter-spacing:2px;margin-bottom:6px;}
 
-/* ── ZONE INTERACTION (sans scroll) ─────────────── */
+/* ── ZONE INTERACTION ───────────────────────────── */
 #interaction{flex:1;background:var(--bg-mid);border-top:1px solid var(--border-subtle);display:flex;flex-direction:column;overflow:hidden;position:relative;}
 #izone{padding:16px 24px;height:100%;display:flex;flex-direction:column;overflow:hidden;}
 .idle-msg{color:var(--txt-xlo);font-size:.65rem;letter-spacing:2px;text-align:center;margin:auto;}
 
-/* QCM layout — no scroll */
 .q-wrap{display:flex;flex-direction:column;height:100%;overflow:hidden;}
 .q-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;flex-shrink:0;}
-.q-badge{font-family:var(--font-display);font-size:.58rem;letter-spacing:3px;color:var(--gold);border:1px solid rgba(212,168,67,.35);padding:2px 9px;background:var(--gold-dim);border-radius:var(--r4);}
+.q-badge{font-family:var(--font-display);font-size:.58rem;letter-spacing:3px;color:var(--gold);border:1px solid rgba(154,116,32,.3);padding:2px 9px;background:var(--gold-dim);border-radius:var(--r4);}
 .q-pts{font-size:.54rem;color:var(--txt-lo);}
 .q-question{font-family:var(--font-display);font-size:.92rem;color:var(--txt-hi);margin-bottom:10px;line-height:1.35;flex-shrink:0;}
 .q-options{display:flex;flex-direction:column;gap:6px;flex-shrink:0;}
-.q-btn{display:flex;gap:10px;align-items:flex-start;background:var(--bg-card);border:1px solid var(--border-subtle);color:var(--txt-med);padding:9px 12px;font-family:var(--font-mono);font-size:.7rem;line-height:1.38;text-align:left;cursor:pointer;border-radius:var(--r4);transition:all .14s;}
+.q-btn{display:flex;gap:10px;align-items:flex-start;background:var(--bg-card);border:1px solid var(--border-subtle);color:var(--txt-med);padding:9px 12px;font-family:var(--font-mono);font-size:.7rem;line-height:1.38;text-align:left;cursor:pointer;border-radius:var(--r4);transition:all .14s;box-shadow:0 1px 3px rgba(0,0,0,.03);}
 .q-btn:hover:not(:disabled){border-color:var(--gold);color:var(--gold-light);transform:translateX(3px);}
 .q-letter{font-family:var(--font-display);color:var(--txt-xlo);font-size:.75rem;flex-shrink:0;padding-top:1px;}
-.q-btn.right{border-color:var(--teal);background:var(--teal-dim);color:#c2f0e0;}
+.q-btn.right{border-color:var(--teal);background:var(--teal-dim);color:#1a5a50;}
 .q-btn.right .q-letter{color:var(--teal);}
-.q-btn.wrong{border-color:var(--red);background:var(--red-dim);color:#e8b4bc;opacity:.7;pointer-events:none;}
+.q-btn.wrong{border-color:var(--red);background:var(--red-dim);color:#8a3a3a;opacity:.7;pointer-events:none;}
 .q-btn.chosen{border-color:var(--gold);color:var(--gold-light);background:var(--gold-dim);}
 .q-btn.dim{opacity:.28;pointer-events:none;}
 .q-btn:disabled{pointer-events:none;}
 
-/* Feedback panel — slides in, replaces options */
 #feedback-panel{display:none;flex-direction:column;height:100%;}
 #feedback-panel.show{display:flex;}
 .fb-inner{flex:1;overflow-y:auto;padding-right:4px;}
-.fb-card{padding:11px 14px;border-left:3px solid #444;font-size:.73rem;line-height:1.52;color:var(--txt-med);border-radius:0 var(--r4) var(--r4) 0;background:var(--bg-card);}
-.fb-card.good{border-color:var(--teal);background:var(--teal-dim);color:#c2f0e0;}
+.fb-card{padding:11px 14px;border-left:3px solid #ccc;font-size:.73rem;line-height:1.52;color:var(--txt-med);border-radius:0 var(--r4) var(--r4) 0;background:var(--bg-card);box-shadow:0 1px 4px rgba(0,0,0,.03);}
+.fb-card.good{border-color:var(--teal);background:var(--teal-dim);color:#1a5a50;}
 .fb-card.hint{border-color:var(--gold);background:var(--gold-dim);color:var(--gold-light);}
-.fb-card.bad{border-color:var(--red);background:var(--red-dim);color:#e8b4bc;}
+.fb-card.bad{border-color:var(--red);background:var(--red-dim);color:#8a3a3a;}
 .fb-card.note{border-color:var(--txt-lo);color:var(--txt-med);}
 .fb-name{font-family:var(--font-display);font-size:.6rem;letter-spacing:2px;display:block;margin-bottom:4px;}
 .hint-label{font-family:var(--font-display);font-size:.55rem;letter-spacing:2px;color:var(--gold);margin:8px 0 3px;border-top:1px dashed var(--border-soft);padding-top:7px;}
 .pts-line{font-family:var(--font-display);color:var(--teal);letter-spacing:2px;margin-bottom:5px;font-size:.72rem;}
 .fb-actions{display:flex;gap:8px;margin-top:12px;flex-shrink:0;}
-/* If user got it wrong + hint available: show retry */
 .retry-opts{display:flex;flex-direction:column;gap:5px;margin-top:10px;}
 .retry-btn{display:flex;gap:10px;align-items:flex-start;background:var(--bg-card);border:1px solid var(--border-subtle);color:var(--txt-med);padding:7px 11px;font-family:var(--font-mono);font-size:.68rem;line-height:1.35;text-align:left;cursor:pointer;border-radius:var(--r4);transition:all .14s;}
 .retry-btn:hover:not(:disabled){border-color:var(--gold);color:var(--gold-light);}
-.retry-btn.right{border-color:var(--teal);background:var(--teal-dim);color:#c2f0e0;pointer-events:none;}
-.retry-btn.wrong{border-color:var(--red);background:var(--red-dim);color:#e8b4bc;opacity:.6;pointer-events:none;}
+.retry-btn.right{border-color:var(--teal);background:var(--teal-dim);color:#1a5a50;pointer-events:none;}
+.retry-btn.wrong{border-color:var(--red);background:var(--red-dim);color:#8a3a3a;opacity:.6;pointer-events:none;}
 
-.btn-continue{background:var(--teal);color:#041a12;border:none;padding:9px 22px;font-family:var(--font-display);font-size:.76rem;letter-spacing:2px;cursor:pointer;border-radius:var(--r4);text-transform:uppercase;transition:background .14s;}
-.btn-continue:hover{background:#3de8b0;}
+.btn-continue{background:var(--teal);color:#fff;border:none;padding:9px 22px;font-family:var(--font-display);font-size:.76rem;letter-spacing:2px;cursor:pointer;border-radius:var(--r4);text-transform:uppercase;transition:background .14s;}
+.btn-continue:hover{background:#0e8e80;}
 .btn-continue.ghost{background:transparent;color:var(--txt-med);border:1px solid var(--border-soft);}
 
-/* Pts pop */
 .pts-pop{position:fixed;top:50%;right:80px;font-family:var(--font-display);font-size:1.4rem;color:var(--teal);letter-spacing:2px;animation:ptspop 1.5s ease-out forwards;z-index:200;pointer-events:none;}
 @keyframes ptspop{from{opacity:0;transform:translateY(10px);}15%{opacity:1;}to{opacity:0;transform:translateY(-30px);}}
 
-/* ── ÉCRANS PLEIN (reveal, bilan, fin) ─────────────── */
+/* ── OVERLAYS ───────────────────────────────────── */
 .overlay{position:absolute;inset:0;background:var(--bg-mid);z-index:200;display:none;overflow-y:auto;padding:22px 28px 36px;}
 .overlay.on{display:block;animation:fadein .35s ease;}
-@keyframes fadein{from{opacity:0;}to{opacity:1;}}
 .ov-kicker{font-family:var(--font-display);font-size:.58rem;letter-spacing:3px;color:var(--gold);margin-bottom:4px;}
 .ov-title{font-family:var(--font-display);font-size:1.4rem;color:var(--txt-hi);margin-bottom:14px;font-weight:600;}
 
-/* Reveal */
-.reveal-wrap,.bilan-wrap,.final-wrap{max-width:740px;margin:0 auto;}
-.reveal-choice{border:1px dashed var(--border-soft);padding:10px 14px;color:var(--gold-light);font-size:.74rem;margin-bottom:12px;border-radius:var(--r4);}
+.reveal-wrap,.bilan-wrap,.final-wrap,.practice-wrap{max-width:740px;margin:0 auto;}
+.reveal-choice{border:1px dashed var(--border-soft);padding:10px 14px;color:var(--gold-light);font-size:.74rem;margin-bottom:12px;border-radius:var(--r4);background:var(--gold-dim);}
 .rg-row{padding:8px 12px;border-left:3px solid;margin:6px 0;font-size:.72rem;line-height:1.5;border-radius:0 var(--r4) var(--r4) 0;}
-.rg-row.ok{border-color:var(--teal);color:#c2f0e0;background:var(--teal-dim);}
-.rg-row.ko{border-color:var(--red);color:#e8b4bc;background:var(--red-dim);}
+.rg-row.ok{border-color:var(--teal);color:#1a5a50;background:var(--teal-dim);}
+.rg-row.ko{border-color:var(--red);color:#8a3a3a;background:var(--red-dim);}
 .reveal-body p{font-size:.76rem;line-height:1.58;color:var(--txt-med);margin-bottom:9px;}
 .reveal-body b{color:var(--txt-hi);}
 .reveal-common{margin-top:14px;border-top:1px solid var(--border-subtle);padding-top:12px;}
@@ -221,47 +239,60 @@ body{background:var(--bg-deep);color:var(--txt-hi);font-family:var(--font-mono);
 /* Bilan */
 .bilan-score{font-family:var(--font-display);font-size:3rem;color:var(--teal);line-height:1;}
 .bs-max{font-family:var(--font-display);font-size:.7rem;color:var(--txt-lo);letter-spacing:3px;margin-bottom:16px;display:block;}
-.bilan-row{display:grid;grid-template-columns:1.3fr 60px 1.6fr;gap:12px;align-items:center;padding:10px 14px;border:1px solid var(--border-subtle);margin-bottom:7px;background:var(--bg-card);border-radius:var(--r4);}
+.bilan-row{display:grid;grid-template-columns:1.3fr 60px 1.6fr;gap:12px;align-items:center;padding:10px 14px;border:1px solid var(--border-subtle);margin-bottom:7px;background:var(--bg-card);border-radius:var(--r4);box-shadow:0 1px 3px rgba(0,0,0,.03);}
 .br-skill{font-family:var(--font-display);font-size:.78rem;color:var(--txt-hi);}
 .br-pts{font-family:var(--font-display);font-size:1rem;text-align:center;}
 .br-verdict{font-size:.68rem;color:var(--txt-lo);line-height:1.4;}
 .bilan-row.ok{border-left:3px solid var(--teal);}.bilan-row.ok .br-pts{color:var(--teal);}
 .bilan-row.mid{border-left:3px solid var(--gold);}.bilan-row.mid .br-pts{color:var(--gold);}
 .bilan-row.ko{border-left:3px solid var(--red);}.bilan-row.ko .br-pts{color:var(--red);}
-.bilan-verdict{margin:14px 0 7px;padding:11px 14px;background:var(--bg-card);border-left:3px solid var(--txt-lo);font-size:.72rem;line-height:1.55;color:var(--txt-med);border-radius:0 var(--r4) var(--r4) 0;}
-/* Profil SDR */
-.sdr-profile{margin:14px 0;padding:14px 18px;border:1px solid var(--border-soft);border-radius:var(--r8);background:var(--bg-card);}
+.bilan-verdict{margin:14px 0 7px;padding:11px 14px;background:var(--bg-card);border-left:3px solid var(--txt-lo);font-size:.72rem;line-height:1.55;color:var(--txt-med);border-radius:0 var(--r4) var(--r4) 0;box-shadow:0 1px 3px rgba(0,0,0,.03);}
+.sdr-profile{margin:14px 0;padding:14px 18px;border:1px solid var(--border-soft);border-radius:var(--r8);background:var(--bg-card);box-shadow:0 2px 8px rgba(0,0,0,.04);}
 .sp-label{font-size:.52rem;letter-spacing:2.5px;color:var(--txt-xlo);font-family:var(--font-display);margin-bottom:3px;}
 .sp-title{font-family:var(--font-display);font-size:1.1rem;letter-spacing:1px;margin-bottom:4px;}
 .sp-desc{font-size:.72rem;color:var(--txt-med);line-height:1.5;}
 .rep-profile{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px;}
 .rp-item{display:flex;align-items:center;gap:8px;}
-.rp-label{font-size:.6rem;color:var(--txt-lo);width:60px;flex-shrink:0;}
-.rp-track{flex:1;height:5px;background:var(--bg-deep);border-radius:3px;overflow:hidden;}
+.rp-label{font-size:.6rem;color:var(--txt-lo);width:70px;flex-shrink:0;}
+.rp-track{flex:1;height:5px;background:var(--bg-deep);border-radius:3px;overflow:hidden;border:1px solid var(--border-subtle);}
 .rp-fill{height:100%;border-radius:3px;}
 .rp-fill.posture{background:var(--blue);}
 .rp-fill.cadre{background:var(--gold);}
-.rp-fill.integrite{background:var(--teal);}
-.rp-fill.alliance{background:#9b7dd4;}
-/* Mémo Bruno */
+.rp-fill.authenticite{background:var(--teal);}
+.rp-fill.connexion{background:#7a5ab8;}
 .bruno-memo{margin:12px 0;padding:14px 18px;background:var(--bg-deep);border:1px solid var(--border-subtle);border-radius:var(--r8);font-size:.7rem;line-height:1.6;color:var(--txt-med);}
 .bruno-memo-head{font-family:var(--font-display);font-size:.58rem;letter-spacing:3px;color:var(--teal);margin-bottom:6px;}
 .bruno-memo b{color:var(--txt-hi);}
 
 /* Final */
 .final-wrap{text-align:center;padding-top:20px;}
-.next-ep{margin:20px auto;max-width:540px;border:1px solid var(--border-soft);padding:20px 24px;background:var(--bg-card);border-radius:var(--r8);}
+.next-ep{margin:20px auto;max-width:540px;border:1px solid var(--border-soft);padding:20px 24px;background:var(--bg-card);border-radius:var(--r8);box-shadow:0 2px 10px rgba(0,0,0,.04);}
 .ne-label{font-family:var(--font-display);font-size:.56rem;letter-spacing:4px;color:var(--red);margin-bottom:6px;}
 .ne-title{font-family:var(--font-display);font-size:1.15rem;color:var(--txt-hi);margin-bottom:10px;}
 .ne-tease{font-size:.72rem;line-height:1.6;color:var(--txt-med);}
-/* Cliffhanger "locked" transcript */
-.transcript-locked{margin:16px auto;max-width:480px;border:1px solid var(--border-soft);border-radius:var(--r4);overflow:hidden;}
+.transcript-locked{margin:16px auto;max-width:480px;border:1px solid var(--border-subtle);border-radius:var(--r4);overflow:hidden;background:var(--bg-card);}
 .tr-line{padding:8px 14px;font-size:.68rem;color:var(--txt-med);border-bottom:1px solid var(--border-subtle);}
 .tr-line:last-child{border-bottom:none;}
 .tr-speaker{font-family:var(--font-display);font-size:.55rem;letter-spacing:2px;margin-bottom:2px;}
 .tr-blurred{filter:blur(4px);user-select:none;pointer-events:none;color:var(--txt-hi);}
-.tr-locked{display:flex;align-items:center;justify-content:center;gap:8px;padding:12px 14px;background:rgba(232,68,90,.08);border-top:2px solid var(--red);}
+.tr-locked{display:flex;align-items:center;justify-content:center;gap:8px;padding:12px 14px;background:var(--red-dim);border-top:2px solid var(--red);}
 .tr-locked-text{font-family:var(--font-display);font-size:.7rem;letter-spacing:2px;color:var(--red);}
+
+/* ── PRACTICE MODE SELECTOR ─────────────────────── */
+.practice-wrap{text-align:left;}
+.practice-desc{font-size:.78rem;line-height:1.6;color:var(--txt-med);margin-bottom:16px;}
+.practice-scenario{background:var(--bg-card);border:1px solid var(--border-soft);border-left:3px solid var(--gold);padding:12px 16px;margin-bottom:20px;border-radius:0 var(--r4) var(--r4) 0;font-size:.74rem;color:var(--txt-med);line-height:1.5;}
+.practice-scenario b{color:var(--txt-hi);}
+.mode-selector{display:flex;gap:12px;margin-bottom:12px;}
+.mode-btn{flex:1;padding:20px 16px;border:2px solid var(--border-soft);border-radius:var(--r8);background:var(--bg-card);cursor:pointer;text-align:center;transition:all .2s;font-family:var(--font-mono);position:relative;}
+.mode-btn:hover:not(:disabled){border-color:var(--teal);transform:translateY(-2px);box-shadow:0 4px 16px rgba(0,0,0,.06);}
+.mode-btn:disabled{opacity:.55;cursor:not-allowed;}
+.mode-btn .mode-icon{font-size:2rem;display:block;margin-bottom:8px;}
+.mode-btn .mode-label{font-family:var(--font-display);font-size:.85rem;letter-spacing:2px;color:var(--txt-hi);display:block;margin-bottom:4px;}
+.mode-btn .mode-desc{font-size:.65rem;color:var(--txt-lo);line-height:1.4;}
+.mode-soon{display:inline-block;font-size:.55rem;letter-spacing:1.5px;color:var(--red);background:var(--red-dim);padding:2px 8px;border-radius:10px;margin-top:6px;font-family:var(--font-display);text-transform:uppercase;}
+.mode-btn.active-mode{border-color:var(--teal);background:var(--teal-dim);}
+.practice-note{font-size:.65rem;color:var(--txt-xlo);line-height:1.5;font-style:italic;}
 
 ::-webkit-scrollbar{width:4px;}
 ::-webkit-scrollbar-track{background:var(--bg-mid);}
@@ -273,11 +304,11 @@ body{background:var(--bg-deep);color:var(--txt-hi);font-family:var(--font-mono);
 
   <!-- HUD -->
   <div id="hud">
-    <div class="hud-ep">ALIZÉO · S1·E1 — LE BOUCLIER</div>
+    <div class="hud-ep">ALIZÉO · S1·E1 — LA RÉACTANCE</div>
     <div class="hud-score">Score <b id="score-val">0</b>/12</div>
     <div class="hud-right">
-      <div class="profile-tag"><span class="profile-name" id="sdr-name-hud">Vous</span><span class="profile-title" id="sdr-title-hud">SDR</span></div>
-      <div class="hud-status"><span class="dot"></span><span id="status-lbl">OUVERTURE</span></div>
+      <div class="profile-tag"><span class="profile-name" id="sdr-name-hud">Vous</span><span class="profile-title" id="sdr-title-hud">Commercial</span></div>
+      <div class="hud-status"><span class="dot"></span><span id="status-lbl">INTRODUCTION</span></div>
     </div>
   </div>
 
@@ -294,14 +325,14 @@ body{background:var(--bg-deep);color:var(--txt-hi);font-family:var(--font-mono);
       <span class="rep-val" id="rv-cadre">—</span>
     </div>
     <div class="rep-item">
-      <span class="rep-label">Intégrité</span>
-      <div class="rep-track"><div class="rep-fill integrite" id="rp-integrite"></div></div>
-      <span class="rep-val" id="rv-integrite">—</span>
+      <span class="rep-label">Authenticité</span>
+      <div class="rep-track"><div class="rep-fill authenticite" id="rp-authenticite"></div></div>
+      <span class="rep-val" id="rv-authenticite">—</span>
     </div>
     <div class="rep-item">
-      <span class="rep-label">Alliance</span>
-      <div class="rep-track"><div class="rep-fill alliance" id="rp-alliance"></div></div>
-      <span class="rep-val" id="rv-alliance">—</span>
+      <span class="rep-label">Connexion</span>
+      <div class="rep-track"><div class="rep-fill connexion" id="rp-connexion"></div></div>
+      <span class="rep-val" id="rv-connexion">—</span>
     </div>
   </div>
 
@@ -309,67 +340,80 @@ body{background:var(--bg-deep);color:var(--txt-hi);font-family:var(--font-mono);
   <div id="stage">
     <div class="panel" id="pl">
       <svg style="position:absolute;inset:0;width:100%;height:100%;" viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
-        <!-- Fenêtres immeubles arrière -->
-        <rect x="28" y="32" width="220" height="195" rx="3" fill="#0e1726" stroke="#1d2a3a" stroke-width="2"/>
-        <line x1="138" y1="32" x2="138" y2="227" stroke="#1d2a3a" stroke-width="2"/>
-        <line x1="28" y1="130" x2="248" y2="130" stroke="#1d2a3a" stroke-width="2"/>
-        <g fill="#0c1220"><rect x="38" y="78" width="36" height="140"/><rect x="88" y="108" width="30" height="110"/><rect x="152" y="68" width="42" height="150"/><rect x="202" y="118" width="32" height="100"/></g>
-        <!-- Lumières fenêtres -->
-        <g fill="#e8c070" opacity=".7"><circle cx="54" cy="58" r="2"/><circle cx="78" cy="72" r="2"/><circle cx="108" cy="56" r="2"/><circle cx="154" cy="66" r="2"/><circle cx="178" cy="52" r="2"/><circle cx="204" cy="78" r="2"/><circle cx="94" cy="96" r="2"/><circle cx="162" cy="92" r="2"/><circle cx="214" cy="58" r="2"/><circle cx="62" cy="148" r="2"/><circle cx="122" cy="158" r="2"/><circle cx="192" cy="142" r="2"/></g>
-        <!-- Bureau Lucas -->
-        <rect x="60" y="324" width="120" height="68" rx="5" fill="#1a2030" stroke="#28344a" stroke-width="1.5"/>
-        <rect x="68" y="332" width="104" height="52" rx="3" fill="#232e44"/>
-        <rect x="76" y="340" width="36" height="6" rx="2" fill="#d4a843"/>
-        <rect x="76" y="352" width="58" height="4" rx="2" fill="#5ba3e0" opacity=".7"/>
-        <rect x="76" y="362" width="44" height="4" rx="2" fill="#5ba3e0" opacity=".4"/>
-        <rect x="52" y="390" width="136" height="8" rx="3" fill="#28344a"/>
-        <!-- Téléphone Lucas -->
-        <rect x="210" y="358" width="26" height="32" rx="4" fill="#3a4662"/>
-        <path d="M236 364 q10 7 0 18" stroke="#3a4662" stroke-width="5" fill="none"/>
-        <!-- Sol, plante -->
-        <rect x="0" y="398" width="400" height="14" fill="#1a1e2a"/>
-        <rect x="0" y="412" width="400" height="88" fill="#14171f"/>
-        <path d="M44 398 Q30 366 18 378 Q30 378 42 398" fill="#2a5a3a"/>
-        <path d="M44 398 Q58 358 70 370 Q56 374 46 398" fill="#3a6e4a"/>
-        <circle cx="44" cy="400" r="7" fill="#3a3228"/>
+        <rect x="0" y="0" width="400" height="355" fill="#f5f0e8"/>
+        <rect x="0" y="345" width="400" height="10" fill="#e0d8c8"/>
+        <rect x="0" y="355" width="400" height="145" fill="#e8ddd0"/>
+        <rect x="40" y="40" width="140" height="180" rx="4" fill="#c8dfe8" stroke="#b8a888" stroke-width="3"/>
+        <line x1="110" y1="40" x2="110" y2="220" stroke="#b8a888" stroke-width="3"/>
+        <line x1="40" y1="130" x2="180" y2="130" stroke="#b8a888" stroke-width="3"/>
+        <rect x="48" y="48" width="52" height="72" rx="2" fill="#dceef4" opacity=".6"/>
+        <rect x="116" y="48" width="52" height="72" rx="2" fill="#dceef4" opacity=".5"/>
+        <rect x="48" y="138" width="52" height="72" rx="2" fill="#dceef4" opacity=".4"/>
+        <rect x="116" y="138" width="52" height="72" rx="2" fill="#dceef4" opacity=".35"/>
+        <path d="M30 35 Q46 35 46 52 L46 225 Q36 220 30 225 Z" fill="#c8b898" opacity=".65"/>
+        <path d="M190 35 Q174 35 174 52 L174 225 Q184 220 190 225 Z" fill="#c8b898" opacity=".65"/>
+        <rect x="55" y="260" width="210" height="80" rx="14" fill="#6a90a8"/>
+        <rect x="45" y="272" width="28" height="56" rx="10" fill="#5a80a0"/>
+        <rect x="247" y="272" width="28" height="56" rx="10" fill="#5a80a0"/>
+        <rect x="65" y="250" width="190" height="18" rx="8" fill="#7aa0b8"/>
+        <rect x="80" y="270" width="42" height="36" rx="7" fill="#e0c090" transform="rotate(-4 101 288)"/>
+        <rect x="198" y="270" width="42" height="36" rx="7" fill="#e0c090" transform="rotate(4 219 288)"/>
+        <rect x="100" y="345" width="120" height="10" rx="3" fill="#a08060"/>
+        <rect x="112" y="355" width="8" height="22" rx="2" fill="#a08060"/>
+        <rect x="200" y="355" width="8" height="22" rx="2" fill="#a08060"/>
+        <rect x="320" y="305" width="24" height="40" rx="5" fill="#c0a878"/>
+        <circle cx="332" cy="288" r="20" fill="#4a8a4a"/>
+        <circle cx="322" cy="278" r="14" fill="#5a9a5a"/>
+        <circle cx="342" cy="282" r="12" fill="#3a7a3a"/>
+        <rect x="250" y="60" width="80" height="60" rx="3" fill="#eae2d4" stroke="#c8b898" stroke-width="3"/>
+        <rect x="258" y="68" width="64" height="44" rx="2" fill="#d4e0d0"/>
+        <path d="M268 90 Q282 78 296 90 Q310 102 310 90" stroke="#7aaa7a" stroke-width="2" fill="none"/>
+        <circle cx="280" cy="82" r="6" fill="#e8d060" opacity=".6"/>
       </svg>
-      <div class="ts-label" id="ts-l">OPEN SPACE ALIZÉO — 18H47</div>
+      <div class="ts-label" id="ts-l">SALON MME DURAND — 14H30</div>
     </div>
     <div class="panel" id="pr">
       <svg style="position:absolute;inset:0;width:100%;height:100%;" viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
-        <!-- Vue ville de nuit -->
-        <rect x="206" y="26" width="170" height="210" rx="3" fill="#0a1018" stroke="#1e2c38" stroke-width="2"/>
-        <g fill="#08101a"><rect x="220" y="120" width="38" height="115"/><rect x="268" y="88" width="32" height="147"/><rect x="310" y="128" width="46" height="107"/></g>
-        <g fill="#6ab8e8" opacity=".65"><circle cx="232" cy="78" r="1.8"/><circle cx="250" cy="98" r="1.8"/><circle cx="282" cy="110" r="1.8"/><circle cx="298" cy="68" r="1.8"/><circle cx="324" cy="148" r="1.8"/><circle cx="340" cy="94" r="1.8"/></g>
-        <!-- Bureau direction -->
-        <rect x="226" y="318" width="130" height="74" rx="4" fill="#121820" stroke="#1e2c38" stroke-width="1.5"/>
-        <rect x="234" y="326" width="114" height="58" rx="2" fill="#192436"/>
-        <rect x="242" y="334" width="44" height="5" rx="2" fill="#5ba3e0" opacity=".75"/>
-        <rect x="242" y="345" width="76" height="4" rx="2" fill="#5ba3e0" opacity=".45"/>
-        <rect x="242" y="355" width="60" height="4" rx="2" fill="#5ba3e0" opacity=".3"/>
-        <rect x="276" y="390" width="22" height="8" fill="#1a2030"/>
-        <rect x="258" y="396" width="58" height="5" rx="2" fill="#1a2030"/>
-        <!-- Téléphone Nadine (sonnant) -->
-        <rect x="94" y="350" width="76" height="36" rx="7" fill="#101318" stroke="#1e2c38" stroke-width="1.5"/>
-        <rect x="102" y="356" width="28" height="8" rx="2" fill="#1a2432"/>
-        <circle id="phone-led" cx="152" cy="360" r="4" fill="#e8445a" style="animation:ledslow 2.8s infinite;"/>
-        <!-- Plaque Roussel -->
-        <rect x="228" y="404" width="128" height="20" rx="3" fill="#191410" stroke="#2c2018" stroke-width="1"/>
-        <text x="292" y="418" font-family="JetBrains Mono, monospace" font-size="9" fill="#9e8850" text-anchor="middle" letter-spacing="1">GROUPE ROUSSEL</text>
-        <!-- Sol -->
-        <rect x="0" y="398" width="400" height="14" fill="#2a1c14"/>
-        <rect x="0" y="412" width="400" height="88" fill="#1c130e"/>
+        <rect x="0" y="0" width="400" height="300" fill="#b0d4e8"/>
+        <rect x="0" y="280" width="400" height="20" fill="#b0d4e8"/>
+        <ellipse cx="80" cy="55" rx="42" ry="18" fill="#e0eef4" opacity=".8"/>
+        <ellipse cx="105" cy="50" rx="30" ry="14" fill="#e0eef4" opacity=".8"/>
+        <ellipse cx="310" cy="85" rx="35" ry="14" fill="#e0eef4" opacity=".7"/>
+        <ellipse cx="290" cy="80" rx="25" ry="12" fill="#e0eef4" opacity=".7"/>
+        <circle cx="340" cy="48" r="24" fill="#f0d860" opacity=".75"/>
+        <circle cx="340" cy="48" r="30" fill="#f0d860" opacity=".15"/>
+        <rect x="40" y="155" width="320" height="245" fill="#f0e8d8" stroke="#c8b898" stroke-width="3"/>
+        <path d="M18 160 L200 42 L382 160 Z" fill="#a05030" stroke="#804020" stroke-width="3"/>
+        <rect x="125" y="82" width="48" height="32" rx="2" fill="#2a4a6a" stroke="#1a3a5a" stroke-width="1.5" transform="rotate(-22 149 98)"/>
+        <line x1="134" y1="80" x2="157" y2="96" stroke="#4a6a8a" stroke-width=".8" transform="rotate(-22 149 98)"/>
+        <line x1="144" y1="80" x2="167" y2="96" stroke="#4a6a8a" stroke-width=".8" transform="rotate(-22 149 98)"/>
+        <line x1="154" y1="80" x2="140" y2="96" stroke="#4a6a8a" stroke-width=".8" transform="rotate(-22 149 98)"/>
+        <rect x="180" y="74" width="48" height="32" rx="2" fill="#2a4a6a" stroke="#1a3a5a" stroke-width="1.5" transform="rotate(-22 204 90)"/>
+        <line x1="189" y1="72" x2="212" y2="88" stroke="#4a6a8a" stroke-width=".8" transform="rotate(-22 204 90)"/>
+        <line x1="199" y1="72" x2="222" y2="88" stroke="#4a6a8a" stroke-width=".8" transform="rotate(-22 204 90)"/>
+        <line x1="209" y1="72" x2="195" y2="88" stroke="#4a6a8a" stroke-width=".8" transform="rotate(-22 204 90)"/>
+        <rect x="80" y="205" width="70" height="80" rx="4" fill="#c8dfe8" stroke="#b8a888" stroke-width="3"/>
+        <line x1="115" y1="205" x2="115" y2="285" stroke="#b8a888" stroke-width="3"/>
+        <line x1="80" y1="245" x2="150" y2="245" stroke="#b8a888" stroke-width="3"/>
+        <rect x="245" y="225" width="55" height="125" rx="4" fill="#8a6a4a" stroke="#6a4a2a" stroke-width="3"/>
+        <circle cx="288" cy="292" r="4" fill="#c0a060"/>
+        <rect x="0" y="395" width="400" height="105" fill="#5a9a4a"/>
+        <rect x="0" y="390" width="400" height="8" fill="#4a8a3a"/>
+        <path d="M255 395 L272 500 L308 500 L291 395 Z" fill="#d8d0b8"/>
+        <circle cx="55" cy="408" r="20" fill="#3a7a2a"/>
+        <circle cx="75" cy="404" r="17" fill="#4a8a3a"/>
+        <circle cx="355" cy="406" r="22" fill="#3a7a2a"/>
+        <circle cx="375" cy="410" r="15" fill="#4a8a3a"/>
+        <rect x="160" y="410" width="40" height="30" rx="3" fill="#c8b898" stroke="#a89878" stroke-width="1.5"/>
+        <circle cx="180" cy="425" r="8" fill="#5a5a5a"/>
       </svg>
-      <div class="ts-label" id="ts-r">DIRECTION GÉN. — 18H47</div>
+      <div class="ts-label" id="ts-r">EXTÉRIEUR — TOIT SOLAIRE</div>
     </div>
 
     <!-- Personnages -->
     <div class="char" id="c-lucas"></div>
-    <div class="char" id="c-nadine"></div>
+    <div class="char" id="c-durand"></div>
     <div class="char" id="c-bruno"></div>
-    <div class="char" id="c-roussel"></div>
-    <!-- Bruno réaction mini -->
-    <div id="bruno-react"></div>
 
     <!-- Bulles -->
     <div class="bubble" id="bl"><div class="b-speaker"></div><div class="b-text"></div></div>
@@ -403,19 +447,41 @@ body{background:var(--bg-deep);color:var(--txt-hi);font-family:var(--font-mono);
     <div id="izone">
       <div class="idle-msg">— SCÈNE EN COURS —</div>
     </div>
-    <!-- Feedback panel (overlay sans scroll, sur la zone) -->
     <div id="feedback-panel"></div>
   </div>
 
   <!-- OVERLAYS -->
   <div class="overlay" id="ov-reveal">
     <div class="reveal-wrap">
-      <div class="ov-kicker">Réponse à votre question d'ouverture</div>
-      <h2 class="ov-title">Pourquoi neuf appels sur dix sont-ils filtrés ?</h2>
+      <div class="ov-kicker">Réponse à votre question d'introduction</div>
+      <h2 class="ov-title">Quand un prospect dit « c'est trop cher », que se passe-t-il ?</h2>
       <div id="rv-choice" class="reveal-choice"></div>
       <div id="rv-body" class="reveal-body"></div>
-      <div class="reveal-common"><p>Retenez l'essentiel : une posture basse ne se corrige pas avec un meilleur discours. Elle se corrige avec un <b>meilleur cadre</b>. Lucas va l'appliquer — dès maintenant.</p></div>
-      <div style="margin-top:16px;"><button class="btn-continue" onclick="startReplay()">Le lendemain, 9h12 ▸</button></div>
+      <div class="reveal-common"><p>Retenez l'essentiel : ce n'est pas le prix qui bloque. C'est la façon dont vous répondez au prix. Chaque argument que vous avancez renforce le mur au lieu de le franchir. Lucas va le découvrir — à ses dépens.</p></div>
+      <div style="margin-top:16px;"><button class="btn-continue" onclick="startScene1()">Entrer dans le salon ▸</button></div>
+    </div>
+  </div>
+
+  <div class="overlay" id="ov-practice-mid">
+    <div class="practice-wrap">
+      <div class="ov-kicker">Mise en pratique — 1/2</div>
+      <h2 class="ov-title">À vous de jouer</h2>
+      <p class="practice-desc">Vous venez d'apprendre la méthode en trois temps. Avant de voir Lucas l'appliquer, mettez-vous en situation.</p>
+      <div class="practice-scenario"><b>Contexte :</b> Vous êtes chez un prospect. Il vient de dire : « 18 000 €, c'est vraiment cher pour des panneaux. »</div>
+      <div class="mode-selector">
+        <button class="mode-btn" id="mode-vocal-mid" disabled>
+          <span class="mode-icon">🎤</span>
+          <span class="mode-label">Mode Vocal</span>
+          <span class="mode-desc">Parlez au micro pour répondre</span>
+          <span class="mode-soon">Prochainement</span>
+        </button>
+        <button class="mode-btn active-mode" onclick="proceedAfterPracticeMid()">
+          <span class="mode-icon">⌨️</span>
+          <span class="mode-label">Mode Clavier</span>
+          <span class="mode-desc">Tapez votre réponse au clavier</span>
+        </button>
+      </div>
+      <p class="practice-note">Le mode vocal utilisera le microphone de votre appareil via la Web Speech API pour une simulation de dialogue oral en temps réel. Cette fonctionnalité sera disponible dans la prochaine mise à jour. Pour l'instant, le mode clavier vous permet de continuer l'épisode.</p>
     </div>
   </div>
 
@@ -426,30 +492,53 @@ body{background:var(--bg-deep);color:var(--txt-hi);font-family:var(--font-mono);
       <div class="bilan-score" id="bil-pts">0</div>
       <span class="bs-max">points sur 12</span>
       <div class="sdr-profile">
-        <div class="sp-label">PROFIL SDR — ÉPISODE 1</div>
+        <div class="sp-label">PROFIL COMMERCIAL — ÉPISODE 1</div>
         <div class="sp-title" id="sdr-profile-title"></div>
         <div class="sp-desc" id="sdr-profile-desc"></div>
         <div class="rep-profile" id="rep-profile-bars"></div>
       </div>
       <div id="bil-rows"></div>
       <div class="bruno-memo" id="bruno-memo-text"></div>
-      <div style="margin-top:14px;"><button class="btn-continue" onclick="cliffhanger()">10h30 — La suite ▸</button></div>
+      <div style="margin-top:14px;"><button class="btn-continue" onclick="showPracticeEnd()">Pratique finale ▸</button></div>
+    </div>
+  </div>
+
+  <div class="overlay" id="ov-practice-end">
+    <div class="practice-wrap">
+      <div class="ov-kicker">Mise en pratique — 2/2</div>
+      <h2 class="ov-title">Récapitulatif : utilisez les trois temps</h2>
+      <p class="practice-desc">Vous avez vu Lucas appliquer la méthode. Maintenant, imaginez un prospect qui vous dit : « Je ne suis pas sûr que ça marche vraiment chez moi, mon toit n'est pas bien orienté. »</p>
+      <div class="practice-scenario"><b>Votre mission :</b> Formulez mentalement vos trois étapes — clarification, réflexion, comparaison — avant de passer à l'épisode suivant.</div>
+      <div class="mode-selector">
+        <button class="mode-btn" id="mode-vocal-end" disabled>
+          <span class="mode-icon">🎤</span>
+          <span class="mode-label">Mode Vocal</span>
+          <span class="mode-desc">Parlez au micro pour répondre</span>
+          <span class="mode-soon">Prochainement</span>
+        </button>
+        <button class="mode-btn active-mode" onclick="cliffhanger()">
+          <span class="mode-icon">⌨️</span>
+          <span class="mode-label">Mode Clavier</span>
+          <span class="mode-desc">Valider et terminer l'épisode</span>
+        </button>
+      </div>
+      <p class="practice-note">Le mode vocal sera disponible dans la prochaine mise à jour. Il vous permettra de prononcer vos réponses à voix haute et de recevoir un retour en temps réel via la Web Speech API (compatible Chrome et Edge).</p>
     </div>
   </div>
 
   <div class="overlay" id="ov-final">
     <div class="final-wrap">
       <div class="ov-kicker" style="color:var(--red);">Fin de l'épisode 1</div>
-      <h2 class="ov-title" style="font-size:2rem;">« Le Bouclier »</h2>
+      <h2 class="ov-title" style="font-size:2rem;">« La Réactance »</h2>
       <div class="next-ep">
         <div class="ne-label">Prochainement</div>
-        <div class="ne-title">Épisode 2 — Les quinze premières secondes</div>
-        <p class="ne-tease">Roussel a une règle, et elle ne se négocie pas : quinze secondes pour lui donner envie d'écouter la seizième. Ceux qui récitent décrochent. Ceux qui intriguent continuent. L'erreur que tout le monde fait — et le réflexe de rejet qu'elle déclenche instantanément.</p>
+        <div class="ne-title">Épisode 2 — Les trois temps en situation</div>
+        <p class="ne-tease">Lucas rencontre un prospect qui n'a pas une objection classique — il a une croyance profonde. « Les panneaux solaires, c'est un scam. » Quand l'objection est un mur idéologique, les trois temps ne suffisent plus. Il faut d'abord déconstruire — sans jamais attaquer.</p>
       </div>
       <div class="transcript-locked">
-        <div class="tr-line"><div class="tr-speaker" style="color:var(--gold);">LUCAS</div><div>Monsieur Roussel, bonjour. Je vous appelle au sujet de…</div></div>
-        <div class="tr-line"><div class="tr-speaker" style="color:var(--red);">M. ROUSSEL</div><div class="tr-blurred">— Ah, encore un qui commence par "je vous appelle au sujet de". Vous avez dix secondes.</div></div>
-        <div class="tr-line"><div class="tr-speaker" style="color:var(--gold);">LUCAS</div><div class="tr-blurred">— Vos ateliers perdent… je veux dire, j'ai calculé que vous pourriez…</div></div>
+        <div class="tr-line"><div class="tr-speaker" style="color:var(--gold);">LUCAS</div><div>Je comprends votre point de vue. Dites-moi, qu'est-ce qui vous fait dire que…</div></div>
+        <div class="tr-line"><div class="tr-speaker" style="color:var(--blue);">M. LEROY</div><div class="tr-blurred">— Mon voisin en a installé il y a deux ans et il ne m'a jamais parlé d'économies. Au contraire, il m'a dit que…</div></div>
+        <div class="tr-line"><div class="tr-speaker" style="color:var(--gold);">LUCAS</div><div class="tr-blurred">— Ce qui est intéressant dans ce que vous dites, c'est que vous avez une source directe. Est-ce que vous lui avez demandé…</div></div>
         <div class="tr-locked">
           <span class="tr-locked-text">⊘ ACCÈS REFUSÉ — ÉPISODE 2 VERROUILLÉ</span>
         </div>
@@ -462,95 +551,112 @@ body{background:var(--bg-deep);color:var(--txt-hi);font-family:var(--font-mono);
 
 </div>
 
-<style>
-@keyframes ledslow{0%,100%{opacity:.2;}50%{opacity:.9;}}
-</style>
-
 <script>
 /* ═══════════════════════════════════════════════════
    SVG PERSONNAGES
 ═══════════════════════════════════════════════════ */
 const SVG = {
-LUCAS:`<svg viewBox="0 0 200 240" xmlns="http://www.w3.org/2000/svg">
-  <path d="M38 240 L38 206 Q38 178 66 168 L134 168 Q162 178 162 206 L162 240 Z" fill="#252e45"/>
-  <path d="M86 168 L100 186 L114 168 L108 164 L100 178 L92 164 Z" fill="#334060"/>
-  <rect x="89" y="140" width="22" height="32" rx="8" fill="#e0ac7d"/>
-  <ellipse cx="58" cy="112" rx="8" ry="11" fill="#e0ac7d"/>
-  <ellipse cx="142" cy="112" rx="8" ry="11" fill="#e0ac7d"/>
-  <ellipse cx="100" cy="106" rx="43" ry="50" fill="#eebd8f"/>
-  <path d="M57 108 Q52 52 100 50 Q148 52 143 108 Q141 80 124 74 Q130 84 114 80 Q108 66 86 72 Q72 76 66 90 Q60 96 57 108 Z" fill="#26262e"/>
-  <path d="M56 104 Q100 42 144 104" stroke="#cdd2dd" stroke-width="7" fill="none" stroke-linecap="round"/>
-  <ellipse cx="58" cy="116" rx="10" ry="13" fill="#cdd2dd"/>
-  <path d="M62 128 Q76 156 98 152" stroke="#cdd2dd" stroke-width="4" fill="none" stroke-linecap="round"/>
-  <circle cx="100" cy="152" r="6" fill="#cdd2dd"/>
-  <g class="brows-n"><path d="M76 96 q10 -4 20 0" stroke="#26262e" stroke-width="4" fill="none" stroke-linecap="round"/><path d="M104 96 q10 -4 20 0" stroke="#26262e" stroke-width="4" fill="none" stroke-linecap="round"/></g>
-  <g class="brows-s"><path d="M78 90 q8 -4 16 4" stroke="#26262e" stroke-width="4" fill="none" stroke-linecap="round"/><path d="M106 94 q8 -8 16 -4" stroke="#26262e" stroke-width="4" fill="none" stroke-linecap="round"/></g>
-  <g class="brows-c"><path d="M76 94 h20" stroke="#26262e" stroke-width="4" stroke-linecap="round"/><path d="M104 92 h20" stroke="#26262e" stroke-width="4" stroke-linecap="round"/></g>
-  <ellipse cx="86" cy="108" rx="5" ry="6" fill="#1c1c24"/>
-  <ellipse cx="114" cy="108" rx="5" ry="6" fill="#1c1c24"/>
-  <path d="M100 112 q4 8 -2 12" stroke="#c98d5f" stroke-width="3" fill="none" stroke-linecap="round"/>
-  <path class="mouth-n" d="M90 134 q10 4 20 0" stroke="#7a4a34" stroke-width="3.5" fill="none" stroke-linecap="round"/>
-  <path class="mouth-sad" d="M90 138 q10 -6 20 0" stroke="#7a4a34" stroke-width="3.5" fill="none" stroke-linecap="round"/>
-  <path class="mouth-ok" d="M88 130 q12 9 24 0" stroke="#7a4a34" stroke-width="3.5" fill="none" stroke-linecap="round"/>
-  <path class="sweat" d="M146 82 q7 11 0 16 q-7 -5 0 -16" fill="#7fd4ff"/>
+LUCAS:`<svg viewBox="0 0 200 260" xmlns="http://www.w3.org/2000/svg">
+  <g class="arm-gesture">
+    <path d="M36 196 Q18 170 28 148" stroke="#3a6878" stroke-width="14" fill="none" stroke-linecap="round"/>
+    <circle cx="28" cy="145" r="7" fill="#e0ac7d"/>
+  </g>
+  <g class="arm-open">
+    <path d="M36 196 Q10 190 8 168" stroke="#3a6878" stroke-width="14" fill="none" stroke-linecap="round"/>
+    <circle cx="8" cy="165" r="7" fill="#e0ac7d"/>
+    <path d="M164 196 Q190 190 192 168" stroke="#3a6878" stroke-width="14" fill="none" stroke-linecap="round"/>
+    <circle cx="192" cy="165" r="7" fill="#e0ac7d"/>
+  </g>
+  <path d="M38 260 L38 226 Q38 198 66 188 L134 188 Q162 198 162 226 L162 260 Z" fill="#3a6878"/>
+  <path d="M86 188 L100 206 L114 188 L108 184 L100 198 L92 184 Z" fill="#4a7888"/>
+  <rect x="89" y="160" width="22" height="32" rx="8" fill="#e0ac7d"/>
+  <ellipse cx="58" cy="132" rx="8" ry="11" fill="#e0ac7d"/>
+  <ellipse cx="142" cy="132" rx="8" ry="11" fill="#e0ac7d"/>
+  <ellipse cx="100" cy="126" rx="43" ry="50" fill="#eebd8f"/>
+  <path d="M57 128 Q52 72 100 70 Q148 72 143 128 Q141 100 124 94 Q130 104 114 100 Q108 86 86 92 Q72 96 66 110 Q60 116 57 128 Z" fill="#4a3a2a"/>
+  <path d="M56 124 Q100 62 144 124" stroke="#cdd2dd" stroke-width="7" fill="none" stroke-linecap="round"/>
+  <ellipse cx="58" cy="136" rx="10" ry="13" fill="#cdd2dd"/>
+  <path d="M62 148 Q76 176 98 172" stroke="#cdd2dd" stroke-width="4" fill="none" stroke-linecap="round"/>
+  <circle cx="100" cy="172" r="6" fill="#cdd2dd"/>
+  <g class="brows-n"><path d="M76 116 q10 -4 20 0" stroke="#4a3a2a" stroke-width="4" fill="none" stroke-linecap="round"/><path d="M104 116 q10 -4 20 0" stroke="#4a3a2a" stroke-width="4" fill="none" stroke-linecap="round"/></g>
+  <g class="brows-s"><path d="M78 110 q8 -4 16 4" stroke="#4a3a2a" stroke-width="4" fill="none" stroke-linecap="round"/><path d="M106 114 q8 -8 16 -4" stroke="#4a3a2a" stroke-width="4" fill="none" stroke-linecap="round"/></g>
+  <g class="brows-c"><path d="M76 114 h20" stroke="#4a3a2a" stroke-width="4" stroke-linecap="round"/><path d="M104 112 h20" stroke="#4a3a2a" stroke-width="4" stroke-linecap="round"/></g>
+  <g class="brows-think"><path d="M78 112 q10 -6 18 0" stroke="#4a3a2a" stroke-width="3.5" fill="none" stroke-linecap="round"/><path d="M104 118 q10 2 18 -2" stroke="#4a3a2a" stroke-width="3.5" fill="none" stroke-linecap="round"/></g>
+  <ellipse cx="86" cy="128" rx="5" ry="6" fill="#1c1c24"/>
+  <ellipse cx="114" cy="128" rx="5" ry="6" fill="#1c1c24"/>
+  <ellipse cx="88" cy="127" rx="1.8" ry="2" fill="#fff"/>
+  <ellipse cx="116" cy="127" rx="1.8" ry="2" fill="#fff"/>
+  <path d="M100 132 q4 8 -2 12" stroke="#c98d5f" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <path class="mouth-closed mouth-n" d="M90 154 q10 4 20 0" stroke="#7a4a34" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+  <ellipse class="mouth-open" cx="100" cy="156" rx="7" ry="5" fill="#7a4a34"/>
+  <path class="mouth-sad" d="M90 158 q10 -6 20 0" stroke="#7a4a34" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+  <path class="mouth-ok" d="M88 150 q12 9 24 0" stroke="#7a4a34" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+  <path class="mouth-think" d="M92 156 q8 0 16 0" stroke="#7a4a34" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <path class="sweat" d="M146 102 q7 11 0 16 q-7 -5 0 -16" fill="#7fd4ff"/>
 </svg>`,
-NADINE:`<svg viewBox="0 0 200 240" xmlns="http://www.w3.org/2000/svg">
-  <path d="M34 240 L34 208 Q34 180 62 170 L138 170 Q166 180 166 208 L166 240 Z" fill="#2a3240"/>
-  <path d="M84 170 L100 200 L116 170 L110 166 L100 188 L90 166 Z" fill="#3a4455"/>
-  <path d="M90 170 L100 196 L110 170 Z" fill="#e9e9ef"/>
-  <rect x="90" y="142" width="20" height="30" rx="8" fill="#e6bd97"/>
-  <ellipse cx="100" cy="106" rx="42" ry="48" fill="#f0c8a4"/>
-  <path d="M58 106 Q54 54 100 52 Q146 54 142 106 Q140 66 100 66 Q60 66 58 106 Z" fill="#4e4842"/>
-  <circle cx="100" cy="50" r="13" fill="#4e4842"/>
-  <circle cx="60" cy="124" r="3" fill="#e0e0ea"/>
-  <circle cx="140" cy="124" r="3" fill="#e0e0ea"/>
-  <path d="M74 92 q12 2 18 6" stroke="#4e4842" stroke-width="4" fill="none" stroke-linecap="round"/>
-  <path d="M126 92 q-12 2 -18 6" stroke="#4e4842" stroke-width="4" fill="none" stroke-linecap="round"/>
-  <circle cx="84" cy="106" r="14" fill="none" stroke="#cdd2dc" stroke-width="2.5"/>
-  <circle cx="116" cy="106" r="14" fill="none" stroke="#cdd2dc" stroke-width="2.5"/>
-  <path d="M98 106 L102 106" stroke="#cdd2dc" stroke-width="2.5"/>
-  <ellipse cx="84" cy="106" rx="4" ry="5" fill="#2a2a32"/>
-  <ellipse cx="116" cy="106" rx="4" ry="5" fill="#2a2a32"/>
-  <path d="M100 112 q3 8 -2 11" stroke="#cf9a72" stroke-width="3" fill="none" stroke-linecap="round"/>
-  <path class="mouth-stern" d="M90 136 L110 136" stroke="#8a4a48" stroke-width="3.5" stroke-linecap="round"/>
-  <path class="mouth-smile" d="M88 132 q12 8 24 0" stroke="#8a4a48" stroke-width="3.5" fill="none" stroke-linecap="round"/>
-  <path d="M162 236 Q182 206 172 168" stroke="#2a3240" stroke-width="20" fill="none" stroke-linecap="round"/>
-  <circle cx="171" cy="162" r="9" fill="#f0c8a4"/>
-  <rect x="148" y="124" width="42" height="18" rx="9" fill="#16161e" transform="rotate(14 169 133)"/>
+DURAND:`<svg viewBox="0 0 200 260" xmlns="http://www.w3.org/2000/svg">
+  <g class="arms-crossed">
+    <path d="M36 200 Q54 218 86 210" stroke="#8a6a7a" stroke-width="16" fill="none" stroke-linecap="round"/>
+    <path d="M164 200 Q146 218 114 210" stroke="#8a6a7a" stroke-width="16" fill="none" stroke-linecap="round"/>
+  </g>
+  <g class="arms-open-d">
+    <path d="M36 200 Q16 194 14 174" stroke="#8a6a7a" stroke-width="14" fill="none" stroke-linecap="round"/>
+    <circle cx="14" cy="171" r="6" fill="#e6bd97"/>
+    <path d="M164 200 Q184 194 186 174" stroke="#8a6a7a" stroke-width="14" fill="none" stroke-linecap="round"/>
+    <circle cx="186" cy="171" r="6" fill="#e6bd97"/>
+  </g>
+  <path d="M34 260 L34 228 Q34 200 62 190 L138 190 Q166 200 166 228 L166 260 Z" fill="#8a6a7a"/>
+  <path d="M84 190 L100 210 L116 190 L110 186 L100 200 L90 186 Z" fill="#9a7a8a"/>
+  <rect x="88" y="162" width="24" height="30" rx="8" fill="#e6bd97"/>
+  <ellipse cx="100" cy="126" rx="42" ry="48" fill="#f0c8a4"/>
+  <path d="M58 126 Q56 78 100 76 Q144 78 142 126 Q140 88 100 86 Q60 88 58 126 Z" fill="#6a4a3a"/>
+  <path d="M58 126 Q56 80 100 76 Q80 82 72 100 Q64 114 58 126 Z" fill="#5a3a2a"/>
+  <circle cx="60" cy="108" r="3" fill="#e0e0ea"/>
+  <circle cx="140" cy="108" r="3" fill="#e0e0ea"/>
+  <path d="M74 112 q12 2 18 6" stroke="#6a4a3a" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+  <path d="M126 112 q-12 2 -18 6" stroke="#6a4a3a" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+  <g class="brows-n"><path d="M76 116 q10 -4 20 0" stroke="#6a4a3a" stroke-width="3.5" fill="none" stroke-linecap="round"/><path d="M104 116 q10 -4 20 0" stroke="#6a4a3a" stroke-width="3.5" fill="none" stroke-linecap="round"/></g>
+  <g class="brows-raised"><path d="M76 108 q10 -8 20 -2" stroke="#6a4a3a" stroke-width="3.5" fill="none" stroke-linecap="round"/><path d="M104 110 q10 -6 20 -2" stroke="#6a4a3a" stroke-width="3.5" fill="none" stroke-linecap="round"/></g>
+  <g class="brows-think-d"><path d="M78 118 q10 -2 18 2" stroke="#6a4a3a" stroke-width="3" fill="none" stroke-linecap="round"/><path d="M106 120 q8 0 16 -2" stroke="#6a4a3a" stroke-width="3" fill="none" stroke-linecap="round"/></g>
+  <circle cx="84" cy="126" r="14" fill="none" stroke="#cdd2dc" stroke-width="2.5"/>
+  <circle cx="116" cy="126" r="14" fill="none" stroke="#cdd2dc" stroke-width="2.5"/>
+  <path d="M98 126 L102 126" stroke="#cdd2dc" stroke-width="2.5"/>
+  <ellipse cx="84" cy="126" rx="4" ry="5" fill="#2a2a32"/>
+  <ellipse cx="116" cy="126" rx="4" ry="5" fill="#2a2a32"/>
+  <ellipse cx="85.5" cy="125" rx="1.5" ry="1.8" fill="#fff"/>
+  <ellipse cx="117.5" cy="125" rx="1.5" ry="1.8" fill="#fff"/>
+  <path d="M100 132 q3 8 -2 11" stroke="#cf9a72" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <path class="mouth-closed mouth-n" d="M90 156 L110 156" stroke="#8a4a48" stroke-width="3.5" stroke-linecap="round"/>
+  <ellipse class="mouth-open" cx="100" cy="158" rx="6" ry="4.5" fill="#8a4a48"/>
+  <path class="mouth-smile" d="M88 152 q12 8 24 0" stroke="#8a4a48" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+  <path class="mouth-think-d" d="M94 158 q6 -2 12 0" stroke="#8a4a48" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  <path d="M56 220 Q48 240 56 252" stroke="#8a6a7a" stroke-width="12" fill="none" stroke-linecap="round"/>
+  <circle cx="56" cy="254" r="5" fill="#f0c8a4"/>
 </svg>`,
-BRUNO:`<svg viewBox="0 0 200 240" xmlns="http://www.w3.org/2000/svg">
-  <path d="M36 240 L36 206 Q36 178 64 168 L136 168 Q164 178 164 206 L164 240 Z" fill="#38403a"/>
-  <path d="M86 168 L100 192 L114 168 L106 165 L100 180 L94 165 Z" fill="#484e42"/>
-  <path d="M92 168 L100 186 L108 168 Z" fill="#d8d2c2"/>
-  <rect x="89" y="140" width="22" height="30" rx="8" fill="#cf9a6c"/>
-  <ellipse cx="100" cy="106" rx="43" ry="49" fill="#dfa977"/>
-  <path d="M57 102 Q56 52 100 50 Q144 52 143 102 Q140 70 100 68 Q60 70 57 102 Z" fill="#8a8a92"/>
-  <path d="M57 102 Q56 52 100 50 Q78 54 66 76 Q59 88 57 102 Z" fill="#5a5a62"/>
-  <path d="M57 104 Q58 148 100 152 Q142 148 143 104 Q143 132 122 142 Q110 150 100 149 Q90 150 78 142 Q57 132 57 104 Z" fill="#75757d"/>
-  <ellipse cx="57" cy="110" rx="8" ry="11" fill="#dfa977"/>
-  <ellipse cx="143" cy="110" rx="8" ry="11" fill="#dfa977"/>
-  <path d="M74 92 q10 -5 20 -1" stroke="#686870" stroke-width="4.5" fill="none" stroke-linecap="round"/>
-  <path d="M106 87 q10 -4 20 3" stroke="#686870" stroke-width="4.5" fill="none" stroke-linecap="round"/>
-  <ellipse cx="86" cy="105" rx="5" ry="5.5" fill="#20202a"/>
-  <ellipse cx="114" cy="105" rx="5" ry="5.5" fill="#20202a"/>
-  <path d="M100 108 q5 10 -3 14" stroke="#b57e50" stroke-width="3" fill="none" stroke-linecap="round"/>
-  <path d="M88 137 q14 9 26 -2" stroke="#4a3428" stroke-width="3.5" fill="none" stroke-linecap="round"/>
-  <path d="M36 216 Q60 238 86 226" stroke="#38403a" stroke-width="18" fill="none" stroke-linecap="round"/>
-  <circle cx="90" cy="224" r="8" fill="#dfa977"/>
-  <rect x="80" y="206" width="26" height="20" rx="4" fill="#c06840"/>
-  <path d="M106 210 q9 4 0 11" stroke="#c06840" stroke-width="4" fill="none"/>
-  <path d="M86 200 q3 -6 0 -11 M96 200 q3 -6 0 -11" stroke="#98a0a8" stroke-width="2" fill="none" opacity=".6"/>
-</svg>`,
-ROUSSEL:`<svg viewBox="0 0 200 240" xmlns="http://www.w3.org/2000/svg">
-  <path d="M30 240 L30 210 Q30 182 60 172 L140 172 Q170 182 170 210 L170 240 Z" fill="#0c0c14"/>
-  <rect x="88" y="142" width="24" height="32" fill="#0c0c14"/>
-  <ellipse cx="100" cy="104" rx="45" ry="52" fill="#0c0c14"/>
-  <path d="M54 100 Q52 46 100 44 Q148 46 146 100 Q144 64 100 62 Q56 64 54 100 Z" fill="#0c0c14"/>
-  <path d="M145 98 Q146 46 100 44 Q122 50 132 64 Q143 78 145 102 Z" fill="#e8445a" opacity=".85"/>
-  <path d="M170 216 Q170 186 142 174 L147 169 Q172 183 174 217 Z" fill="#e8445a" opacity=".75"/>
-  <path d="M54 100 Q52 48 100 44 Q84 50 74 64 Q60 80 56 100 Z" fill="#e8445a" opacity=".25"/>
-  <ellipse cx="86" cy="110" rx="3.5" ry="4.5" fill="#e8445a" opacity=".7"/>
-  <ellipse cx="114" cy="110" rx="3.5" ry="4.5" fill="#e8445a" opacity=".7"/>
+BRUNO:`<svg viewBox="0 0 200 260" xmlns="http://www.w3.org/2000/svg">
+  <path d="M36 260 L36 226 Q36 198 64 188 L136 188 Q164 198 164 226 L164 260 Z" fill="#3a4a3a"/>
+  <path d="M86 188 L100 212 L114 188 L106 185 L100 200 L94 185 Z" fill="#4a5a4a"/>
+  <rect x="89" y="160" width="22" height="30" rx="8" fill="#cf9a6c"/>
+  <ellipse cx="100" cy="126" rx="43" ry="49" fill="#dfa977"/>
+  <path d="M57 122 Q56 72 100 70 Q144 72 143 122 Q140 90 100 88 Q60 90 57 122 Z" fill="#6a6a72"/>
+  <path d="M57 122 Q56 72 100 70 Q78 74 66 96 Q59 108 57 122 Z" fill="#4a4a52"/>
+  <path d="M57 124 Q58 168 100 172 Q142 168 143 124 Q143 152 122 162 Q110 170 100 169 Q90 170 78 162 Q57 152 57 124 Z" fill="#5a5a62"/>
+  <ellipse cx="57" cy="130" rx="8" ry="11" fill="#dfa977"/>
+  <ellipse cx="143" cy="130" rx="8" ry="11" fill="#dfa977"/>
+  <path d="M74 112 q10 -5 20 -1" stroke="#5a5a62" stroke-width="4.5" fill="none" stroke-linecap="round"/>
+  <path d="M106 107 q10 -4 20 3" stroke="#5a5a62" stroke-width="4.5" fill="none" stroke-linecap="round"/>
+  <ellipse cx="86" cy="125" rx="5" ry="5.5" fill="#20202a"/>
+  <ellipse cx="114" cy="125" rx="5" ry="5.5" fill="#20202a"/>
+  <ellipse cx="87.5" cy="124" rx="1.8" ry="2" fill="#fff"/>
+  <ellipse cx="115.5" cy="124" rx="1.8" ry="2" fill="#fff"/>
+  <path d="M100 128 q5 10 -3 14" stroke="#b57e50" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <path class="mouth-closed mouth-n-b" d="M88 157 q14 9 26 -2" stroke="#4a3428" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+  <ellipse class="mouth-open" cx="100" cy="158" rx="7" ry="5" fill="#4a3428"/>
+  <path class="mouth-smile-b" d="M86 152 q14 12 28 0" stroke="#4a3428" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+  <path d="M36 236 Q60 258 86 246" stroke="#3a4a3a" stroke-width="18" fill="none" stroke-linecap="round"/>
+  <circle cx="90" cy="244" r="8" fill="#dfa977"/>
+  <rect x="80" y="226" width="26" height="20" rx="4" fill="#5a7a5a"/>
+  <path d="M86 220 q3 -6 0 -11 M96 220 q3 -6 0 -11" stroke="#8a9a88" stroke-width="2" fill="none" opacity=".5"/>
 </svg>`
 };
 
@@ -558,715 +664,683 @@ ROUSSEL:`<svg viewBox="0 0 200 240" xmlns="http://www.w3.org/2000/svg">
    ÉTAT
 ═══════════════════════════════════════════════════ */
 const SP = {
-  LUCAS:{c:"#d4a843",label:"Lucas Moreau — SDR",short:"LUCAS"},
-  NADINE:{c:"#5ba3e0",label:"Nadine Fabre — Assistante de direction",short:"NADINE"},
-  BRUNO:{c:"#2dd4a0",label:"Bruno — Votre mentor",short:"BRUNO"},
-  ROUSSEL:{c:"#e8445a",label:"M. Roussel — Groupe Roussel",short:"M. ROUSSEL"}
+  LUCAS:{c:"#9a7420",label:"Lucas Moreau — Commercial solaire",short:"LUCAS",bubble:"bl"},
+  DURAND:{c:"#8a5a8a",label:"Mme Durand — Propriétaire",short:"MME DURAND",bubble:"br"},
+  BRUNO:{c:"#0d7a6e",label:"Bruno — Votre mentor",short:"BRUNO",bubble:"bc"}
 };
-const st = {score:0, trap:null, rep:{posture:0,cadre:0,integrite:0,alliance:0}, results:[]};
+const st = {score:0, trap:null, rep:{posture:0,cadre:0,authenticite:0,connexion:0}, results:[], pendingCb:null};
+let mouthTimer = null;
+let typeTimer = null;
+let theoryIdx = 0;
 
 /* ═══════════════════════════════════════════════════
    DONNÉES PÉDAGO
 ═══════════════════════════════════════════════════ */
 const TRAP = {
-  intro:"Avant d'entrer dans la scène, une question. Pas de bonne réponse attendue — pour l'instant.",
-  q:"Selon vous, pourquoi neuf appels sur dix sont-ils filtrés dès la première phrase ?",
+  intro:"Avant d'entrer chez Mme Durand, une question. Pas de bonne réponse attendue — pour l'instant.",
+  q:"Quand un prospect vous dit « c'est trop cher », que se passe-t-il réellement dans son cerveau ?",
   opts:[
-    "Parce que l'argumentaire n'est pas assez convaincant.",
-    "Parce que les assistantes ont pour mission de bloquer tous les appels non identifiés.",
-    "Parce que l'appelant se place, sans le savoir, en position de demandeur."
+    "Il évalue rationnellement le rapport qualité/prix et votre offre ne passe pas le test.",
+    "Son cerveau active un mécanisme de défense psychologique : la réactance.",
+    "Il n'est pas vraiment intéressé et cherche une excuse polie pour vous congédier."
   ]
 };
 
+const REVEAL_TEXTS = [
+  `<p><b>Faux — et c'est la réponse la plus choisie.</b> Si c'était une question de calcul, un tableau Excel suffirait à vendre. Mais les prospects qui reçoivent un chiffre parfait et restent bloqués existent par milliers. Le rationnel n'est pas le problème.</p>`,
+  `<p><b>Exactement.</b> La réactance, décrite par Brehm en 1966, est un mécanisme profond : quand quelqu'un sent qu'on essaie de le convaincre, son cerveau active une résistance proportionnelle à la pression ressentie. Plus vous argumentez, plus il se braque.</p>`,
+  `<p><b>Pas toujours.</b> Parfois oui. Mais la majorité des « c'est trop cher » sont sincères — le prospect ressent un blocage réel, pas une excuse. Le problème n'est pas dans ce qu'il dit, mais dans la façon dont vous réagissez. Et la réaction standard des commerciaux aggrave ce blocage.</p>`
+];
+
 const D1 = {
-  q:"Qu'est-ce qui a déclenché le filtre de Nadine ?",
-  correct:1, skill:null,
-  hint:"Dans les trois premières secondes, Nadine ne cherche pas à savoir ce que Lucas vend. Elle cherche à savoir qui il <em>semble être</em>.",
-  reveal:"La bonne réponse : B. Lucas s'est annoncé comme un commercial et s'est placé en demandeur — position basse. Le pitch n'a fait que confirmer un diagnostic déjà posé.",
+  q:"Qu'est-ce qui a déclenché la fermeture de Mme Durand ?",
+  correct:1, pts:3, skill:"Posture", rep:"posture",
+  hint:"Regardez la séquence : Lucas reçoit l'objection, et que fait-il dans la seconde qui suit ?",
+  reveal:"La bonne réponse : B. Lucas a immédiatement contre-argumenté. Chaque argument a renforcé la réactance de Mme Durand au lieu de la diminuer.",
   opts:[
-    {t:"Lucas a pitché sa solution dès la première phrase — trop d'information trop tôt.",
-     fb:"Pertinent, mais ce n'est pas ça qui a déclenché le filtre — le pitch n'a fait que confirmer un diagnostic déjà posé. Relisez sa phrase d'ouverture : comment Lucas s'annonce-t-il, avant même de parler du produit ?"},
-    {t:"Lucas s'est identifié comme commercial et a demandé une faveur : position basse dès la première seconde.",
-     fb:"Exactement. « Lucas Moreau, de la société Alizéo… j'aimerais… s'il vous plaît. » Il s'étiquette, il demande, il justifie. Trois signaux de demandeur en une seule phrase — Nadine n'avait plus besoin d'écouter la suite."},
-    {t:"Lucas a appelé à 18h47 — trop tard, les décideurs ne décrochent plus.",
-     fb:"Contre-intuitif : la fin de journée peut être un bon créneau, quand les standards lâchent. Ce n'est pas l'heure qui a joué contre Lucas. Regardez ce qu'il dit de lui-même dans ses tout premiers mots."}
+    {t:"Le prix de 18 000 € était objectivement trop élevé pour le budget de Mme Durand.",
+     fb:"Le prix n'a jamais été le problème réel. Relisez la scène : quand Lucas a arrêté de parler, Mme Durand ne parlait plus de chiffres. Elle parlait de confiance et d'incertitude. Le prix était un symptôme, pas la cause."},
+    {t:"Lucas a répondu à l'objection par des arguments, déclenchant la réactance de Mme Durand.",
+     fb:"Exactement. « Je comprends, mais si on calcule… » — chaque « mais » est une micro-attaque contre la position du prospect. Son cerveau a répondu en renforçant sa résistance. Lucas a perdu parce qu'il a gagné le débat — et perdu la vente."},
+    {t:"Lucas n'a pas suffisamment personnalisé son argumentaire au profil de Mme Durand.",
+     fb:"La personnalisation aide, mais ce n'est pas ça qui a causé l'échec. Même un argumentaire ultra-personnalisé, délivré en mode argumentation, déclenche la même réactance. La question est : <em>comment</em> vous répondez, pas <em>ce que</em> vous dites."}
   ]
 };
 
 const D2 = {
-  q:"Qu'aurait-il fallu faire, dès la première phrase ?",
-  correct:2, skill:null,
-  hint:"Un avocat qui rappelle un client passe sans jamais se justifier. Qu'est-ce qu'il fait que Lucas ne fait pas ? Il informe — il ne demande pas.",
-  reveal:"La bonne réponse : C. Se poser en pair qui rappelle au sujet d'un dossier — une information à vérifier, pas une faveur à accorder.",
+  q:"Face à « c'est trop cher », quel doit être le premier réflexe ?",
+  correct:0, pts:2, skill:"Cadre", rep:"cadre",
+  hint:"Un médecin ne prescrit pas avant d'avoir examiné. Un commercial ne devrait pas répondre avant d'avoir compris.",
+  reveal:"La bonne réponse : A. Poser une question de clarification pour comprendre ce que « trop cher » veut dire pour ce prospect précis.",
   opts:[
-    {t:"Annoncer un bénéfice chiffré immédiatement pour susciter l'intérêt.",
-     fb:"Un bénéfice hurlé dès la première seconde, ça sent le commercial à dix mètres. Et Nadine n'est pas la décisionnaire. La question n'est pas d'impressionner — c'est de ressembler à quoi ?"},
-    {t:"Insister en rappelant plusieurs fois dans la semaine : la persévérance finit par payer.",
-     fb:"L'acharnement est le meilleur moyen de se faire bannir d'un standard. Ce n'est pas une question de quantité — c'est une question de posture dans l'appel."},
-    {t:"Se positionner en pair qui rappelle au sujet d'un dossier, avec une question fermée et simple.",
-     fb:"Voilà. On n'implore pas une faveur — on signale une information à vérifier. « Je le rappelle au sujet du dossier de leurs ateliers, il est là ? » Ça ne se discute pas, ça ne se justifie pas. Cette nuance change tout."}
+    {t:"Poser une question de clarification : « Qu'est-ce qui vous fait dire que c'est beaucoup ? »",
+     fb:"Parfait. Vous ne niez pas, ne justifiez pas, n'argumentez pas. Vous cherchez à comprendre. Et dans le même temps, vous envoyez un signal au cerveau du prospect : « cette personne ne m'attaque pas » — la réactance baisse d'un cran."},
+    {t:"Rassurer sur le retour sur investissement avec des chiffres concrets.",
+     fb:"C'est exactement ce que Lucas a fait — et c'est ce qui a déclenché la réactance. Les chiffres rassurent ceux qui sont déjà convaincus. Pour les autres, ils ressentent qu'on essaie de les convaincre, et ils se braquent."},
+    {t:"Acknowledge l'objection puis pivoter vers un autre bénéfice non lié au prix.",
+     fb:"Le pivot est une technique de contournement — et le prospect le sent. « Je comprends, mais parlons plutôt de… » = « je ne veux pas traiter votre vraie objection ». La confiance chute au lieu de monter."}
   ]
 };
 
 const THEORY = [
-  {k:"De l'autre côté du fil : un métier, pas un mur",
-   kicker:"COMPRENDRE L'ÉCRAN — POINT 1/4",
-   key:"Nadine ne trie pas des appels. Elle trie des statuts.",
-   h:`<p>Nadine ne déteste pas les commerciaux. Elle protège une seule chose : <b>le temps de son dirigeant</b>. Trente à quarante appels par jour tentent de passer — impossible de tous les analyser. Depuis vingt-deux ans, son cerveau trie en trois secondes sur un unique critère :</p>
-   <blockquote>« Cette personne a-t-elle légitimement affaire à monsieur Roussel, ou cherche-t-elle une ouverture ? »</blockquote>
-   <p>Avocats, experts-comptables, fournisseurs habituels : ils passent tous. Sans argumentaire, sans charme particulier. Pourquoi ? Parce qu'ils <b>semblent avoir raison d'être là</b>. Le filtre ne juge ni votre produit, ni votre mérite — il juge le <b>statut que vous affichez</b>.</p>`},
-  {k:"La position basse : les trois signaux du demandeur",
-   kicker:"COMPRENDRE L'ÉCRAN — POINT 2/4",
-   key:"Un pair n'implore pas. Il informe.",
-   h:`<p>Trois comportements vous classent immédiatement côté demandeurs :</p>
-   <div class="dd dont"><span>À ne pas faire</span>« Bonjour, Lucas Moreau <b>de la société Alizéo</b>… » — vous livrez votre étiquette commerciale avant qu'on la demande.</div>
-   <div class="dd dont"><span>À ne pas faire</span>« <b>J'aimerais</b> parler à monsieur Roussel, <b>s'il vous plaît</b>… » — vous sollicitez une faveur.</div>
-   <div class="dd dont"><span>À ne pas faire</span>« Nous éditons une solution <b>qui pourrait l'intéresser</b>… » — vous plaidez votre cause avant même qu'on vous demande.</div>
-   <p>Et le téléphone amplifie tout : la voix qui monte dans les aigus, le débit qui s'accélère, les phrases qui s'allongent. <b>Le corps vous suit — même à distance.</b> Nadine l'entend sans vous voir.</p>`},
-  {k:"Le cadrage administratif : le réflexe du dossier",
-   kicker:"COMPRENDRE L'ÉCRAN — POINT 3/4",
-   key:"Un cadre banal passe mieux qu'un discours brillant.",
-   h:`<p>Ce qui passe un filtre, ce n'est pas un discours convaincant. C'est un <b>cadre banal</b> — presque ennuyeux.</p>
-   <div class="dd do"><span>Ce qu'il faut faire</span>« Je le rappelle <b>au sujet du dossier de leurs ateliers</b>. Il est joignable ? »</div>
-   <p>Pas de promesse, pas de chiffre, pas d'entreprise. Un objet neutre et crédible, puis une <b>question fermée</b> à laquelle on répond en trois mots. La question fermée est votre meilleure arme : elle force une réponse courte et ne ressemble à rien de commercial.</p>
-   <p>Deux garde-fous : le dossier doit être <b>crédible</b> — un vrai sujet de son métier, jamais une invention grossière. Et on ne ment jamais. <b>Jamais.</b></p>`},
-  {k:"L'assistante n'est pas l'ennemie",
-   kicker:"COMPRENDRE L'ÉCRAN — POINT 4/4",
-   key:"On ne passe pas le mur. On le traverse avec elle.",
-   h:`<p>Nadine peut être le filtre… ou votre meilleure alliée. Les assistants connaissent l'organigramme, les priorités du moment, parfois l'humeur du jour.</p>
-   <p>Ceux qui les bousculent ou tentent de les contourner se font repérer — et se grillent parfois définitivement. Ceux qui les traitent en professionnelles respectées obtiennent ce qu'aucune base de données ne contient : <b>le bon interlocuteur, le bon créneau, parfois un mot de recommandation</b>.</p>
-   <div class="dd do"><span>La règle</span>On ne « passe » pas un standard. On le traverse <b>avec</b> lui.</div>`}
+  {kicker:"COMPRENDRE LA RÉACTANCE — POINT 1/4",
+   key:"Quand on pousse, l'autre résiste.",
+   h:`<p>En 1966, le psychologue Jack Brehm démontre un phénomène contre-intuitif : <b>plus vous essayez de convaincre quelqu'un, plus il résiste</b>. C'est la réactance psychologique.</p>
+   <p>Le mécanisme est inconscient et immédiat. Quand le cerveau du prospect détecte une tentative d'influence, il active un reflexe de défense — exactement comme un bras qui se lève pour se protéger.</p>
+   <blockquote>« La réactance n'est pas un choix. C'est un reflexe. Vous ne pouvez pas la combattre — vous pouvez seulement ne pas la déclencher. »</blockquote>
+   <p>En 2026, les prospects sont exposés à des milliers de tentatives de persuasion par jour. Leur réactance est <b>chroniquement activée</b>. Les anciennes techniques d'argumentation ne fonctionnent plus — elles font exactement l'inverse de ce qu'on attend.</p>`},
+  {kicker:"COMPRENDRE LA RÉACTANCE — POINT 2/4",
+   key:"L'erreur universelle : répondre aux objections par des arguments.",
+   h:`<p>La formation commerciale classique enseigne : « objection → réfutation → conclusion ». Ce modèle était pertinent quand les prospects faisaient confiance par défaut. En 2026, c'est un piège.</p>
+   <div class="dd dont"><span>Erreur classique</span>Prospect : « C'est trop cher. »<br>Commercial : « Je comprends, <b>mais</b> si on calcule sur 25 ans… »</div>
+   <p>Le mot « mais » est un signal d'attaque. Le cerveau du prospect l'entend comme : « ce que vous venez de dire est faux, voici la vraie réponse. » Résultat : il se braque davantage.</p>
+   <div class="dd dont"><span>Erreur classique</span>Prospect : « Je ne suis pas sûr. »<br>Commercial : « Nos études montrent que… »</div>
+   <p>Apporter une preuve quand on vous dit « je ne suis pas sûr », c'est répondre à un doute émotionnel par une démonstration rationnelle. <b>Deux registres différents — deux échecs garantis.</b></p>`},
+  {kicker:"LA MÉTHODE EN 3 TEMPS — POINT 3/4",
+   key:"Clarifier → Faire réfléchir → Comparer.",
+   h:`<p>Au lieu de répondre, on va <b>faire répondre le prospect</b>. Trois étapes, dans cet ordre précis :</p>
+   <div class="dd do"><span>Temps 1 — Clarifier</span>« Qu'est-ce qui vous fait dire que c'est beaucoup ? »<br><em>But : comprendre la vraie nature de l'objection sans jamais la contredire.</em></div>
+   <div class="dd do"><span>Temps 2 — Faire réfléchir</span>« Si vous investissiez 18 000 € dans quelque chose qui vous rapportait plus du double, vous hésiteriez ? »<br><em>But : amener le prospect à se convaincre lui-même en reformulant le cadre.</em></div>
+   <div class="dd do"><span>Temps 3 — Comparer</span>« C'est un peu comme planter un verger : les premières années vous arrosez sans récolter, puis pendant 20 ans vous récoltez sans arroser. »<br><em>But : contourner la résistance en activant l'imagination plutôt que la logique.</em></div>
+   <p>Aucun des trois temps ne contredit le prospect. Aucun ne déclenche la réactance. Et pourtant, le résultat est dix fois plus puissant qu'un argumentaire parfait.</p>`},
+  {kicker:"LE POUVOIR DES COMPARAISONS — POINT 4/4",
+   key:"Penser X, c'est comme… — le pont qui contourne le mur.",
+   h:`<p>La comparaison (ou analogie) est l'outil le plus sous-estimé de la vente moderne. Pourquoi ça marche ?</p>
+   <p>Quand vous argumentez, vous activez le cortex préfrontal du prospect — la zone analytique, critique, méfiante. Quand vous utilisez une comparaison, vous activez le cortex visuel et le système limbique — l'imagination, l'émotion, l'association.</p>
+   <blockquote>« L'argument parle au juge. La comparaison parle à l'enfant. Et c'est l'enfant qui décide. »</blockquote>
+   <div class="dd do"><span>Structure d'une bonne comparaison</span>« Penser/vouloir/faire [X], c'est comme [Y] — [explication courte]. »<br>Exemple : « Hésiter à installer des panneaux parce qu'il faut attendre 5 ans pour le ROI, c'est comme refuser de planter un arbre parce qu'il ne donne pas de fruits le lendemain. »</div>
+   <p>La comparaison ne <b>contredit pas</b> le prospect — elle <b>déplace</b> son cadre de pensée. Et ce déplacement se fait sans résistance, parce qu'il passe par l'imagination, pas par la raison.</p>`}
 ];
 
-const REVEAL_TEXTS = [
-  `<p><b>Faux — et c'est la réponse la plus choisie.</b> Un argumentaire brillant, débité en position de demandeur, se fait filtrer de la même manière. Le contenu n'arrive qu'après le statut : Nadine juge le porteur du message avant le message lui-même.</p>`,
-  `<p><b>Faux — et c'est une bonne nouvelle.</b> Avocats, experts-comptables, fournisseurs, pairs : des dizaines d'appels passent chaque jour, sans charme particulier ni argumentaire. Le filtre ne bloque pas les appels. Il bloque les <b>postures</b>.</p>`,
-  `<p><b>Exactement.</b> Les neuf sur dix qui se font filtrer se sont classés eux-mêmes : ils s'annoncent, ils demandent, ils justifient. La preuve ? L'appel de Lucas hier soir : le produit n'y était pour rien — la phrase d'ouverture, oui. Et une position, ça se corrige en une seule phrase.</p>`
+const D3 = {
+  q:"Pourquoi la question de clarification est-elle si puissante ?",
+  correct:2, pts:2, skill:"Authenticité", rep:"authenticite",
+  hint:"Quand vous posez une vraie question, que signalez-vous à votre interlocuteur ?",
+  reveal:"La bonne réponse : C. Vous signalez que son opinion mérite d'être comprise — ce qui est l'exact inverse du signal envoyé par un argument.",
+  opts:[
+    {t:"Elle permet de gagner du temps en repoussant le moment de répondre.",
+     fb:"Ce n'est pas une tactique de temporisation — c'est un acte d'écoute sincère. Si vous posez la question juste pour gagner du temps, le prospect le sentira. L'authenticité est indispensable."},
+    {t:"Elle force le prospect à justifier son objection, ce qui l'affaiblit.",
+     fb:"C'est une lecture cynique — et dangereuse. Si le prospect sent que votre question est un piège pour le mettre en difficulté, la réactance explose. La clarification doit être sincère, pas stratégique."},
+    {t:"Elle envoie le signal : « votre avis mérite d'être compris » — ce qui désarme la réactance.",
+     fb:"Exactement. Le cerveau du prospect est programmé pour se défendre contre la persuasion. Mais il n'est pas programmé pour se défendre contre l'écoute. En posant une vraie question de clarification, vous changez de camp : vous n'êtes plus dans l'attaque, vous êtes dans la compréhension."}
+  ]
+};
+
+const D4 = {
+  q:"Mme Durand dit : « Je ne suis pas sûre que ça marche vraiment chez moi, mon toit n'est pas bien orienté. » Quelle est la meilleure réponse ?",
+  correct:1, pts:3, skill:"Connexion", rep:"connexion",
+  hint:"Clarifiez d'abord, puis utilisez une comparaison qui déplace le cadre.",
+  reveal:"La bonne réponse : B. D'abord clarifier ce qu'elle sait de son orientation, puis comparer avec une image concrète qui contourne l'objection technique.",
+  opts:[
+    {t:"« Nos installateurs font une étude technique gratuite. Dans 90 % des cas, on trouve une solution même avec une orientation imparfaite. »",
+     fb:"Argument pur. Vous rassurez avec des chiffres — mais elle n'est pas dans le rationnel, elle est dans le doute. Et le mot « 90 % des cas » sous-entend « vous êtes peut-être dans les 10 % où ça ne marche pas ». Mauvais signal."},
+    {t:"« Qu'est-ce qui vous fait penser que votre toit est mal orienté ? [...] C'est un peu comme un jardin : même avec une exposition partielle au soleil, on peut cultiver beaucoup de choses si on sait quoi planter et où. »",
+     fb:"Parfait. Clarification d'abord (sans contredire), puis comparaison qui déplace le cadre : du problème technique vers l'image d'un jardin qui s'adapte. Le prospect imagine au lieu d'analyser — et la résistance baisse."},
+    {t:"« Vous savez, l'orientation parfaite c'est le sud, mais même au sud-est ou au sud-ouest on obtient 85 à 92 % du rendement. C'est négligeable. »",
+     fb:"« C'est négligeable » = « votre inquiétude n'a pas de valeur ». Même si c'est techniquement vrai, vous venez de dévalider son ressenti. La réactance se réactive immédiatement. Les faits ont raison — mais le commercial a perdu."}
+  ]
+};
+
+const D5 = {
+  q:"Quel est le danger de la méthode en 3 temps si elle est mal exécutée ?",
+  correct:0, pts:2, skill:"Posture", rep:"posture",
+  hint:"La méthode est un outil, pas un masque. Que se passe-t-il si le prospect sent que vous jouez un rôle ?",
+  reveal:"La bonne réponse : A. Si les questions sonnent mécaniques ou manipulatrices, le prospect détecte le truc — et la réactance est pire qu'avec un argument direct.",
+  opts:[
+    {t:"Si les questions sonnent mécaniques, le prospect détecte la manipulation — et la réactance explose.",
+     fb:"Exactement. La méthode en 3 temps n'est efficace que si elle est animée par une curiosité sincère. Le prospect ressent la différence entre « je pose cette question parce que je veux comprendre » et « je pose cette question parce qu'on m'a dit de la poser ». L'authenticité n'est pas un bonus — c'est le carburant."},
+    {t:"Les trois temps prennent trop de temps et le prospect perd patience.",
+     fb:"Au contraire : les trois temps prennent souvent moins de temps qu'un long argumentaire. Et le prospect ne perd jamais patience quand on s'intéresse sincèrement à lui — il perd patience quand on lui parle de soi."},
+    {t:"La méthode ne fonctionne que sur les objections de prix, pas sur les objections techniques.",
+     fb:"La méthode fonctionne sur toutes les objections — y compris les plus techniques. La clarification sert à comprendre, la réflexion sert à recadrer, la comparaison sert à imaginer. Ces trois mouvements sont universels."}
+  ]
+};
+
+/* ═══════════════════════════════════════════════════
+   SCÈNES
+═══════════════════════════════════════════════════ */
+const SCENE1 = [
+  {type:'voff',text:"Mardi 14h30. Lucas sonne à la porte de Mme Durand, propriétaire d'une maison individuelle à Saint-Étienne. Elle a rempli un formulaire en ligne il y a trois semaines."},
+  {type:'show',who:'LUCAS',expr:'neutral'},
+  {type:'show',who:'DURAND',expr:'neutral'},
+  {type:'lit',panel:'left'},
+  {type:'bubble',who:'DURAND',text:"Bonjour, c'est bien pour les panneaux solaires ? Entrez, je vous en prie.",expr:'neutral'},
+  {type:'bubble',who:'LUCAS',text:"Bonjour Madame Durand, merci de me recevoir. Je vais vous présenter notre solution, je suis sûr que vous allez apprécier.",expr:'eager'},
+  {type:'voff',text:"Lucas installe son dossier, montre des photos, déroule ses chiffres. Pendant dix minutes, il présente. Mme Durand écoute poliment."},
+  {type:'bubble',who:'DURAND',text:"C'est intéressant, mais… 18 000 €, c'est beaucoup d'argent quand même.",expr:'skeptical'},
+  {type:'bubble',who:'LUCAS',text:"Je comprends votre réserve, mais si on calcule sur 25 ans avec les économies d'énergie et les aides de l'État, votre retour sur investissement est d'environ 38 000 €. C'est plus du double.",expr:'eager'},
+  {type:'bubble',who:'DURAND',text:"Oui mais… on ne sait jamais ce qui peut se passer dans 25 ans. Et si les panneaux s'usent avant ?",expr:'resistant'},
+  {type:'bubble',who:'LUCAS',text:"Justement, nos panneaux sont garantis 25 ans, et les études montrent qu'ils fonctionnent encore à 85 % de leur capacité après 30 ans. C'est un investissement extrêmement sûr.",expr:'eager'},
+  {type:'setExpr',who:'LUCAS',expr:'stressed'},
+  {type:'setExpr',who:'DURAND',expr:'resistant'},
+  {type:'bubble',who:'DURAND',text:"Je vois… Écoutez, c'est très complet mais je vais en discuter avec mon mari. On vous rappellera.",expr:'resistant'},
+  {type:'voff',text:"Lucas sort de la maison. Il a tout bien expliqué. Les chiffres étaient bons. Les arguments étaient solides. Et il a perdu."},
+  {type:'hide',who:'DURAND'},
+  {type:'setExpr',who:'LUCAS',expr:'stressed'},
+  {type:'voff',text:"Ce que Lucas ne sait pas encore : ce n'est pas son produit qui a été rejeté. C'est sa méthode. Chaque argument qu'il a avancé a renforcé le mur au lieu de le franchir."}
 ];
 
-const QS1 = {
-  q:"Au téléphone, ni le visage ni la tenue ne seront visibles. Qu'est-ce qui va trahir la position de Lucas si sa voix ne suit pas ?",
-  correct:0, skill:"Posture vocale", rep:"posture",
-  hint:"Bruno l'a dit : le corps vous suit, même à distance. Qu'est-ce que fait physiquement votre voix quand vous sentez que vous êtes en position basse ?",
-  reveal:"La bonne réponse : A. Un pair respire, pose sa voix, laisse ses phrases se terminer. Un demandeur presse, monte dans les aigus, s'accélère. Nadine n'a pas besoin de voir Lucas — elle l'entend.",
-  opts:[
-    {t:"La voix qui monte dans les aigus et le débit qui s'emballe — le stress s'entend.",
-     fb:"Exact. Un pair respire, laisse des silences. Un demandeur presse et justifie. Nadine n'a pas besoin de vous voir : elle l'entend clairement."},
-    {t:"Le vocabulaire trop technique — le jargon donne l'impression de vouloir impressionner.",
-     fb:"Le jargon peut parfois desservir, mais des experts légitimes en utilisent toute la journée sans se faire filtrer. Ce n'est pas ça qui vous classera. Qu'est-ce que votre corps fait entendre quand vous sentez que vous demandez une faveur ?"},
-    {t:"L'absence de sourire — sans sourire dans la voix, on sonne froid et peu engageant.",
-     fb:"Le fameux « sourire au téléphone ». Ça ne fait pas de mal — mais des commerciaux très souriants se font filtrer chaque jour. Le sourire n'a jamais fait passer personne pour un pair. Qu'est-ce qui change réellement dans le son de votre voix quand vous êtes en position basse ?"}
-  ]
-};
-
-const QS2 = {
-  q:"Nadine demande : « C'est à quel sujet ? » Que répond Lucas ?",
-  correct:1, skill:"Cadrage administratif", rep:"cadre",
-  hint:"Un objet neutre, presque banal — le fameux dossier — et une question fermée. Rien à juger, rien à débattre.",
-  reveal:"La bonne réponse : B. Un objet neutre, une question fermée, pas une virgule de trop. Nadine n'a rien à évaluer : juste une information à vérifier.",
-  opts:[
-    {t:"« Nous accompagnons les industriels sur la performance de leurs ateliers. Je peux vous en dire deux mots ? »",
-     fb:"Relisez la phrase : « nous accompagnons », « je peux » — c'est un pitch qui demande la permission. Du commercial pur. Quel objet banal et neutre aurait mieux fonctionné ?"},
-    {t:"« C'est au sujet du dossier de leurs ateliers. Il est joignable ? »",
-     fb:"Parfait. Un objet neutre, une question fermée — pas une virgule de trop. Nadine n'a rien à juger : juste une information à vérifier. C'est exactement le cadrage administratif."},
-    {t:"« C'est confidentiel — je ne peux en parler qu'à monsieur Roussel directement. »",
-     fb:"Deux erreurs simultanées : vous signalez du mystère (méfiance immédiate) et vous forcez la porte. Un pair se justifie-t-il ? Non — il informe. Quel objet neutre pouviez-vous invoquer ?"}
-  ]
-};
-
-const QS3 = {
-  q:"Un collègue a conseillé à Lucas de dire : « Je le rappelle suite à nos échanges de mails » — alors qu'aucun mail n'a jamais été envoyé. Qu'en penser ?",
-  correct:2, skill:"Intégrité", rep:"integrite",
-  hint:"Bruno avait posé une règle sans exception dans son briefing. Une seule chose qu'on ne fait jamais — même si « personne ne vérifie ».",
-  reveal:"La bonne réponse : C. On ne ment jamais. Un vrai dossier, un vrai sujet — c'est la seule base qui tienne sur la durée.",
-  opts:[
-    {t:"C'est une astuce comme une autre : l'objectif est de passer, et le résultat justifie le moyen.",
-     fb:"Court-termisme pur. Quand ça marche, vous démarrez sur un mensonge. Quand ça échoue — et ça finit par arriver — vous êtes grillé, parfois auprès de toute l'entreprise. Rappellez-vous la règle absolue de Bruno."},
-    {t:"C'est discutable, mais l'essentiel est de paraître crédible — peu importe le chemin emprunté.",
-     fb:"Justement : « crédible ». Un mensonge découvert détruit en une seconde une crédibilité construite en dix appels. Et les assistantes comparent leurs notes — c'est leur métier. Que disait la règle « jamais » du briefing ?"},
-    {t:"À proscrire sans exception : un mensonge finit toujours par se retourner contre vous — et coupe l'accès définitivement.",
-     fb:"Sans exception. Le cadrage administratif s'appuie sur du crédible, jamais du faux. On peut simplifier — on ne travestit pas. C'est aussi ce qui distingue un commercial fiable d'un commercial tolerable."}
-  ]
-};
-
-const QS4 = {
-  q:"Nadine tend une perche : « Il est en réunion jusqu'à 10h30. Vous voulez que je lui transmette un message ? » Que fait Lucas ?",
-  correct:1, skill:"Alliance standard", rep:"alliance",
-  hint:"Bruno disait qu'on ne « passe » pas un standard — on le traverse avec lui. Qu'est-ce que cela implique concrètement ici ?",
-  reveal:"La bonne réponse : B. Remercier, vérifier le bon décideur, poser un créneau précis. L'assistante devient alliée — et l'appel de 10h30 est à moitié gagné.",
-  opts:[
-    {t:"Dérouler un argumentaire court et percutant qu'elle pourra transmettre fidèlement.",
-     fb:"Elle proposait un message, pas un discours. Vous la transformez en porte-voix de votre pitch — personne ne transmet ça. Que peut-on demander à une alliée, plutôt que de lui imposer un contenu ?"},
-    {t:"La remercier sincèrement, vérifier que monsieur Roussel est bien le bon interlocuteur sur ce sujet, et proposer de rappeler à 10h30.",
-     fb:"Élégant. Vous la respectez dans son rôle, vous vérifiez le décideur — elle sait — et vous posez un créneau ferme, avec elle pour témoin. C'est traverser le mur avec elle, pas contre elle."},
-    {t:"Remercier et raccrocher poliment — inutile de la solliciter davantage.",
-     fb:"Politesse appréciée… mais occasion manquée. Elle vous tend une perche : information, accès, créneau. La refuser, c'est repartir de zéro demain matin. Quelle valeur avait cette alliée, selon le briefing de Bruno ?"}
-  ]
-};
-
-const SDR_PROFILES = [
-  {range:[0,4],  color:"var(--red)",   title:"L'Instruit",   desc:"Les fondations sont posées. Les réflexes ne sont pas encore automatiques — c'est normal au premier épisode. La répétition fait le reste."},
-  {range:[5,7],  color:"var(--gold)",  title:"Le Praticien", desc:"Les mécaniques sont comprises. Quelques automatismes manquent encore — les prochains épisodes s'en chargent, souvent sans prévenir."},
-  {range:[8,10], color:"var(--teal)",  title:"Le Stratège",  desc:"Solide. Le cadre est intégré, les nuances aussi. Le réflexe de pair est presque là — il manque juste l'automatisme sous pression."},
-  {range:[11,12],color:"var(--blue)",  title:"Le Partenaire","desc":"Maîtrise complète sur cet épisode. Attention : les prochains épisodes testent d'autres couches — le vernis craque parfois là où on ne l'attend pas."}
+const SCENE2 = [
+  {type:'voff',text:"Même scène. Même salon. Même objection. Mais cette fois, Bruno a montré à Lucas une autre voie."},
+  {type:'show',who:'LUCAS',expr:'calm'},
+  {type:'show',who:'DURAND',expr:'neutral'},
+  {type:'lit',panel:'left'},
+  {type:'bubble',who:'DURAND',text:"18 000 €, c'est beaucoup d'argent quand même.",expr:'skeptical'},
+  {type:'setExpr',who:'LUCAS',expr:'calm'},
+  {type:'bubble',who:'LUCAS',text:"Qu'est-ce qui vous fait dire que c'est beaucoup ?",expr:'calm'},
+  {type:'setExpr',who:'DURAND',expr:'thinking'},
+  {type:'bubble',who:'DURAND',text:"Bah… c'est un gros investissement pour nous. On a une retraite modeste.",expr:'thinking'},
+  {type:'bubble',who:'LUCAS',text:"Si vous investissiez 18 000 € dans quelque chose qui vous rapportait plus du double sur 25 ans, est-ce que vous hésiteriez ?",expr:'calm'},
+  {type:'setExpr',who:'DURAND',expr:'thinking'},
+  {type:'bubble',who:'DURAND',text:"Non… quand vous le dites comme ça, non.",expr:'thinking'},
+  {type:'setExpr',who:'LUCAS',expr:'confident'},
+  {type:'bubble',who:'LUCAS',text:"C'est un peu comme planter un verger. Les premières années vous arrosez sans récolter. Et puis pendant 20 ans, vous récoltez sans arroser.",expr:'confident'},
+  {type:'setExpr',who:'DURAND',expr:'open'},
+  {type:'bubble',who:'DURAND',text:"C'est vrai que vu comme ça, ça change la perspective… Comment on fait pour concrètement ?",expr:'open'},
+  {type:'setExpr',who:'LUCAS',expr:'confident'},
+  {type:'voff',text:"Lucas n'a rien argumenté. Il a posé deux questions et utilisé une image. Et Mme Durand s'est convaincue toute seule. La réactance n'a jamais été activée — parce qu'elle n'a jamais eu de raison de se défendre."},
+  {type:'voff',text:"Retenez : en 2026, celui qui argumente perd. Celui qui questionne — et qui fait imaginer — gagne."}
 ];
 
 /* ═══════════════════════════════════════════════════
-   UTILITAIRES UI
+   INITIALISATION SVG
 ═══════════════════════════════════════════════════ */
-function setStatus(label,c){
-  document.getElementById("status-lbl").textContent=label;
-  const hs=document.querySelector(".hud-status");
-  hs.style.color=c||"var(--gold)";
-  hs.querySelector(".dot").style.background=c||"var(--gold)";
-}
-function setTs(side,text){ document.getElementById("ts-"+side).textContent=text; }
-function showOv(id){
-  document.querySelectorAll(".overlay").forEach(o=>o.classList.remove("on"));
-  document.getElementById(id).classList.add("on");
-}
-function popPts(pts){
-  const p=document.createElement("div");
-  p.className="pts-pop";p.textContent="+"+pts+" pt"+(pts>1?"s":"");
-  document.body.appendChild(p);setTimeout(()=>p.remove(),1600);
-}
-function updateRep(skill,pts){
-  const map={posture:"posture",cadre:"cadre",integrite:"integrite",alliance:"alliance"};
-  const k=map[skill];if(!k)return;
-  st.rep[k]+=pts;
-  const pct=Math.min(100,Math.round(st.rep[k]/3*100));
-  document.getElementById("rp-"+k).style.width=pct+"%";
-  document.getElementById("rv-"+k).textContent=st.rep[k]+"/3";
-}
-function brunoReact(type){
-  const el=document.getElementById("bruno-react");
-  if(!el.innerHTML) return;
-  el.classList.add("show","nudge");
-  setTimeout(()=>el.classList.remove("nudge"),400);
+function initChars(){
+  document.getElementById('c-lucas').innerHTML = SVG.LUCAS;
+  document.getElementById('c-durand').innerHTML = SVG.DURAND;
+  document.getElementById('c-bruno').innerHTML = SVG.BRUNO;
 }
 
 /* ═══════════════════════════════════════════════════
-   SCÈNE : BULLES + VOIX OFF
+   TYPEWRITER
 ═══════════════════════════════════════════════════ */
-function bubble(side,speaker,text){
-  const id={left:"bl",right:"br",center:"bc"}[side];
-  const el=document.getElementById(id);
-  el.style.setProperty("--bc",SP[speaker].c);
-  el.querySelector(".b-speaker").textContent=SP[speaker].label;
-  el.querySelector(".b-speaker").style.color=SP[speaker].c;
-  el.querySelector(".b-text").textContent=text;
-  el.classList.add("show");
-}
-function hideBubbles(){["bl","br","bc"].forEach(id=>document.getElementById(id).classList.remove("show"));}
-function setTalking(side){
-  document.getElementById("pl").classList.toggle("lit",side==="left");
-  document.getElementById("pr").classList.toggle("lit",side==="right");
-  document.getElementById("pl").classList.toggle("dim",side==="right");
-  document.getElementById("pr").classList.toggle("dim",side==="left");
-  if(!side){document.getElementById("pl").classList.remove("dim");document.getElementById("pr").classList.remove("dim");}
-}
-function applyMood(m){
-  const lc=document.getElementById("c-lucas");
-  const nd=document.getElementById("c-nadine");
-  lc.classList.remove("stressed","confident");
-  nd.classList.remove("smile");
-  if(m&&m.lucas)lc.classList.add(m.lucas);
-  if(m&&m.nadine)nd.classList.add(m.nadine);
-}
-let vTimer=null,vActive=false,vFull="";
-function typeVoff(text){
-  const el=document.getElementById("voff-text");
-  document.getElementById("voff").classList.add("show");
-  vFull=text;vActive=true;let i=0;el.textContent="";
-  clearInterval(vTimer);
-  vTimer=setInterval(()=>{i++;el.textContent=text.slice(0,i);if(i>=text.length){clearInterval(vTimer);vActive=false;}},15);
-}
-function voffDone(){
-  if(vActive){clearInterval(vTimer);document.getElementById("voff-text").textContent=vFull;vActive=false;return false;}
-  return true;
-}
-function clearVoff(){
-  clearInterval(vTimer);vActive=false;
-  document.getElementById("voff").classList.remove("show");
-  document.getElementById("voff-text").textContent="";
-}
-
-/* ═══════════════════════════════════════════════════
-   SÉQUENCEUR DE SCÈNE
-═══════════════════════════════════════════════════ */
-let seq={active:false,lines:[],idx:0,done:null};
-function playSeq(lines,done){
-  seq={active:true,lines,idx:0,done};
-  document.getElementById("izone").innerHTML=`<div class="idle-msg">— Cliquez sur la scène pour avancer —</div>`;
-  document.getElementById("feedback-panel").style.display="none";
-  document.getElementById("clicker").classList.add("on");
-  document.getElementById("click-hint").classList.add("show");
-  showLine();
-}
-function showLine(){
-  const s=seq;
-  if(s.idx>=s.lines.length){endSeq();return;}
-  const l=s.lines[s.idx];
-  hideBubbles();clearVoff();setTalking(null);
-  if(l.mood)applyMood(l.mood);
-  if(l.enter)document.getElementById("c-"+l.enter).classList.add("in");
-  if(l.exit)document.getElementById("c-"+l.exit).classList.remove("in");
-  if(l.voff)typeVoff(l.voff);
-  else{bubble(l.side,l.speaker,l.text);setTalking(l.side);}
-}
-function endSeq(){
-  seq.active=false;
-  document.getElementById("clicker").classList.remove("on");
-  document.getElementById("click-hint").classList.remove("show");
-  hideBubbles();clearVoff();setTalking(null);
-  if(seq.done)seq.done();
-}
-
-/* ═══════════════════════════════════════════════════
-   QCM — SANS SCROLL (feedback remplace options)
-═══════════════════════════════════════════════════ */
-function askTrap(onDone){
-  const iz=document.getElementById("izone");
-  const fp=document.getElementById("feedback-panel");
-  fp.style.display="none";fp.innerHTML="";
-  iz.style.display="flex";
-  iz.innerHTML=`
-    <div class="q-wrap">
-      <div class="q-head"><span class="q-badge">Avant la scène</span></div>
-      <div class="q-question">${TRAP.q}</div>
-      <div style="font-size:.68rem;color:var(--txt-lo);margin-bottom:10px;">${TRAP.intro}</div>
-      <div class="q-options" id="trap-opts"></div>
-      <div id="trap-fb" style="margin-top:8px;"></div>
-    </div>`;
-  const wrap=document.getElementById("trap-opts");
-  let picked=false;
-  TRAP.opts.forEach((o,i)=>{
-    const b=document.createElement("button");
-    b.className="q-btn";
-    b.innerHTML=`<span class="q-letter">${"ABC"[i]}</span><span>${o}</span>`;
-    b.addEventListener("click",()=>{
-      if(picked)return;picked=true;st.trap=i;
-      b.classList.add("chosen");
-      wrap.querySelectorAll(".q-btn").forEach(x=>{if(x!==b)x.classList.add("dim");});
-      const fb=document.getElementById("trap-fb");
-      fb.innerHTML=`<div class="fb-card note" style="margin-bottom:10px;"><span class="fb-name" style="color:var(--txt-lo)">Réponse enregistrée</span>On y revient dans quelques minutes — et la réponse risque de vous surprendre.</div>
-        <button class="btn-continue" id="trap-go">Entrer dans la scène ▸</button>`;
-      document.getElementById("trap-go").addEventListener("click",onDone);
-    });
-    wrap.appendChild(b);
-  });
-}
-
-function askQCM(qdata, opts){
-  const iz=document.getElementById("izone");
-  const fp=document.getElementById("feedback-panel");
-  iz.style.display="flex";
-  fp.style.display="none";fp.innerHTML="";
-
-  iz.innerHTML=`
-    <div class="q-wrap">
-      <div class="q-head">
-        <span class="q-badge">${opts.badge||"Question"}</span>
-        ${opts.scored?`<span class="q-pts">3 pts sans indice · 1 pt avec · 0 sinon</span>`:""}
-      </div>
-      <div class="q-question">${qdata.q}</div>
-      <div class="q-options" id="qopts"></div>
-    </div>`;
-
-  const wrap=document.getElementById("qopts");
-  const spk=opts.speaker||"BRUNO";
-  let attempts=0, hintShown=false, resolved=false;
-
-  qdata.opts.forEach((o,i)=>{
-    const b=document.createElement("button");
-    b.className="q-btn";
-    b.innerHTML=`<span class="q-letter">${"ABC"[i]}</span><span>${o.t}</span>`;
-    b.addEventListener("click",()=>handle(i,b));
-    wrap.appendChild(b);
-  });
-
-  function handle(i,b){
-    if(resolved||b.disabled)return;
-    if(i===qdata.correct){
-      resolved=true;
-      let pts=null;
-      if(opts.scored){
-        pts=attempts===0?3:1;
-        st.score+=pts;
-        if(qdata.rep)updateRep(qdata.rep,pts);
-        st.results.push({skill:qdata.skill,pts,rep:qdata.rep});
-        document.getElementById("score-val").textContent=st.score;
-        if(pts>0)popPts(pts);
-      }
-      brunoReact("right");
-      showFeedback({
-        cls:"good",pts,speaker:spk,
-        text:qdata.opts[i].fb,
-        onContinue:opts.onDone
-      });
+function typeText(el, text, speed, cb){
+  if(typeTimer) clearTimeout(typeTimer);
+  el.textContent = '';
+  let i = 0;
+  function tick(){
+    if(i < text.length){
+      el.textContent += text.charAt(i);
+      i++;
+      typeTimer = setTimeout(tick, speed);
     } else {
-      attempts++;
-      b.classList.add("wrong");b.disabled=true;
-      if(!hintShown){
-        hintShown=true;
-        brunoReact("wrong");
-        showFeedbackWithRetry({
-          speaker:spk,
-          wrongFb:qdata.opts[i].fb,
-          hint:qdata.hint,
-          qdata,opts,attempts
-        });
-      } else {
-        resolved=true;
-        if(opts.scored){
-          if(qdata.rep)updateRep(qdata.rep,0);
-          st.results.push({skill:qdata.skill,pts:0,rep:qdata.rep});
-        }
-        brunoReact("double-wrong");
-        showFeedback({
-          cls:"bad",pts:0,speaker:spk,
-          text:qdata.reveal,
-          onContinue:opts.onDone
-        });
-      }
+      if(cb) cb();
     }
+  }
+  tick();
+}
+
+/* ═══════════════════════════════════════════════════
+   MOUTH ANIMATION
+═══════════════════════════════════════════════════ */
+function startMouth(charEl){
+  stopMouth();
+  charEl.classList.add('speaking');
+}
+function stopMouth(){
+  if(mouthTimer){clearInterval(mouthTimer);mouthTimer=null;}
+  document.querySelectorAll('.char.speaking').forEach(c=>c.classList.remove('speaking'));
+}
+
+/* ═══════════════════════════════════════════════════
+   EXPRESSIONS
+═══════════════════════════════════════════════════ */
+function setExpression(who, expr){
+  const map = {LUCAS:'c-lucas',DURAND:'c-durand',BRUNO:'c-bruno'};
+  const el = document.getElementById(map[who]);
+  if(!el) return;
+  el.className = 'char';
+  if(expr && expr !== 'neutral') el.classList.add(expr);
+}
+
+function showChar(who){
+  const map = {LUCAS:'c-lucas',DURAND:'c-durand',BRUNO:'c-bruno'};
+  const el = document.getElementById(map[who]);
+  if(who === 'BRUNO') el.classList.add('in');
+  el.style.opacity = '1';
+}
+function hideChar(who){
+  const map = {LUCAS:'c-lucas',DURAND:'c-durand',BRUNO:'c-bruno'};
+  const el = document.getElementById(map[who]);
+  if(who === 'BRUNO') el.classList.remove('in');
+  else el.style.opacity = '0';
+}
+
+function setLitPanel(panel){
+  document.getElementById('pl').className = 'panel' + (panel==='left'?' lit':' dim');
+  document.getElementById('pr').className = 'panel' + (panel==='right'?' lit':' dim');
+}
+
+/* ═══════════════════════════════════════════════════
+   BULLES & VOIX OFF
+═══════════════════════════════════════════════════ */
+function hideAllBubbles(){
+  ['bl','br','bc'].forEach(id=>{
+    document.getElementById(id).classList.remove('show');
+  });
+  document.getElementById('voff').classList.remove('show');
+}
+
+function showVoff(text, cb){
+  hideAllBubbles();
+  stopMouth();
+  const voff = document.getElementById('voff');
+  const voffText = document.getElementById('voff-text');
+  voff.classList.add('show');
+  disableClick();
+  typeText(voffText, text, 22, ()=>{
+    enableClick();
+    st.pendingCb = cb;
+  });
+}
+
+function showBubble(who, text, cb){
+  hideAllBubbles();
+  const bubbleId = SP[who].bubble;
+  const bubble = document.getElementById(bubbleId);
+  const charMap = {LUCAS:'c-lucas',DURAND:'c-durand',BRUNO:'c-bruno'};
+  const charEl = document.getElementById(charMap[who]);
+
+  bubble.querySelector('.b-speaker').textContent = SP[who].short;
+  bubble.querySelector('.b-speaker').style.color = SP[who].c;
+  bubble.style.setProperty('--bc', SP[who].c);
+  bubble.classList.add('show');
+
+  startMouth(charEl);
+  disableClick();
+
+  typeText(bubble.querySelector('.b-text'), text, 22, ()=>{
+    stopMouth();
+    enableClick();
+    st.pendingCb = cb;
+  });
+}
+
+function disableClick(){
+  document.getElementById('clicker').classList.remove('on');
+  document.getElementById('click-hint').classList.remove('show');
+}
+function enableClick(){
+  document.getElementById('clicker').classList.add('on');
+  document.getElementById('click-hint').classList.add('show');
+}
+
+document.getElementById('clicker').addEventListener('click', ()=>{
+  if(st.pendingCb){
+    const cb = st.pendingCb;
+    st.pendingCb = null;
+    disableClick();
+    cb();
+  }
+});
+
+/* ═══════════════════════════════════════════════════
+   SCENE RUNNER
+═══════════════════════════════════════════════════ */
+let sceneSteps = [];
+let sceneIdx = 0;
+let sceneCb = null;
+
+function runScene(steps, cb){
+  sceneSteps = steps;
+  sceneIdx = 0;
+  sceneCb = cb;
+  execStep();
+}
+
+function execStep(){
+  if(sceneIdx >= sceneSteps.length){
+    if(sceneCb) sceneCb();
+    return;
+  }
+  const s = sceneSteps[sceneIdx];
+  if(s.type === 'voff'){
+    showVoff(s.text, ()=>{ sceneIdx++; execStep(); });
+  } else if(s.type === 'bubble'){
+    if(s.expr) setExpression(s.who, s.expr);
+    showBubble(s.who, s.text, ()=>{ sceneIdx++; execStep(); });
+  } else if(s.type === 'show'){
+    showChar(s.who);
+    if(s.expr) setExpression(s.who, s.expr);
+    sceneIdx++; execStep();
+  } else if(s.type === 'hide'){
+    hideChar(s.who);
+    sceneIdx++; execStep();
+  } else if(s.type === 'setExpr'){
+    setExpression(s.who, s.expr);
+    sceneIdx++; execStep();
+  } else if(s.type === 'lit'){
+    setLitPanel(s.panel);
+    sceneIdx++; execStep();
+  } else {
+    sceneIdx++; execStep();
   }
 }
 
-function showFeedback({cls,pts,speaker,text,onContinue}){
-  const iz=document.getElementById("izone");
-  const fp=document.getElementById("feedback-panel");
-  iz.style.display="none";
-  fp.style.display="flex";fp.style.flexDirection="column";fp.style.padding="14px 22px";
-  const spk=SP[speaker];
-  const ptsLine=pts!==null&&pts!==undefined?`<div class="pts-line">+${pts} point${pts>1?"s":""}</div>`:"";
-  fp.innerHTML=`
-    <div class="fb-inner">
-      <div class="fb-card ${cls}">
-        ${ptsLine}
-        <span class="fb-name" style="color:${spk.c}">${spk.short}</span>
-        ${text}
-      </div>
-    </div>
-    <div class="fb-actions" style="flex-shrink:0;margin-top:10px;">
-      <button class="btn-continue" id="fb-go">Continuer ▸</button>
-    </div>`;
-  document.getElementById("fb-go").addEventListener("click",()=>{
-    fp.style.display="none";fp.innerHTML="";
-    onContinue();
-  });
-}
+/* ═══════════════════════════════════════════════════
+   QUIZ
+═══════════════════════════════════════════════════ */
+const LETTERS = ['A','B','C','D'];
+function showQuiz(qData, onDone){
+  const izone = document.getElementById('izone');
+  const fbPanel = document.getElementById('feedback-panel');
+  fbPanel.classList.remove('show');
+  fbPanel.innerHTML = '';
 
-function showFeedbackWithRetry({speaker,wrongFb,hint,qdata,opts,attempts}){
-  const iz=document.getElementById("izone");
-  const fp=document.getElementById("feedback-panel");
-  iz.style.display="none";
-  fp.style.display="flex";fp.style.flexDirection="column";fp.style.padding="14px 22px";
-  const spk=SP[speaker];
-  let resolved=false;
-  fp.innerHTML=`
-    <div class="fb-inner">
-      <div class="fb-card hint">
-        <span class="fb-name" style="color:${spk.c}">${spk.short}</span>
-        ${wrongFb}
-        <div class="hint-label">Indice</div>
-        <span style="color:var(--txt-med);font-size:.7rem;">${hint}</span>
-      </div>
-      <div style="margin-top:10px;font-family:var(--font-display);font-size:.6rem;letter-spacing:2px;color:var(--txt-lo);">Réessayez :</div>
-      <div class="retry-opts" id="retry-opts"></div>
-    </div>`;
-  const ro=document.getElementById("retry-opts");
-  qdata.opts.forEach((o,i)=>{
-    const already=document.querySelectorAll(".q-btn.wrong");
-    let wasWrong=false;
-    // Check if this option was already tried wrong (we track by index)
-    already.forEach(el=>{ if(el.textContent.includes(o.t.slice(0,20))) wasWrong=true; });
-    const b=document.createElement("button");
-    b.className="retry-btn"+(wasWrong?" wrong":"");
-    b.innerHTML=`<span class="q-letter" style="font-family:var(--font-display);color:var(--txt-xlo);font-size:.75rem;flex-shrink:0;">${"ABC"[i]}</span><span>${o.t}</span>`;
-    if(wasWrong){b.disabled=true;}
-    b.addEventListener("click",()=>{
-      if(resolved||wasWrong)return;
-      if(i===qdata.correct){
-        resolved=true;
-        b.classList.add("right");
-        let pts=null;
-        if(opts.scored){
-          pts=1;
-          st.score+=pts;
-          if(qdata.rep)updateRep(qdata.rep,pts);
-          st.results.push({skill:qdata.skill,pts,rep:qdata.rep});
-          document.getElementById("score-val").textContent=st.score;
-          popPts(pts);
-        }
-        // Show final good feedback
-        fp.innerHTML=`
-          <div class="fb-inner">
-            <div class="fb-card good">
-              ${pts!==null?`<div class="pts-line">+${pts} point</div>`:""}
-              <span class="fb-name" style="color:${spk.c}">${spk.short}</span>
-              ${qdata.opts[i].fb}
-            </div>
-          </div>
-          <div class="fb-actions" style="flex-shrink:0;margin-top:10px;">
-            <button class="btn-continue" id="fb-go2">Continuer ▸</button>
-          </div>`;
-        document.getElementById("fb-go2").addEventListener("click",()=>{
-          fp.style.display="none";fp.innerHTML="";
-          opts.onDone();
-        });
-      } else {
-        resolved=true;
-        b.classList.add("wrong");b.disabled=true;
-        if(opts.scored){
-          if(qdata.rep)updateRep(qdata.rep,0);
-          st.results.push({skill:qdata.skill,pts:0,rep:qdata.rep});
-        }
-        fp.innerHTML=`
-          <div class="fb-inner">
-            <div class="fb-card bad">
-              <span class="fb-name" style="color:var(--red)">Bonne réponse</span>
-              ${qdata.reveal}
-            </div>
-          </div>
-          <div class="fb-actions" style="flex-shrink:0;margin-top:10px;">
-            <button class="btn-continue" id="fb-go3">Continuer ▸</button>
-          </div>`;
-        document.getElementById("fb-go3").addEventListener("click",()=>{
-          fp.style.display="none";fp.innerHTML="";
-          opts.onDone();
-        });
-      }
+  let html = '<div class="q-wrap">';
+  html += '<div class="q-head">';
+  if(qData.skill) html += `<span class="q-badge">${qData.skill}</span>`;
+  html += `<span class="q-pts">${qData.pts} pts</span></div>`;
+  html += `<div class="q-question">${qData.q}</div>`;
+  html += '<div class="q-options">';
+  qData.opts.forEach((o,i)=>{
+    html += `<button class="q-btn" data-idx="${i}"><span class="q-letter">${LETTERS[i]}</span><span>${o.t}</span></button>`;
+  });
+  html += '</div></div>';
+  izone.innerHTML = html;
+
+  document.getElementById('status-lbl').textContent = qData.skill || 'QUESTION';
+
+  izone.querySelectorAll('.q-btn').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const idx = parseInt(btn.dataset.idx);
+      handleAnswer(qData, idx, izone, fbPanel, onDone);
     });
-    ro.appendChild(b);
+  });
+}
+
+function handleAnswer(qData, chosen, izone, fbPanel, onDone){
+  const btns = izone.querySelectorAll('.q-btn');
+  const correct = qData.correct;
+  const isRight = chosen === correct;
+
+  btns.forEach((b,i)=>{
+    b.disabled = true;
+    if(i === correct) b.classList.add('right');
+    if(i === chosen && !isRight) b.classList.add('wrong');
+    if(i !== chosen && i !== correct) b.classList.add('dim');
+  });
+
+  if(isRight){
+    st.score += qData.pts;
+    document.getElementById('score-val').textContent = st.score;
+    showPtsPop(qData.pts);
+    if(qData.rep) st.rep[qData.rep] = Math.min(100, (st.rep[qData.rep]||0) + Math.round(qData.pts / qData.pts * 33));
+    updateRepBars();
+    st.results.push({skill:qData.skill, pts:qData.pts, max:qData.pts, ok:true});
+  } else {
+    if(qData.rep) st.rep[qData.rep] = Math.min(100, (st.rep[qData.rep]||0) + 8);
+    updateRepBars();
+    st.results.push({skill:qData.skill, pts:0, max:qData.pts, ok:false});
+  }
+
+  let fbHtml = '<div class="fb-inner">';
+  fbHtml += `<div class="pts-line">${isRight ? '+'+qData.pts+' points' : '+0 point'}</div>`;
+  fbHtml += `<div class="fb-card ${isRight?'good':'bad'}"><span class="fb-name">${isRight ? 'CORRECT' : 'INCORRECT'}</span>${qData.opts[chosen].fb}</div>`;
+  if(!isRight && qData.hint){
+    fbHtml += `<div class="hint-label">INDICE</div><div class="fb-card hint">${qData.hint}</div>`;
+    fbHtml += '<div class="retry-opts">';
+    qData.opts.forEach((o,i)=>{
+      if(i === chosen || i === correct) return;
+      fbHtml += `<button class="retry-btn" data-ridx="${i}"><span class="q-letter">${LETTERS[i]}</span><span>${o.t}</span></button>`;
+    });
+    fbHtml += '</div>';
+  }
+  fbHtml += '</div>';
+  fbHtml += `<div class="fb-actions"><button class="btn-continue" id="btn-fb-cont">Continuer ▸</button></div>`;
+
+  fbPanel.innerHTML = fbHtml;
+  fbPanel.classList.add('show');
+
+  fbPanel.querySelector('#btn-fb-cont').addEventListener('click', ()=>{
+    if(onDone) onDone();
+  });
+
+  if(!isRight){
+    fbPanel.querySelectorAll('.retry-btn').forEach(rb=>{
+      rb.addEventListener('click', ()=>{
+        const ri = parseInt(rb.dataset.ridx);
+        fbPanel.querySelectorAll('.retry-btn').forEach(r=>{r.disabled=true;r.classList.add('wrong');});
+        rb.classList.remove('wrong');
+        rb.classList.add('right');
+        const hintEl = fbPanel.querySelector('.hint-label');
+        if(hintEl) hintEl.remove();
+        const hintCard = fbPanel.querySelector('.fb-card.hint');
+        if(hintCard) hintCard.remove();
+        const wrongCard = fbPanel.querySelector('.fb-card.bad');
+        if(wrongCard){wrongCard.classList.remove('bad');wrongCard.classList.add('note');wrongCard.querySelector('.fb-name').textContent='VOTRE RÉPONSE';}
+      });
+    });
+  }
+}
+
+function showPtsPop(pts){
+  const el = document.createElement('div');
+  el.className = 'pts-pop';
+  el.textContent = '+' + pts;
+  document.body.appendChild(el);
+  setTimeout(()=>el.remove(), 1600);
+}
+
+function updateRepBars(){
+  ['posture','cadre','authenticite','connexion'].forEach(k=>{
+    const fill = document.getElementById('rp-'+k);
+    const val = document.getElementById('rv-'+k);
+    const v = st.rep[k] || 0;
+    fill.style.width = v + '%';
+    val.textContent = v > 0 ? v + '%' : '—';
   });
 }
 
 /* ═══════════════════════════════════════════════════
-   THÉORIE — FREEZE EN SCÈNE
+   THEORY
 ═══════════════════════════════════════════════════ */
-let thIdx=0;
-function renderTheory(){
-  const c=THEORY[thIdx];
-  document.getElementById("th-kicker").textContent=c.kicker;
-  document.getElementById("th-title").textContent=c.k;
-  document.getElementById("th-count").textContent=`Briefing Bruno — ${thIdx+1} / ${THEORY.length}`;
-  document.getElementById("th-body").innerHTML=c.h;
-  document.getElementById("th-prev").style.visibility=thIdx===0?"hidden":"visible";
-  const last=thIdx===THEORY.length-1;
-  document.getElementById("th-next").textContent=last?"Terminer le briefing ▸":"Suivant ▸";
+function showTheory(onDone){
+  theoryIdx = 0;
+  st.theoryDone = onDone;
+  renderTheorySlide();
+  document.getElementById('freeze-char').innerHTML = SVG.BRUNO;
+  document.getElementById('freeze-overlay').classList.add('on');
+  document.getElementById('status-lbl').textContent = 'THÉORIE';
 }
-function thPrev(){if(thIdx>0){thIdx--;renderTheory();}}
+
+function renderTheorySlide(){
+  const t = THEORY[theoryIdx];
+  document.getElementById('th-kicker').textContent = t.kicker;
+  document.getElementById('th-title').textContent = t.key;
+  document.getElementById('th-count').textContent = `${theoryIdx+1} / ${THEORY.length}`;
+  document.getElementById('th-body').innerHTML = t.h;
+  document.getElementById('th-prev').style.visibility = theoryIdx > 0 ? 'visible' : 'hidden';
+  document.getElementById('th-next').textContent = theoryIdx < THEORY.length - 1 ? 'Suivant ▸' : 'Compris ✓';
+}
+
 function thNext(){
-  if(thIdx<THEORY.length-1){thIdx++;renderTheory();}
-  else{document.getElementById("freeze-overlay").classList.remove("on");startReveal();}
+  if(theoryIdx < THEORY.length - 1){
+    theoryIdx++;
+    renderTheorySlide();
+  } else {
+    document.getElementById('freeze-overlay').classList.remove('on');
+    if(st.theoryDone) st.theoryDone();
+  }
+}
+function thPrev(){
+  if(theoryIdx > 0){
+    theoryIdx--;
+    renderTheorySlide();
+  }
 }
 
 /* ═══════════════════════════════════════════════════
-   DÉROULÉ ÉPISODE
+   TRAP QUESTION
 ═══════════════════════════════════════════════════ */
-function startIntro(){
-  setStatus("OUVERTURE","var(--gold)");
-  playSeq([
-    {voff:"18h47. Boulogne-Billancourt. Dans l'open space d'Alizéo, une seule lumière résiste encore."},
-    {voff:"Celle de Lucas Moreau, 27 ans, téléprospecteur. Quarante-sept appels passés aujourd'hui. Aucun dirigeant au téléphone."},
-    {voff:"De l'autre côté de la ville, au sixième étage du Groupe Roussel, Nadine Fabre, assistante de direction depuis vingt-deux ans. Certains l'appellent « le filtre ». Les autres, « le mur »."},
-    {voff:"Lucas tente sa chance une dernière fois. Il s'apprête à commettre l'erreur que neuf téléprospecteurs sur dix commettent… avant même d'avoir dit « bonjour »."}
-  ],()=>askTrap(scene1));
-}
+function showTrap(){
+  document.getElementById('status-lbl').textContent = 'INTRODUCTION';
+  const izone = document.getElementById('izone');
+  let html = '<div class="q-wrap">';
+  html += '<div class="q-head"><span class="q-badge">QUESTION D'INTRODUCTION</span><span class="q-pts">0 pt</span></div>';
+  html += `<div class="q-question" style="font-size:.85rem;">${TRAP.intro}</div>`;
+  html += `<div class="q-question">${TRAP.q}</div>`;
+  html += '<div class="q-options">';
+  TRAP.opts.forEach((o,i)=>{
+    html += `<button class="q-btn" data-idx="${i}"><span class="q-letter">${LETTERS[i]}</span><span>${o}</span></button>`;
+  });
+  html += '</div></div>';
+  izone.innerHTML = html;
 
-function scene1(){
-  setStatus("APPEL N°1 — 18H47","var(--red)");
-  setTs("l","OPEN SPACE ALIZÉO — 18H47");
-  setTs("r","DIRECTION GÉN. — 18H47");
-  document.getElementById("pr").querySelector("#phone-led").style.animation="ledfast .45s infinite";
-  playSeq([
-    {side:"left",speaker:"LUCAS",text:"Dernier appel de la journée. 01 46 22 18 04… On y va.",mood:{lucas:"stressed"}},
-    {voff:"Sixième étage. Le téléphone de la direction générale se met à sonner."},
-    {side:"right",speaker:"NADINE",text:"Groupe Roussel, direction générale. Bonsoir."},
-    {side:"left",speaker:"LUCAS",text:"Bonsoir madame ! Lucas Moreau, de la société Alizéo. J'aimerais parler à monsieur Roussel, s'il vous plaît — nous éditons une solution de pilotage qui pourrait vraiment l'intéresser.",mood:{lucas:"stressed"}},
-    {side:"right",speaker:"NADINE",text:"Monsieur Roussel ne prend pas ce type d'appel. Vous pouvez écrire à contact@groupe-roussel.fr. Bonne soirée."},
-    {side:"left",speaker:"LUCAS",text:"Ah… euh, d'accord. Merci quand même.",mood:{lucas:"stressed"}},
-    {voff:"Clic. Vingt-deux secondes. Personne n'a raccroché méchamment. Et pourtant, Lucas vient de commettre trois erreurs. Trois."}
-  ],()=>{
-    document.getElementById("pr").querySelector("#phone-led").style.animation="ledslow 2.8s infinite";
-    brunoArrives();
+  izone.querySelectorAll('.q-btn').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const idx = parseInt(btn.dataset.idx);
+      st.trap = idx;
+      const btns = izone.querySelectorAll('.q-btn');
+      btns.forEach((b,i)=>{
+        b.disabled = true;
+        if(i === 1) b.classList.add('right');
+        if(i === idx && idx !== 1) b.classList.add('wrong');
+        if(i !== idx && i !== 1) b.classList.add('dim');
+      });
+      showReveal(idx);
+    });
   });
 }
 
-function brunoArrives(){
-  setStatus("COACHING","var(--teal)");
-  playSeq([
-    {enter:"bruno",voff:"Une silhouette s'approche. Café à la main, démarche tranquille. Bruno, le mentor de l'équipe."},
-    {side:"center",speaker:"BRUNO",text:"Vingt-deux secondes. Presque un record, ça. Le mur t'a renvoyé avant que tu finisses ta phrase."},
-    {side:"center",speaker:"BRUNO",text:"Mais tu sais ce qui vient de se passer, là ? Parce que si tu le sais, on peut avancer."}
-  ],()=>askQCM(D1,{badge:"Diagnostic — 1/2",speaker:"BRUNO",onDone:()=>
-    askQCM(D2,{badge:"Diagnostic — 2/2",speaker:"BRUNO",onDone:theoryTransition})
-  }));
+function showReveal(chosen){
+  const ov = document.getElementById('ov-reveal');
+  document.getElementById('rv-choice').textContent = 'Votre réponse : « ' + TRAP.opts[chosen] + ' »';
+  let bodyHtml = REVEAL_TEXTS[chosen];
+  if(chosen !== 1){
+    bodyHtml += `<div class="rg-row ok" style="margin-top:12px;">${REVEAL_TEXTS[1]}</div>`;
+  }
+  document.getElementById('rv-body').innerHTML = bodyHtml;
+  ov.classList.add('on');
 }
 
-function theoryTransition(){
-  playSeq([
-    {side:"center",speaker:"BRUNO",text:"Bien. Assieds-toi. Cinq minutes — et après ça, tu ne verras plus jamais un standard de la même façon."},
-  ],()=>{
-    setStatus("BRIEFING","var(--teal)");
-    document.getElementById("freeze-char").innerHTML=SVG.BRUNO;
-    thIdx=0;renderTheory();
-    document.getElementById("freeze-overlay").classList.add("on");
+/* ═══════════════════════════════════════════════════
+   SCENE 1 + QUESTIONS
+═══════════════════════════════════════════════════ */
+function startScene1(){
+  document.getElementById('ov-reveal').classList.remove('on');
+  hideAllBubbles();
+  disableClick();
+  setLitPanel('left');
+  runScene(SCENE1, ()=>{
+    showQuiz(D1, ()=>{
+      showQuiz(D2, ()=>{
+        showTheory(()=>{
+          showPracticeMid();
+        });
+      });
+    });
   });
 }
 
-function startReveal(){
-  setStatus("LA RÉPONSE","var(--gold)");
-  const i=st.trap;
-  document.getElementById("rv-choice").innerHTML=`Vous aviez répondu <b>${"ABC"[i]}</b> — « ${TRAP.opts[i]} »`;
-  document.getElementById("rv-body").innerHTML=REVEAL_TEXTS[i]+`
-    <div style="margin-top:12px;">
-      <div class="rg-row ko">A — Un argumentaire plus convaincant ? Il n'est même jamais jugé : le statut de l'appelant, lui, l'est déjà.</div>
-      <div class="rg-row ko">B — Les assistantes bloquent tout ? Non : avocats, experts-comptables et fournisseurs passent chaque jour.</div>
-      <div class="rg-row ok">C — La position basse. La seule des trois qui se corrige en une seule phrase.</div>
-    </div>`;
-  showOv("ov-reveal");
+function showPracticeMid(){
+  document.getElementById('ov-practice-mid').classList.add('on');
+}
+function proceedAfterPracticeMid(){
+  document.getElementById('ov-practice-mid').classList.remove('on');
+  hideAllBubbles();
+  disableClick();
+  setLitPanel('left');
+  setExpression('LUCAS','neutral');
+  document.getElementById('status-lbl').textContent = 'REJEU';
+  runScene(SCENE2, ()=>{
+    showQuiz(D3, ()=>{
+      showQuiz(D4, ()=>{
+        showQuiz(D5, ()=>{
+          showBilan();
+        });
+      });
+    });
+  });
 }
 
-function startReplay(){
-  setStatus("REJEU — 9H12","var(--gold)");
-  setTs("l","OPEN SPACE ALIZÉO — LENDEMAIN, 9H12");
-  setTs("r","DIRECTION GÉN. — 9H12");
-  applyMood({lucas:"confident"});
-  document.getElementById("ov-reveal").classList.remove("on");
-  document.getElementById("bruno-react").innerHTML=SVG.BRUNO;
-  document.getElementById("bruno-react").classList.add("show");
-  playSeq([
-    {voff:"Le lendemain. 9h12. Lucas a répété sa phrase trois fois à voix haute. Bruno observe depuis son bureau."},
-    {side:"right",speaker:"NADINE",text:"Groupe Roussel, direction générale. Bonjour."},
-    {side:"center",speaker:"BRUNO",text:"Stop. Avant que tu parles. Elle ne te voit pas. Qu'est-ce qui va te trahir si ta voix ne suit pas ?"}
-  ],()=>askQCM(QS1,{badge:"Question 1/4",scored:true,speaker:"BRUNO",onDone:seq1}));
-}
-
-function seq1(){
-  playSeq([
-    {side:"left",speaker:"LUCAS",text:"Voix posée, débit lent. C'est parti.",mood:{lucas:"confident"}},
-    {side:"left",speaker:"LUCAS",text:"Bonjour — c'est bien le bureau de monsieur Roussel ?"},
-    {side:"right",speaker:"NADINE",text:"C'est bien. C'est à quel sujet ?"},
-    {voff:"Le moment décisif. Le filtre vient de poser sa question — chaque mot compte maintenant."}
-  ],()=>askQCM(QS2,{badge:"Question 2/4",scored:true,speaker:"BRUNO",onDone:seq2}));
-}
-
-function seq2(){
-  playSeq([
-    {side:"right",speaker:"NADINE",text:"Le dossier des ateliers… Un instant, je vérifie son planning."},
-    {voff:"Pendant que la ligne patiente, un flash-back. Ce matin, dans la cuisine, un collègue avait un conseil à donner."},
-    {side:"center",speaker:"BRUNO",text:"Ah, ce conseil-là. Écoute bien — parce que tu vas l'entendre toute ta carrière. Qu'est-ce que t'en penses ?"}
-  ],()=>askQCM(QS3,{badge:"Question 3/4",scored:true,speaker:"BRUNO",onDone:seq3}));
-}
-
-function seq3(){
-  playSeq([
-    {side:"right",speaker:"NADINE",text:"Monsieur Roussel est en réunion jusqu'à 10h30. Vous voulez que je lui transmette un message ?"},
-    {voff:"Nadine tend une perche. Reste à ne pas la casser."}
-  ],()=>askQCM(QS4,{badge:"Question 4/4",scored:true,speaker:"BRUNO",onDone:seq4}));
-}
-
-function seq4(){
-  playSeq([
-    {side:"right",speaker:"NADINE",text:"C'est lui, oui. Rappelez à 10h30 — je vous le passe.",mood:{nadine:"smile"}},
-    {side:"left",speaker:"LUCAS",text:"Merci infiniment, madame Fabre. À tout à l'heure.",mood:{lucas:"confident"}},
-    {side:"center",speaker:"BRUNO",text:"Hier : vingt-deux secondes et un échec. Ce matin : un créneau et une alliée. Même mur, même Nadine — autre Lucas."}
-  ],showBilan);
-}
-
+/* ═══════════════════════════════════════════════════
+   BILAN
+═══════════════════════════════════════════════════ */
 function showBilan(){
-  setStatus("BILAN","var(--teal)");
-  const total=st.score;
-  const prof=SDR_PROFILES.find(p=>total>=p.range[0]&&total<=p.range[1])||SDR_PROFILES[0];
-  document.getElementById("bil-title").textContent="Votre bilan, épisode 1";
-  const ptsEl=document.getElementById("bil-pts");
-  ptsEl.textContent=total;
-  ptsEl.style.color=prof.color;
-  document.getElementById("sdr-profile-title").textContent=prof.title;
-  document.getElementById("sdr-profile-title").style.color=prof.color;
-  document.getElementById("sdr-profile-desc").textContent=prof.desc;
-  document.getElementById("sdr-name-hud").textContent="Vous";
-  document.getElementById("sdr-title-hud").textContent=prof.title;
+  document.getElementById('status-lbl').textContent = 'BILAN';
+  const ov = document.getElementById('ov-bilan');
+  document.getElementById('bil-pts').textContent = st.score;
 
-  // Rep profile bars in bilan
-  const rb=document.getElementById("rep-profile-bars");
-  rb.innerHTML=["posture","cadre","integrite","alliance"].map(k=>{
-    const pts=st.rep[k]||0;
-    const pct=Math.round(pts/3*100);
-    const label={posture:"Posture",cadre:"Cadre",integrite:"Intégrité",alliance:"Alliance"}[k];
-    return `<div class="rp-item"><span class="rp-label">${label}</span><div class="rp-track"><div class="rp-fill ${k}" style="width:${pct}%"></div></div></div>`;
-  }).join("");
+  let title = 'Analyse de votre session';
+  let profileTitle = 'Commercial en formation';
+  let profileDesc = 'Vous commencez à intégrer les réflexes de base. La pratique vous aidera à les rendre naturels.';
 
-  // Rows
-  const rows=st.results.map(r=>{
-    const c=r.pts===3?"ok":r.pts===1?"mid":"ko";
-    const v=r.pts===3?"Acquis du premier coup.":r.pts===1?"Acquis avec un indice — à consolider.":"Point fragile — révision programmée.";
-    return `<div class="bilan-row ${c}"><div class="br-skill">${r.skill}</div><div class="br-pts">${r.pts}/3</div><div class="br-verdict">${v}</div></div>`;
-  }).join("");
-  document.getElementById("bil-rows").innerHTML=rows;
+  if(st.score >= 10){
+    title = 'Excellente session';
+    profileTitle = 'Commercial intuitif';
+    profileDesc = 'Vous comprenez naturellement que convaincre ne passe pas par l\'argumentation. Restez vigilant : la méthode ne doit jamais devenir un script mécanique.';
+  } else if(st.score >= 7){
+    title = 'Bonne progression';
+    profileTitle = 'Commercial en développement';
+    profileDesc = 'Les bases sont là. Travaillez surtout la transition entre la clarification et la question de réflexion — c\'est le moment le plus délicat.';
+  } else if(st.score >= 4){
+    title = 'Des acquis, des progrès à faire';
+    profileTitle = 'Commercial en apprentissage';
+    profileDesc = 'Vous avez saisi certains principes mais la méthode en 3 temps n\'est pas encore fluide. Relisez les points de théorie et réécoutez la scène de rejeu.';
+  } else {
+    title = 'Les fondations sont à poser';
+    profileTitle = 'Commercial débutant';
+    profileDesc = 'C\'est normal de ne pas tout saisir dès le premier épisode. L\'essentiel est de retenir ceci : quand un prospect objecte, ne répondez pas — questionnez.';
+  }
 
-  // Memo Bruno personnalisé
-  const weak=st.results.filter(r=>r.pts<3);
-  const memo=weak.length===0
-    ? `<b>Rien à réviser sur cet épisode.</b> Profitez-en — ça ne durera pas. Les prochains épisodes testent d'autres couches.`
-    : `Ces points — <b>${weak.map(r=>r.skill).join(", ")}</b> — reviendront dans les prochains jours, glissés dans d'autres scènes, sans annonce. Des révisions déguisées : la mémoire s'en charge, même sans vous.`;
-  document.getElementById("bruno-memo-text").innerHTML=`<div class="bruno-memo-head">NOTE DE BRUNO</div>${memo}`;
+  document.getElementById('bil-title').textContent = title;
+  document.getElementById('sdr-profile-title').textContent = profileTitle;
+  document.getElementById('sdr-profile-desc').textContent = profileDesc;
 
-  showOv("ov-bilan");
+  let repBarsHtml = '';
+  ['posture','cadre','authenticite','connexion'].forEach(k=>{
+    const labels = {posture:'Posture',cadre:'Cadre',authenticite:'Authenticité',connexion:'Connexion'};
+    const v = st.rep[k] || 0;
+    repBarsHtml += `<div class="rp-item"><span class="rp-label">${labels[k]}</span><div class="rp-track"><div class="rp-fill ${k}" style="width:${v}%"></div></div></div>`;
+  });
+  document.getElementById('rep-profile-bars').innerHTML = repBarsHtml;
+
+  let rowsHtml = '';
+  st.results.forEach(r=>{
+    const cls = r.ok ? (r.pts === r.max ? 'ok' : 'mid') : 'ko';
+    const verdict = r.ok ? 'Acquis' : 'À retravailler';
+    rowsHtml += `<div class="bilan-row ${cls}"><div class="br-skill">${r.skill}</div><div class="br-pts">${r.pts}/${r.max}</div><div class="br-verdict">${verdict}</div></div>`;
+  });
+  document.getElementById('bil-rows').innerHTML = rowsHtml;
+
+  let memoHtml = '<div class="bruno-memo-head">MÉMO DE BRUNO</div>';
+  memoHtml += '<b>Trois temps à retenir :</b><br>';
+  memoHtml += '1. <b>Clarifier</b> — « Qu\'est-ce qui vous fait dire ça ? »<br>';
+  memoHtml += '2. <b>Faire réfléchir</b> — « Si [condition favorable], vous hésiteriez ? »<br>';
+  memoHtml += '3. <b>Comparer</b> — « C\'est comme [image concrète]. »<br><br>';
+  memoHtml += '<b>Règle d\'or :</b> aucune de ces trois étapes ne doit contredire le prospect. Si vous sentez que vous allez argumenter, arrêtez-vous et posez une question à la place.';
+  document.getElementById('bruno-memo-text').innerHTML = memoHtml;
+
+  ov.classList.add('on');
 }
 
+function showPracticeEnd(){
+  document.getElementById('ov-bilan').classList.remove('on');
+  document.getElementById('ov-practice-end').classList.add('on');
+}
+
+/* ═══════════════════════════════════════════════════
+   FINAL
+═══════════════════════════════════════════════════ */
 function cliffhanger(){
-  setStatus("10H30 — LIGNE ROUSSEL","var(--red)");
-  setTs("l","OPEN SPACE ALIZÉO — 10H30");
-  setTs("r","DIRECTION GÉN. — 10H30");
-  document.getElementById("ov-bilan").classList.remove("on");
-  document.getElementById("bruno-react").classList.remove("show");
-  document.getElementById("c-bruno").classList.remove("in");
-  document.getElementById("pr").querySelector("#phone-led").style.animation="ledfast .45s infinite";
-  playSeq([
-    {voff:"10h30, pile. Lucas recompose le numéro. Deux sonneries. Le déclic."},
-    {side:"right",speaker:"NADINE",text:"Je vous le passe. Bonne chance.",mood:{nadine:"smile"}},
-    {enter:"roussel",voff:"Un silence. Un souffle. Et une voix que Lucas n'avait pas anticipée."},
-    {side:"center",speaker:"ROUSSEL",text:"Oui, monsieur Moreau ? Je vous écoute. Vous avez trente secondes.",mood:{lucas:"stressed"}}
-  ],()=>{
-    document.getElementById("pr").querySelector("#phone-led").style.animation="ledslow 2.8s infinite";
-    showOv("ov-final");
-  });
+  document.getElementById('ov-practice-end').classList.remove('on');
+  document.getElementById('ov-final').classList.add('on');
+  document.getElementById('status-lbl').textContent = 'FIN';
 }
 
 /* ═══════════════════════════════════════════════════
    INIT
 ═══════════════════════════════════════════════════ */
 function init(){
-  document.getElementById("c-lucas").innerHTML=SVG.LUCAS;
-  document.getElementById("c-nadine").innerHTML=SVG.NADINE;
-  document.getElementById("c-bruno").innerHTML=SVG.BRUNO;
-  document.getElementById("c-roussel").innerHTML=SVG.ROUSSEL;
-
-  // Expression toggles via CSS classes déjà dans le SVG
-  const lc=document.getElementById("c-lucas");
-  lc.querySelectorAll(".brows-s,.brows-c,.mouth-sad,.mouth-ok,.sweat").forEach(el=>el.style.display="none");
-  const nd=document.getElementById("c-nadine");
-  nd.querySelectorAll(".mouth-smile").forEach(el=>el.style.display="none");
-
-  document.getElementById("clicker").addEventListener("click",()=>{
-    if(!seq.active)return;
-    if(!voffDone())return;
-    seq.idx++;showLine();
-  });
-
-  startIntro();
+  initChars();
+  setLitPanel('none');
+  updateRepBars();
+  showTrap();
 }
-window.addEventListener("load",init);
 
-// Dynamique LED phone
-document.addEventListener("DOMContentLoaded",()=>{
-  const style=document.createElement("style");
-  style.textContent=`@keyframes ledfast{0%,100%{opacity:1;}50%{opacity:.1;}} @keyframes ledslow{0%,100%{opacity:.2;}50%{opacity:.9;}}`;
-  document.head.appendChild(style);
-});
+init();
 </script>
 </body>
 </html>
