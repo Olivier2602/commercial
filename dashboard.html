@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ALIZEO — Hub</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Oswald:wght@400;500;600;700&display=swap');
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --bg-deep:#f0ece4;--bg-mid:#f8f6f2;--bg-card:#ffffff;--bg-card-hover:#fdfcfa;
+  --border-subtle:#e0dbd0;--border-soft:#d0c8b8;
+  --gold:#9a7420;--gold-light:#b8902a;--gold-dim:rgba(154,116,32,.08);
+  --teal:#0d7a6e;--teal-dim:rgba(13,122,110,.06);
+  --red:#c43030;--red-dim:rgba(196,48,48,.06);
+  --blue:#2563a8;--blue-dim:rgba(37,99,168,.06);
+  --purple:#7a5ab8;--purple-dim:rgba(122,90,184,.06);
+  --txt-hi:#1a1a2e;--txt-med:#4a4a5e;--txt-lo:#8a8a9e;--txt-xlo:#b8b8c8;
+  --font-mono:'JetBrains Mono',monospace;--font-display:'Oswald',sans-serif;
+  --r4:4px;--r8:8px;--r12:12px;--r16:16px;
+  --spring:cubic-bezier(.34,1.56,.64,1);--smooth:cubic-bezier(.4,0,.2,1);
+}
+body{background:var(--bg-deep);color:var(--txt-hi);font-family:var(--font-mono);min-height:100vh;overflow-x:hidden;}
+::-webkit-scrollbar{width:5px;}
+::-webkit-scrollbar-track{background:var(--bg-mid);}
+::-webkit-scrollbar-thumb{background:var(--border-soft);border-radius:3px;}
+
+/* ── LOADER ─────────────────────────────────────── */
+#loader{position:fixed;inset:0;background:#1a1a2e;z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:opacity .7s var(--smooth);}
+#loader.gone{opacity:0;pointer-events:none;}
+#loader-logo{font-family:var(--font-display);font-size:2.8rem;letter-spacing:10px;color:transparent;background:linear-gradient(90deg,#9a7420 0%,#d4b060 40%,#fff 50%,#d4b060 60%,#9a7420 100%);background-size:250% 100%;-webkit-background-clip:text;background-clip:text;animation:windPass 2s ease-in-out .3s 1 forwards;opacity:0;animation-fill-mode:forwards;}
+@keyframes windPass{0%{opacity:0;background-position:250% center;}30%{opacity:1;}100%{opacity:1;background-position:-250% center;}}
+#loader-sub{font-family:var(--font-mono);font-size:.55rem;letter-spacing:4px;color:rgba(255,255,255,.25);margin-top:12px;opacity:0;animation:fadeUp .5s ease .8s forwards;}
+@keyframes fadeUp{to{opacity:1;transform:translateY(0);}from{opacity:0;transform:translateY(8px);}}
+
+/* ── PARTICLES ──────────────────────────────────── */
+.particle{position:fixed;width:3px;height:3px;border-radius:50%;background:var(--gold);opacity:0;pointer-events:none;z-index:0;}
+@keyframes drift{0%{opacity:0;transform:translate(0,0);}15%{opacity:.18;}85%{opacity:.18;}100%{opacity:0;transform:translate(var(--dx),var(--dy));}}
+
+/* ── APP SHELL ──────────────────────────────────── */
+#app{max-width:920px;margin:0 auto;min-height:100vh;display:flex;flex-direction:column;opacity:0;transition:opacity .6s ease;position:relative;z-index:1;}
+#app.visible{opacity:1;}
+
+/* ── TOPBAR ─────────────────────────────────────── */
+#topbar{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;background:var(--bg-mid);border-bottom:1px solid var(--border-subtle);position:sticky;top:0;z-index:50;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);}
+#logo-area{display:flex;align-items:center;gap:10px;cursor:pointer;user-select:none;}
+#logo-text{font-family:var(--font-display);font-size:1.2rem;letter-spacing:5px;color:var(--gold);position:relative;overflow:hidden;}
+#logo-text::after{content:'';position:absolute;top:0;left:-100%;width:60%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.25),transparent);animation:logoShimmer 5s ease-in-out 3s infinite;}
+@keyframes logoShimmer{0%,100%{left:-100%;}50%{left:150%;}}
+#logo-wind{width:20px;height:12px;opacity:.35;}
+.rank-badge{display:flex;align-items:center;gap:8px;background:var(--gold-dim);border:1px solid rgba(154,116,32,.25);padding:5px 14px;border-radius:20px;}
+.rank-icon{width:18px;height:18px;fill:var(--gold);opacity:.7;}
+.rank-label{font-family:var(--font-display);font-size:.6rem;letter-spacing:2.5px;color:var(--gold);}
+#profile-area{display:flex;align-items:center;gap:10px;}
+.avatar{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--gold-light));display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-size:.65rem;letter-spacing:1px;color:#fff;}
+.profile-name{font-size:.65rem;color:var(--txt-lo);}
+
+/* ── XP BAR ─────────────────────────────────────── */
+#xp-wrap{padding:0 24px;background:var(--bg-mid);border-bottom:1px solid var(--border-subtle);padding-bottom:10px;}
+#xp-labels{display:flex;justify-content:space-between;margin-bottom:4px;}
+#xp-current{font-family:var(--font-display);font-size:.52rem;letter-spacing:2px;color:var(--gold);}
+#xp-next{font-family:var(--font-display);font-size:.48rem;letter-spacing:1.5px;color:var(--txt-xlo);}
+#xp-track{height:4px;background:var(--border-subtle);border-radius:2px;overflow:hidden;}
+#xp-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--gold),var(--gold-light));border-radius:2px;transition:width 1.2s var(--spring);}
+
+/* ── SEASON HERO ────────────────────────────────── */
+#season-hero{margin:20px 24px 0;padding:24px 28px 20px;background:radial-gradient(ellipse at 50% -20%,rgba(154,116,32,.07) 0%,transparent 70%),var(--bg-card);border:1px solid var(--border-subtle);border-radius:var(--r12);position:relative;overflow:hidden;opacity:0;transform:translateY(16px);transition:opacity .5s ease,transform .5s var(--spring);}
+#season-hero.in{opacity:1;transform:translateY(0);}
+#season-hero::before{content:'';position:absolute;top:-30px;right:-30px;width:120px;height:120px;background:radial-gradient(circle,rgba(154,116,32,.06) 0%,transparent 70%);pointer-events:none;}
+.season-kicker{font-family:var(--font-display);font-size:.52rem;letter-spacing:4px;color:var(--txt-xlo);margin-bottom:4px;}
+.season-title{font-family:var(--font-display);font-size:1.6rem;color:var(--txt-hi);line-height:1.2;margin-bottom:6px;font-weight:600;}
+.season-subtitle{font-size:.7rem;color:var(--txt-lo);line-height:1.5;margin-bottom:16px;}
+#season-progress{display:flex;align-items:center;gap:12px;}
+#sp-track{flex:1;height:6px;background:var(--border-subtle);border-radius:3px;overflow:hidden;}
+#sp-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--teal),#1aaa98);border-radius:3px;transition:width 1.4s var(--spring) .2s;}
+#sp-label{font-family:var(--font-display);font-size:.7rem;color:var(--teal);letter-spacing:1px;white-space:nowrap;}
+
+/* ── EPISODE PATH ───────────────────────────────── */
+#ep-section{margin:24px 24px 0;opacity:0;transform:translateY(16px);transition:opacity .5s ease .15s,transform .5s var(--spring) .15s;}
+#ep-section.in{opacity:1;transform:translateY(0);}
+.section-label{font-family:var(--font-display);font-size:.52rem;letter-spacing:4px;color:var(--txt-xlo);margin-bottom:14px;}
+#ep-path{display:flex;gap:0;position:relative;padding:8px 0 24px;overflow-x:auto;overflow-y:visible;-webkit-overflow-scrolling:touch;scrollbar-width:none;}
+#ep-path::-webkit-scrollbar{display:none;}
+#ep-line{position:absolute;top:38px;left:30px;right:30px;height:3px;background:var(--border-subtle);border-radius:2px;z-index:0;}
+#ep-line-fill{position:absolute;top:0;left:0;height:100%;background:var(--teal);border-radius:2px;width:0%;transition:width 1.4s var(--spring) .3s;}
+.ep-node{flex:0 0 130px;display:flex;flex-direction:column;align-items:center;position:relative;z-index:1;opacity:0;transform:translateY(12px);transition:opacity .4s ease,transform .4s var(--spring);}
+.ep-node.in{opacity:1;transform:translateY(0);}
+.ep-dot{width:14px;height:14px;border-radius:50%;border:3px solid var(--border-soft);background:var(--bg-card);position:relative;z-index:2;transition:all .3s ease;}
+.ep-dot.completed{border-color:var(--teal);background:var(--teal);}
+.ep-dot.current{border-color:var(--gold);background:var(--gold);animation:dotPulse 2s ease-in-out infinite;}
+@keyframes dotPulse{0%,100%{box-shadow:0 0 0 0 rgba(154,116,32,.35);}50%{box-shadow:0 0 0 8px rgba(154,116,32,0);}}
+.ep-dot.locked{border-color:var(--border-subtle);background:var(--bg-mid);}
+.ep-dot .dot-check{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;}
+.ep-dot .dot-check svg{width:8px;height:8px;}
+.ep-card{margin-top:10px;width:120px;background:var(--bg-card);border:1px solid var(--border-subtle);border-radius:var(--r8);padding:12px 10px;text-align:center;cursor:default;transition:transform .3s var(--spring),box-shadow .3s ease,border-color .3s ease;position:relative;overflow:hidden;}
+.ep-card.completed{border-left:3px solid var(--teal);cursor:pointer;}
+.ep-card.completed:hover{transform:translateY(-4px);box-shadow:0 8px 24px rgba(13,122,110,.1);}
+.ep-card.current{border-left:3px solid var(--gold);cursor:pointer;}
+.ep-card.current:hover{transform:translateY(-5px) scale(1.02);box-shadow:0 10px 30px rgba(154,116,32,.12);}
+.ep-card.locked{cursor:default;opacity:.55;}
+.ep-card.locked:hover{opacity:.65;}
+.ep-card.locked::after{content:'';position:absolute;inset:0;background:rgba(248,246,242,.5);backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px);border-radius:var(--r8);pointer-events:none;}
+.ep-icon{width:28px;height:28px;margin:0 auto 8px;color:var(--txt-lo);}
+.ep-card.completed .ep-icon{color:var(--teal);}
+.ep-card.current .ep-icon{color:var(--gold);}
+.ep-num{font-family:var(--font-display);font-size:.5rem;letter-spacing:2px;color:var(--txt-xlo);margin-bottom:3px;}
+.ep-title{font-family:var(--font-display);font-size:.72rem;color:var(--txt-hi);line-height:1.25;margin-bottom:6px;min-height:2.5em;}
+.ep-card.locked .ep-title{filter:blur(3px);user-select:none;}
+.ep-score{font-size:.6rem;color:var(--teal);font-weight:700;margin-bottom:8px;}
+.ep-btn{display:inline-block;padding:5px 16px;border-radius:var(--r4);font-family:var(--font-display);font-size:.6rem;letter-spacing:2px;cursor:pointer;border:none;transition:all .2s var(--spring);}
+.ep-btn.play{background:var(--gold);color:#fff;}
+.ep-btn.play:hover{background:var(--gold-light);transform:scale(1.05);}
+.ep-btn.replay{background:transparent;color:var(--txt-lo);border:1px solid var(--border-subtle);}
+.ep-btn.replay:hover{border-color:var(--teal);color:var(--teal);}
+.ep-lock-icon{width:16px;height:16px;margin:6px auto 0;color:var(--txt-xlo);opacity:.6;}
+
+/* ── MODE CARDS ─────────────────────────────────── */
+#modes-section{margin:24px 24px 0;display:grid;grid-template-columns:1fr 1fr;gap:12px;opacity:0;transform:translateY(16px);transition:opacity .5s ease .3s,transform .5s var(--spring) .3s;}
+#modes-section.in{opacity:1;transform:translateY(0);}
+.mode-card{background:var(--bg-card);border:1px solid var(--border-subtle);border-radius:var(--r12);padding:20px 18px;position:relative;overflow:hidden;transition:transform .3s var(--spring),box-shadow .3s ease,border-color .3s ease;cursor:default;}
+.mode-card.active{cursor:pointer;}
+.mode-card.active:hover{transform:translateY(-4px);box-shadow:0 10px 28px rgba(0,0,0,.07);border-color:var(--gold);}
+.mode-card.locked{opacity:.6;}
+.mode-card.locked::before{content:'';position:absolute;inset:0;background:rgba(248,246,242,.4);backdrop-filter:blur(1px);-webkit-backdrop-filter:blur(1px);z-index:1;}
+.mode-card .mc-glow{position:absolute;top:-20px;right:-20px;width:80px;height:80px;border-radius:50%;opacity:.5;pointer-events:none;z-index:0;}
+.mode-card .mc-icon{width:32px;height:32px;margin-bottom:12px;position:relative;z-index:2;}
+.mode-card .mc-title{font-family:var(--font-display);font-size:.9rem;color:var(--txt-hi);letter-spacing:1px;margin-bottom:4px;position:relative;z-index:2;}
+.mode-card .mc-desc{font-size:.62rem;color:var(--txt-lo);line-height:1.45;position:relative;z-index:2;}
+.mode-card .mc-badge{position:absolute;top:14px;right:14px;font-family:var(--font-display);font-size:.48rem;letter-spacing:2px;padding:3px 8px;border-radius:10px;z-index:3;}
+.mc-badge.soon{background:var(--bg-deep);color:var(--txt-xlo);border:1px solid var(--border-subtle);}
+.mc-badge.live{background:var(--gold-dim);color:var(--gold);border:1px solid rgba(154,116,32,.2);}
+
+/* ── SKILLS ─────────────────────────────────────── */
+#skills-section{margin:24px 24px 0;opacity:0;transform:translateY(16px);transition:opacity .5s ease .45s,transform .5s var(--spring) .45s;}
+#skills-section.in{opacity:1;transform:translateY(0);}
+.skills-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.skill-item{background:var(--bg-card);border:1px solid var(--border-subtle);border-radius:var(--r8);padding:14px 16px;}
+.skill-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;}
+.skill-name{font-family:var(--font-display);font-size:.68rem;letter-spacing:1.5px;color:var(--txt-med);}
+.skill-pct{font-family:var(--font-display);font-size:.72rem;color:var(--txt-lo);}
+.skill-track{height:5px;background:var(--border-subtle);border-radius:3px;overflow:hidden;}
+.skill-fill{height:100%;width:0%;border-radius:3px;transition:width 1.2s var(--spring) .5s;}
+.skill-fill.posture{background:var(--blue);}
+.skill-fill.cadre{background:var(--gold);}
+.skill-fill.authenticite{background:var(--teal);}
+.skill-fill.connexion{background:var(--purple);}
+.skill-detail{font-size:.55rem;color:var(--txt-xlo);margin-top:6px;line-height:1.4;}
+
+/* ── STATS FOOTER ───────────────────────────────── */
+#stats-footer{margin:24px 24px 30px;display:flex;justify-content:center;gap:32px;padding:14px 0;border-top:1px solid var(--border-subtle);opacity:0;transition:opacity .5s ease .55s;}
+#stats-footer.in{opacity:1;}
+.stat-item{text-align:center;}
+.stat-val{font-family:var(--font-display);font-size:1.1rem;color:var(--txt-hi);line-height:1;}
+.stat-label{font-size:.5rem;letter-spacing:2px;color:var(--txt-xlo);margin-top:3px;}
+
+/* ── TRANSITION OVERLAY ─────────────────────────── */
+#transition{position:fixed;inset:0;background:var(--bg-mid);z-index:9000;display:none;align-items:center;justify-content:center;flex-direction:column;gap:12px;}
+#transition.on{display:flex;animation:fadeUp .4s ease forwards;}
+#transition-text{font-family:var(--font-display);font-size:.9rem;letter-spacing:4px;color:var(--txt-lo);animation:pulse 1.5s ease-in-out infinite;}
+@keyframes pulse{0%,100%{opacity:.4;}50%{opacity:1;}}
+
+/* ── TOAST ──────────────────────────────────────── */
+#toast{position:fixed;bottom:-60px;left:50%;transform:translateX(-50%);background:var(--txt-hi);color:var(--bg-card);padding:10px 22px;border-radius:var(--r8);font-size:.65rem;letter-spacing:1px;z-index:9500;transition:bottom .4s var(--spring);pointer-events:none;}
+#toast.show{bottom:30px;}
+
+/* ── RESPONSIVE ─────────────────────────────────── */
+@media(max-width:640px){
+  #topbar{padding:10px 16px;}
+  #logo-text{font-size:1rem;letter-spacing:3px;}
+  .rank-badge{padding:4px 10px;}
+  .rank-label{font-size:.5rem;}
+  .avatar{width:28px;height:28px;font-size:.55rem;}
+  .profile-name{display:none;}
+  #season-hero{margin:14px 16px 0;padding:18px 20px 16px;}
+  .season-title{font-size:1.3rem;}
+  #ep-section{margin:18px 16px 0;}
+  .ep-node{flex:0 0 110px;}
+  .ep-card{width:100px;padding:10px 8px;}
+  .ep-title{font-size:.65rem;}
+  #modes-section{margin:18px 16px 0;gap:10px;}
+  .mode-card{padding:16px 14px;}
+  .mode-card .mc-title{font-size:.8rem;}
+  #skills-section{margin:18px 16px 0;}
+  .skills-grid{grid-template-columns:1fr;gap:8px;}
+  #stats-footer{margin:18px 16px 24px;gap:20px;}
+}
+</style>
+</head>
+<body>
+
+<!-- LOADER -->
+<div id="loader">
+  <div id="loader-logo">ALIZEO</div>
+  <div id="loader-sub">FORMATION COMMERCIALE IMMERSIVE</div>
+</div>
+
+<!-- PARTICLES -->
+<div id="particles-container"></div>
+
+<!-- APP -->
+<div id="app">
+  <header id="topbar">
+    <div id="logo-area">
+      <svg id="logo-wind" viewBox="0 0 20 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M2 6 Q6 2 10 6 Q14 10 18 6" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" opacity=".6"/>
+        <path d="M4 8 Q8 4 12 8 Q15 11 18 9" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round" opacity=".35"/>
+      </svg>
+      <div id="logo-text">ALIZEO</div>
+    </div>
+    <div class="rank-badge">
+      <svg class="rank-icon" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg"><path d="M9 1 L16 5 L16 11 Q16 16 9 17 Q2 16 2 11 L2 5 Z" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
+      <span class="rank-label" id="rank-label">APPRENTI</span>
+    </div>
+    <div id="profile-area">
+      <span class="profile-name">Lucas M.</span>
+      <div class="avatar">LM</div>
+    </div>
+  </header>
+
+  <div id="xp-wrap">
+    <div id="xp-labels">
+      <span id="xp-current">10 / 12 XP</span>
+      <span id="xp-next">Rang suivant : Commercial</span>
+    </div>
+    <div id="xp-track"><div id="xp-fill"></div></div>
+  </div>
+
+  <main>
+    <section id="season-hero">
+      <div class="season-kicker">SAISON 1</div>
+      <div class="season-title">L'art de ne pas convaincre</div>
+      <div class="season-subtitle">Six episodes pour apprendre a vendre sans jamais argumenter. La methode en 3 temps : clarifier, faire reflechir, comparer.</div>
+      <div id="season-progress">
+        <div id="sp-track"><div id="sp-fill"></div></div>
+        <span id="sp-label">1 / 6</span>
+      </div>
+    </section>
+
+    <section id="ep-section">
+      <div class="section-label">PARCOURS</div>
+      <div id="ep-path">
+        <div id="ep-line"><div id="ep-line-fill"></div></div>
+      </div>
+    </section>
+
+    <section id="modes-section">
+      <div class="mode-card active" id="mc-saison">
+        <div class="mc-glow" style="background:var(--gold-dim);"></div>
+        <svg class="mc-icon" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 26 Q8 18 16 18 Q24 18 28 26" stroke="var(--gold)" stroke-width="2" fill="none" stroke-linecap="round"/><circle cx="8" cy="14" r="3" fill="var(--gold)" opacity=".4"/><circle cx="16" cy="10" r="3" fill="var(--gold)" opacity=".7"/><circle cx="24" cy="14" r="3" fill="var(--gold)" opacity=".4"/></svg>
+        <div class="mc-title">Saison</div>
+        <div class="mc-desc">Episodes narratifs avec choix interactifs et feedback personnalise.</div>
+        <span class="mc-badge live">EN COURS</span>
+      </div>
+      <div class="mode-card locked" id="mc-multi">
+        <div class="mc-glow" style="background:var(--blue-dim);"></div>
+        <svg class="mc-icon" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="11" cy="12" r="4" stroke="var(--blue)" stroke-width="1.8" fill="none"/><circle cx="21" cy="12" r="4" stroke="var(--blue)" stroke-width="1.8" fill="none"/><path d="M5 26 Q5 20 11 20 Q14 20 16 22 Q18 20 21 20 Q27 20 27 26" stroke="var(--blue)" stroke-width="1.8" fill="none" stroke-linecap="round"/></svg>
+        <div class="mc-title">Multijoueurs</div>
+        <div class="mc-desc">Jouez des scenarios avec d'autres commerciaux en temps reel.</div>
+        <span class="mc-badge soon">BIENTOT</span>
+      </div>
+      <div class="mode-card locked" id="mc-theorie">
+        <div class="mc-glow" style="background:var(--teal-dim);"></div>
+        <svg class="mc-icon" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="6" y="4" width="20" height="24" rx="2" stroke="var(--teal)" stroke-width="1.8" fill="none"/><line x1="10" y1="10" x2="22" y2="10" stroke="var(--teal)" stroke-width="1.5" opacity=".5"/><line x1="10" y1="14" x2="22" y2="14" stroke="var(--teal)" stroke-width="1.5" opacity=".5"/><line x1="10" y1="18" x2="18" y2="18" stroke="var(--teal)" stroke-width="1.5" opacity=".5"/></svg>
+        <div class="mc-title">Theorie</div>
+        <div class="mc-desc">Bibliotheque de concepts : reactance, cadrage, comparaisons...</div>
+        <span class="mc-badge soon">BIENTOT</span>
+      </div>
+      <div class="mode-card locked" id="mc-simul">
+        <div class="mc-glow" style="background:var(--purple-dim);"></div>
+        <svg class="mc-icon" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="10" y="2" width="12" height="20" rx="6" stroke="var(--purple)" stroke-width="1.8" fill="none"/><path d="M14 22 L14 26 Q14 29 16 29 Q18 29 18 26 L18 22" stroke="var(--purple)" stroke-width="1.5" fill="none"/><path d="M8 10 Q4 10 4 14" stroke="var(--purple)" stroke-width="1.5" fill="none" stroke-linecap="round" opacity=".4"/><path d="M24 10 Q28 10 28 14" stroke="var(--purple)" stroke-width="1.5" fill="none" stroke-linecap="round" opacity=".4"/><path d="M6 15 Q2 15 2 19" stroke="var(--purple)" stroke-width="1.2" fill="none" stroke-linecap="round" opacity=".25"/><path d="M26 15 Q30 15 30 19" stroke="var(--purple)" stroke-width="1.2" fill="none" stroke-linecap="round" opacity=".25"/></svg>
+        <div class="mc-title">Simulation Orale</div>
+        <div class="mc-desc">Pratiquez a voix haute avec la reconnaissance vocale.</div>
+        <span class="mc-badge soon">BIENTOT</span>
+      </div>
+    </section>
+
+    <section id="skills-section">
+      <div class="section-label">COMPETENCES</div>
+      <div class="skills-grid" id="skills-grid"></div>
+    </section>
+  </main>
+
+  <footer id="stats-footer">
+    <div class="stat-item"><div class="stat-val" id="stat-ep">1</div><div class="stat-label">EPISODES</div></div>
+    <div class="stat-item"><div class="stat-val" id="stat-pts">10</div><div class="stat-label">POINTS</div></div>
+    <div class="stat-item"><div class="stat-val" id="stat-time">12 min</div><div class="stat-label">JOUES</div></div>
+    <div class="stat-item"><div class="stat-val" id="stat-rank">1</div><div class="stat-label">RANG</div></div>
+  </footer>
+</div>
+
+<!-- TRANSITION OVERLAY -->
+<div id="transition"><div id="transition-text">CHARGEMENT</div></div>
+
+<!-- TOAST -->
+<div id="toast"></div>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ═══════════════════════════════════════════════
+     DONNEES SIMULEES
+     En production : API / localStorage
+  ═══════════════════════════════════════════════ */
+  var RANKS = [
+    {name:"APPRENTI",     min:0,  max:11},
+    {name:"COMMERCIAL",   min:12, max:23},
+    {name:"NEGOCIATEUR",  min:24, max:35},
+    {name:"STRATEGE",     min:36, max:47},
+    {name:"MAITRE",       min:48, max:59},
+    {name:"EXPERT",       min:60, max:71},
+    {name:"GRAND MAITRE", min:72, max:72}
+  ];
+
+  var EPISODES = [
+    {id:1, title:"La Reactance",          sub:"Quand les arguments vous trahissent",     status:"completed", score:10, max:12,
+     icon:'<svg viewBox="0 0 28 34" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M14 2 L26 8 L26 19 Q26 30 14 32 Q2 30 2 19 L2 8 Z"/></svg>'},
+    {id:2, title:"Les 15 premieres sec.", sub:"L'erreur que tout le monde fait",        status:"unlocked",  score:null, max:12,
+     icon:'<svg viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="14" cy="14" r="11"/><path d="M14 7 L14 14 L19 14"/></svg>'},
+    {id:3, title:"Le cadre invisible",     sub:"Celui qui pose les regles gagne",        status:"locked",    score:null, max:12,
+     icon:'<svg viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="22" height="22" rx="2"/><rect x="8" y="8" width="12" height="12" rx="1" opacity=".4"/></svg>'},
+    {id:4, title:"Quand le prospect pleure", sub:"Gerer l'emotion sans la fuir",       status:"locked",    score:null, max:12,
+     icon:'<svg viewBox="0 0 28 34" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M14 3 Q24 16 24 22 Q24 31 14 32 Q4 31 4 22 Q4 16 14 3 Z"/></svg>'},
+    {id:5, title:"Le silence qui vend",    sub:"Les 3 secondes qui changent tout",      status:"locked",    score:null, max:12,
+     icon:'<svg viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M8 10 Q5 14 8 18" opacity=".8"/><path d="M14 6 Q10 14 14 22" opacity=".5"/><path d="M20 3 Q15 14 20 25" opacity=".3"/></svg>'},
+    {id:6, title:"L'adieu sans perdre",    sub:"Finir par la grande porte",             status:"locked",    score:null, max:12,
+     icon:'<svg viewBox="0 0 28 34" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="3" width="20" height="28" rx="2"/><circle cx="20" cy="19" r="2" fill="currentColor"/><line x1="14" y1="3" x2="14" y2="31" opacity=".2"/></svg>'}
+  ];
+
+  var SKILLS = [
+    {key:"posture",      name:"Posture",      pct:70, color:"posture",      detail:"Garder le cadre sans se justifier"},
+    {key:"cadre",        name:"Cadre",        pct:33, color:"cadre",        detail:"Orienter la conversation sans forcer"},
+    {key:"authenticite", name:"Authenticite", pct:60, color:"authenticite", detail:"Questionner avec une curiosite sincere"},
+    {key:"connexion",    name:"Connexion",    pct:80, color:"connexion",    detail:"Creer un espace ou le prospect se convainc"}
+  ];
+
+  var TOTAL_SCORE = 10;
+  var TOTAL_TIME = "12 min";
+
+  /* ═══════════════════════════════════════════════
+     HELPERS
+  ═══════════════════════════════════════════════ */
+  var $id = function(id){ return document.getElementById(id); };
+
+  function getRank(score){
+    for(var i=0;i<RANKS.length;i++){
+      if(score >= RANKS[i].min && score <= RANKS[i].max) return RANKS[i];
+    }
+    return RANKS[RANKS.length-1];
+  }
+  function getNextRank(score){
+    for(var i=0;i<RANKS.length-1;i++){
+      if(score >= RANKS[i].min && score <= RANKS[i].max) return RANKS[i+1];
+    }
+    return null;
+  }
+
+  /* ═══════════════════════════════════════════════
+     PARTICLES
+  ═══════════════════════════════════════════════ */
+  function createParticles(){
+    var container = $id("particles-container");
+    for(var i=0;i<7;i++){
+      var p = document.createElement("div");
+      p.className = "particle";
+      var x = Math.random() * 100;
+      var y = Math.random() * 100;
+      var dx = (Math.random()-0.5) * 80;
+      var dy = (Math.random()-0.5) * 60 - 20;
+      var dur = 7 + Math.random() * 6;
+      var delay = Math.random() * 5;
+      var size = 2 + Math.random() * 2;
+      p.style.cssText = "left:"+x+"%;top:"+y+"%;width:"+size+"px;height:"+size+"px;--dx:"+dx+"px;--dy:"+dy+"px;animation:drift "+dur+"s ease-in-out "+delay+"s infinite;";
+      container.appendChild(p);
+    }
+  }
+
+  /* ═══════════════════════════════════════════════
+     RENDER EPISODES
+  ═══════════════════════════════════════════════ */
+  function renderEpisodes(){
+    var path = $id("ep-path");
+    var completedCount = 0;
+    var lastCompletedIdx = -1;
+
+    for(var i=0;i<EPISODES.length;i++){
+      var ep = EPISODES[i];
+      if(ep.status === "completed"){ completedCount++; lastCompletedIdx = i; }
+    }
+
+    for(var j=0;j<EPISODES.length;j++){
+      var e = EPISODES[j];
+      var node = document.createElement("div");
+      node.className = "ep-node";
+      node.setAttribute("data-delay", (j * 80));
+
+      var dotClass = e.status === "completed" ? "completed" : (e.status === "unlocked" ? "current" : "locked");
+      var dotHtml = '<div class="ep-dot '+dotClass+'">';
+      if(e.status === "completed"){
+        dotHtml += '<div class="dot-check"><svg viewBox="0 0 8 8" fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round"><path d="M1.5 4 L3.5 6 L6.5 2"/></svg></div>';
+      }
+      dotHtml += '</div>';
+
+      var cardClass = e.status;
+      var cardHtml = '<div class="ep-card '+cardClass+'">';
+      cardHtml += '<div class="ep-icon">'+e.icon+'</div>';
+      cardHtml += '<div class="ep-num">E'+e.id+'</div>';
+      cardHtml += '<div class="ep-title">'+e.title+'</div>';
+
+      if(e.status === "completed"){
+        cardHtml += '<div class="ep-score">'+e.score+'/'+e.max+'</div>';
+        cardHtml += '<button class="ep-btn replay" data-ep="'+e.id+'">REJOUER</button>';
+      } else if(e.status === "unlocked"){
+        cardHtml += '<div class="ep-score" style="color:var(--gold);opacity:.5">-- / '+e.max+'</div>';
+        cardHtml += '<button class="ep-btn play" data-ep="'+e.id+'">JOUER</button>';
+      } else {
+        cardHtml += '<svg class="ep-lock-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="7" width="10" height="8" rx="1.5"/><path d="M5 7 V5 Q5 2 8 2 Q11 2 11 5 V7"/></svg>';
+      }
+      cardHtml += '</div>';
+
+      node.innerHTML = dotHtml + cardHtml;
+      path.appendChild(node);
+    }
+
+    var linePct = lastCompletedIdx >= 0 ? ((lastCompletedIdx) / (EPISODES.length - 1)) * 100 : 0;
+    setTimeout(function(){
+      $id("ep-line-fill").style.width = linePct + "%";
+    }, 400);
+
+    var nodes = path.querySelectorAll(".ep-node");
+    for(var k=0;k<nodes.length;k++){
+      (function(nd, delay){
+        setTimeout(function(){ nd.classList.add("in"); }, delay);
+      })(nodes[k], 600 + k * 80);
+    }
+
+    path.querySelectorAll(".ep-btn.play, .ep-btn.replay").forEach(function(btn){
+      btn.addEventListener("click", function(){
+        var epId = btn.getAttribute("data-ep");
+        startTransition(epId);
+      });
+    });
+  }
+
+  /* ═══════════════════════════════════════════════
+     RENDER SKILLS
+  ═══════════════════════════════════════════════ */
+  function renderSkills(){
+    var grid = $id("skills-grid");
+    for(var i=0;i<SKILLS.length;i++){
+      var s = SKILLS[i];
+      var item = document.createElement("div");
+      item.className = "skill-item";
+      item.innerHTML = '<div class="skill-head"><span class="skill-name">'+s.name+'</span><span class="skill-pct">'+s.pct+'%</span></div>'
+        + '<div class="skill-track"><div class="skill-fill '+s.color+'" data-pct="'+s.pct+'"></div></div>'
+        + '<div class="skill-detail">'+s.detail+'</div>';
+      grid.appendChild(item);
+    }
+  }
+
+  /* ═══════════════════════════════════════════════
+     RENDER XP BAR
+  ═══════════════════════════════════════════════ */
+  function renderXP(){
+    var rank = getRank(TOTAL_SCORE);
+    var next = getNextRank(TOTAL_SCORE);
+    $id("rank-label").textContent = rank.name;
+
+    if(next){
+      var inBracket = TOTAL_SCORE - rank.min;
+      var bracketSize = next.min - rank.min;
+      var pct = Math.round((inBracket / bracketSize) * 100);
+      $id("xp-current").textContent = inBracket + " / " + bracketSize + " XP";
+      $id("xp-next").textContent = "Rang suivant : " + next.name;
+      setTimeout(function(){ $id("xp-fill").style.width = pct + "%"; }, 500);
+    } else {
+      $id("xp-current").textContent = "MAX";
+      $id("xp-next").textContent = "Rang maximum atteint";
+      setTimeout(function(){ $id("xp-fill").style.width = "100%"; }, 500);
+    }
+  }
+
+  /* ═══════════════════════════════════════════════
+     RENDER STATS
+  ═══════════════════════════════════════════════ */
+  function renderStats(){
+    var completedCount = 0;
+    for(var i=0;i<EPISODES.length;i++){
+      if(EPISODES[i].status === "completed") completedCount++;
+    }
+    $id("stat-ep").textContent = completedCount;
+    $id("stat-pts").textContent = TOTAL_SCORE;
+    $id("stat-time").textContent = TOTAL_TIME;
+    $id("stat-rank").textContent = (getRank(TOTAL_SCORE).name === "GRAND MAITRE" ? "7" : "1");
+  }
+
+  /* ═══════════════════════════════════════════════
+     SEASON PROGRESS
+  ═══════════════════════════════════════════════ */
+  function renderSeasonProgress(){
+    var completedCount = 0;
+    for(var i=0;i<EPISODES.length;i++){
+      if(EPISODES[i].status === "completed") completedCount++;
+    }
+    $id("sp-label").textContent = completedCount + " / " + EPISODES.length;
+    setTimeout(function(){ $id("sp-fill").style.width = (completedCount / EPISODES.length * 100) + "%"; }, 300);
+  }
+
+  /* ═══════════════════════════════════════════════
+     SKILL BAR ANIMATION
+  ═══════════════════════════════════════════════ */
+  function animateSkills(){
+    var fills = document.querySelectorAll(".skill-fill");
+    for(var i=0;i<fills.length;i++){
+      (function(f){
+        var pct = f.getAttribute("data-pct");
+        setTimeout(function(){ f.style.width = pct + "%"; }, 700);
+      })(fills[i]);
+    }
+  }
+
+  /* ═══════════════════════════════════════════════
+     TRANSITION (simule le lancement d'un episode)
+  ═══════════════════════════════════════════════ */
+  function startTransition(epId){
+    var overlay = $id("transition");
+    var text = $id("transition-text");
+    var epTitle = "";
+    for(var i=0;i<EPISODES.length;i++){
+      if(EPISODES[i].id === parseInt(epId)){ epTitle = EPISODES[i].title; break; }
+    }
+    text.textContent = "CHARGEMENT : " + epTitle.toUpperCase();
+    overlay.classList.add("on");
+    setTimeout(function(){
+      overlay.style.opacity = "0";
+      overlay.style.transition = "opacity .5s ease";
+      setTimeout(function(){
+        overlay.classList.remove("on");
+        overlay.style.opacity = "";
+        overlay.style.transition = "";
+        showToast("En production, l'episode se lancerait ici.");
+      }, 500);
+    }, 1800);
+  }
+
+  /* ═══════════════════════════════════════════════
+     TOAST
+  ═══════════════════════════════════════════════ */
+  var toastTimer = null;
+  function showToast(msg){
+    var t = $id("toast");
+    t.textContent = msg;
+    t.classList.add("show");
+    if(toastTimer) clearTimeout(toastTimer);
+    toastTimer = setTimeout(function(){ t.classList.remove("show"); }, 2500);
+  }
+
+  /* ═══════════════════════════════════════════════
+     EASTER EGG : logo 5 clics rapides
+  ═══════════════════════════════════════════════ */
+  var logoClicks = 0;
+  var logoClickTimer = null;
+  var particlesFlipped = false;
+
+  $id("logo-area").addEventListener("click", function(){
+    logoClicks++;
+    if(logoClickTimer) clearTimeout(logoClickTimer);
+    logoClickTimer = setTimeout(function(){ logoClicks = 0; }, 1200);
+
+    if(logoClicks >= 5 && !particlesFlipped){
+      particlesFlipped = true;
+      var particles = document.querySelectorAll(".particle");
+      for(var i=0;i<particles.length;i++){
+        particles[i].style.background = "var(--teal)";
+      }
+      showToast("Le vent tourne.");
+      setTimeout(function(){
+        for(var j=0;j<particles.length;j++){
+          particles[j].style.background = "var(--gold)";
+        }
+        particlesFlipped = false;
+      }, 3000);
+    }
+  });
+
+  /* ═══════════════════════════════════════════════
+     MODE CARD CLICKS
+  ═══════════════════════════════════════════════ */
+  $id("mc-saison").addEventListener("click", function(){
+    var section = $id("ep-section");
+    section.scrollIntoView({behavior:"smooth", block:"center"});
+    section.style.outline = "2px solid var(--gold)";
+    section.style.outlineOffset = "8px";
+    section.style.borderRadius = "8px";
+    setTimeout(function(){
+      section.style.outline = "";
+      section.style.outlineOffset = "";
+    }, 1500);
+  });
+
+  var lockedModes = [$id("mc-multi"), $id("mc-theorie"), $id("mc-simul")];
+  var modeNames = ["Multijoueurs", "Theorie", "Simulation Orale"];
+  for(var m=0;m<lockedModes.length;m++){
+    (function(card, name){
+      card.addEventListener("click", function(){
+        showToast(name + " sera disponible dans une prochaine mise a jour.");
+      });
+    })(lockedModes[m], modeNames[m]);
+  }
+
+  /* ═══════════════════════════════════════════════
+     INIT & LOADER
+  ═══════════════════════════════════════════════ */
+  function init(){
+    createParticles();
+    renderEpisodes();
+    renderSkills();
+    renderXP();
+    renderStats();
+    renderSeasonProgress();
+
+    setTimeout(function(){
+      $id("loader").classList.add("gone");
+      $id("app").classList.add("visible");
+
+      setTimeout(function(){
+        $id("season-hero").classList.add("in");
+        $id("ep-section").classList.add("in");
+        $id("modes-section").classList.add("in");
+        $id("skills-section").classList.add("in");
+        $id("stats-footer").classList.add("in");
+        animateSkills();
+      }, 200);
+
+      setTimeout(function(){
+        if($id("loader").parentNode) $id("loader").parentNode.removeChild($id("loader"));
+      }, 1200);
+
+    }, 2200);
+  }
+
+  if(document.readyState === "loading"){
+    document.addEventListener("DOMContentLoaded", init);
+  } else {
+    init();
+  }
+
+})();
+</script>
+</body>
+</html>
