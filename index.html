@@ -7,601 +7,217 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Oswald:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-/* ═══════════════════════════════════════════
-   RESET & TOKENS
-═══════════════════════════════════════════ */
 *{margin:0;padding:0;box-sizing:border-box;}
 :root{
-  --bg:#f0ece4;
-  --bg-mid:#f5f2ec;
-  --bg-panel:#eee9df;
-  --bg-card:#ffffff;
-  --border:#ddd8cc;
-  --border-em:#c8c0b0;
-  --gold:#9a7420;
-  --gold-l:#c4922a;
-  --gold-dim:rgba(154,116,32,.1);
-  --teal:#0d7a6e;
-  --teal-dim:rgba(13,122,110,.08);
-  --red:#c43030;
-  --red-dim:rgba(196,48,48,.07);
-  --blue:#2563a8;
-  --blue-dim:rgba(37,99,168,.07);
+  --bg:#f0ece4;--bg-mid:#f5f2ec;--bg-panel:#eee9df;--bg-card:#ffffff;
+  --border:#ddd8cc;--border-em:#c8c0b0;
+  --gold:#9a7420;--gold-l:#c4922a;--gold-dim:rgba(154,116,32,.1);
+  --teal:#0d7a6e;--teal-dim:rgba(13,122,110,.08);
+  --red:#c43030;--red-dim:rgba(196,48,48,.07);
+  --blue:#2563a8;--blue-dim:rgba(37,99,168,.07);
   --purple:#6d4fa0;
-  --txt:#1a1a2e;
-  --txt-m:#4a4a5e;
-  --txt-l:#8a8a9e;
-  --txt-xl:#b8b8c8;
-  --mono:'JetBrains Mono',monospace;
-  --disp:'Oswald',sans-serif;
+  --txt:#1a1a2e;--txt-m:#4a4a5e;--txt-l:#8a8a9e;--txt-xl:#b8b8c8;
+  --mono:'JetBrains Mono',monospace;--disp:'Oswald',sans-serif;
   --r4:4px;--r8:8px;--r12:12px;
-  --spring:cubic-bezier(.34,1.56,.64,1);
-  --ease:cubic-bezier(.22,1,.36,1);
+  --spring:cubic-bezier(.34,1.56,.64,1);--ease:cubic-bezier(.22,1,.36,1);
 }
+html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(--txt);font-family:var(--mono);}
+#shell{width:100%;height:100%;display:flex;flex-direction:column;overflow:hidden;position:relative;}
 
-/* ═══════════════════════════════════════════
-   SHELL — PLEIN ÉCRAN
-═══════════════════════════════════════════ */
-html,body{
-  width:100%;height:100%;overflow:hidden;
-  background:var(--bg);color:var(--txt);
-  font-family:var(--mono);
-}
-#shell{
-  width:100%;height:100%;
-  display:flex;flex-direction:column;
-  overflow:hidden;position:relative;
-}
-
-/* ═══════════════════════════════════════════
-   HUD — BARRE SUPÉRIEURE
-═══════════════════════════════════════════ */
-#hud{
-  height:46px;flex-shrink:0;
-  display:flex;align-items:center;gap:0;
-  background:var(--bg-panel);
-  border-bottom:1px solid var(--border);
-  padding:0 20px;
-  z-index:10;
-}
-.hud-ep{
-  font-size:.58rem;letter-spacing:2.5px;
-  color:var(--txt-l);font-weight:600;
-  text-transform:uppercase;
-  margin-right:auto;
-}
-.hud-score{
-  font-family:var(--disp);font-size:.72rem;
-  color:var(--txt-l);letter-spacing:3px;
-  margin-right:20px;
-}
+/* ── HUD ── */
+#hud{height:46px;flex-shrink:0;display:flex;align-items:center;gap:0;background:var(--bg-panel);border-bottom:1px solid var(--border);padding:0 16px;z-index:10;}
+.hud-ep{font-size:.58rem;letter-spacing:2.5px;color:var(--txt-l);font-weight:600;text-transform:uppercase;margin-right:auto;}
+.hud-score{font-family:var(--disp);font-size:.72rem;color:var(--txt-l);letter-spacing:3px;margin-right:16px;}
 .hud-score b{color:var(--gold);font-size:1.05rem;}
-.profile-tag{
-  display:flex;align-items:center;gap:8px;
-  background:var(--bg-card);border:1px solid var(--border);
-  padding:4px 12px;border-radius:20px;
-  font-size:.58rem;margin-right:14px;
-}
+.profile-tag{display:flex;align-items:center;gap:8px;background:var(--bg-card);border:1px solid var(--border);padding:4px 12px;border-radius:20px;font-size:.58rem;margin-right:14px;}
 .profile-name{color:var(--txt-m);}
 .profile-title{color:var(--gold);font-family:var(--disp);letter-spacing:1px;}
-.hud-status{
-  display:flex;align-items:center;gap:6px;
-  font-size:.58rem;letter-spacing:2px;color:var(--teal);
-}
-.dot{
-  width:7px;height:7px;border-radius:50%;
-  background:var(--teal);
-  animation:pulse 1.8s infinite;
-}
-@keyframes pulse{
-  0%{box-shadow:0 0 0 0 rgba(13,122,110,.45);}
-  70%{box-shadow:0 0 0 9px transparent;}
-  100%{box-shadow:0 0 0 0 transparent;}
-}
+.hud-status{display:flex;align-items:center;gap:6px;font-size:.58rem;letter-spacing:2px;color:var(--teal);}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--teal);animation:pulse 1.8s infinite;}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(13,122,110,.45);}70%{box-shadow:0 0 0 9px transparent;}100%{box-shadow:0 0 0 0 transparent;}}
 
-/* ═══════════════════════════════════════════
-   PROGRESS BAR — ÉTAPES ÉPISODE
-═══════════════════════════════════════════ */
-#progress-bar{
-  height:32px;flex-shrink:0;
-  display:flex;align-items:center;
-  background:var(--bg);
-  border-bottom:1px solid var(--border);
-  padding:0 20px;gap:0;
-  overflow:hidden;
-}
-.step-item{
-  display:flex;align-items:center;gap:0;
-  flex:1;
-  opacity:.35;
-  transition:opacity .4s var(--ease);
-}
-.step-item.active{opacity:1;}
-.step-item.done{opacity:.6;}
-.step-dot{
-  width:8px;height:8px;border-radius:50%;
-  border:1.5px solid var(--txt-xl);
-  background:transparent;
-  transition:all .4s var(--ease);
-  flex-shrink:0;
-}
-.step-item.active .step-dot{
-  border-color:var(--gold);background:var(--gold);
-  box-shadow:0 0 0 3px var(--gold-dim);
-}
-.step-item.done .step-dot{
-  border-color:var(--teal);background:var(--teal);
-}
-.step-label{
-  font-size:.5rem;letter-spacing:1.5px;
-  color:var(--txt-xl);margin-left:5px;
-  text-transform:uppercase;white-space:nowrap;
-  transition:color .4s;
-}
-.step-item.active .step-label{color:var(--gold);}
-.step-item.done .step-label{color:var(--teal);}
-.step-line{
-  flex:1;height:1px;background:var(--border);
-  margin:0 6px;max-width:40px;
-}
+/* ── PROGRESS BAR ── */
+#progress-bar{height:32px;flex-shrink:0;display:flex;align-items:center;background:var(--bg);border-bottom:1px solid var(--border);padding:0 16px;gap:0;overflow:hidden;}
+.step-item{display:flex;align-items:center;gap:0;flex:1;opacity:.35;transition:opacity .4s var(--ease);}
+.step-item.active{opacity:1;}.step-item.done{opacity:.6;}
+.step-dot{width:8px;height:8px;border-radius:50%;border:1.5px solid var(--txt-xl);background:transparent;transition:all .4s var(--ease);flex-shrink:0;}
+.step-item.active .step-dot{border-color:var(--gold);background:var(--gold);box-shadow:0 0 0 3px var(--gold-dim);}
+.step-item.done .step-dot{border-color:var(--teal);background:var(--teal);}
+.step-label{font-size:.5rem;letter-spacing:1.5px;color:var(--txt-xl);margin-left:5px;text-transform:uppercase;white-space:nowrap;transition:color .4s;}
+.step-item.active .step-label{color:var(--gold);}.step-item.done .step-label{color:var(--teal);}
+.step-line{flex:1;height:1px;background:var(--border);margin:0 6px;max-width:40px;}
 
-/* ═══════════════════════════════════════════
-   REP BAR
-═══════════════════════════════════════════ */
-#rep-bar{
-  height:30px;flex-shrink:0;
-  display:flex;align-items:center;
-  background:var(--bg-panel);
-  border-bottom:1px solid var(--border);
-  padding:0 20px;gap:0;
-}
-.rep-item{
-  display:flex;align-items:center;gap:7px;
-  flex:1;padding:0 8px;
-}
-.rep-item:not(:last-child){
-  border-right:1px solid var(--border);
-}
-.rep-label{
-  font-size:.5rem;letter-spacing:1.5px;
-  color:var(--txt-l);white-space:nowrap;text-transform:uppercase;
-}
-.rep-track{
-  flex:1;height:3px;
-  background:var(--bg-card);border-radius:2px;
-  overflow:hidden;border:1px solid var(--border);
-}
+/* ── REP BAR ── */
+#rep-bar{height:30px;flex-shrink:0;display:flex;align-items:center;background:var(--bg-panel);border-bottom:1px solid var(--border);padding:0 16px;gap:0;}
+.rep-item{display:flex;align-items:center;gap:7px;flex:1;padding:0 8px;}
+.rep-item:not(:last-child){border-right:1px solid var(--border);}
+.rep-label{font-size:.5rem;letter-spacing:1.5px;color:var(--txt-l);white-space:nowrap;text-transform:uppercase;}
+.rep-track{flex:1;height:3px;background:var(--bg-card);border-radius:2px;overflow:hidden;border:1px solid var(--border);}
 .rep-fill{height:100%;width:0%;border-radius:2px;transition:width .7s var(--spring);}
-.rep-fill.posture{background:var(--blue);}
-.rep-fill.cadre{background:var(--gold);}
-.rep-fill.auth{background:var(--teal);}
-.rep-fill.conn{background:var(--purple);}
-.rep-val{
-  font-family:var(--disp);font-size:.6rem;
-  color:var(--txt-l);min-width:22px;text-align:right;
-}
+.rep-fill.posture{background:var(--blue);}.rep-fill.cadre{background:var(--gold);}
+.rep-fill.auth{background:var(--teal);}.rep-fill.conn{background:var(--purple);}
+.rep-val{font-family:var(--disp);font-size:.6rem;color:var(--txt-l);min-width:22px;text-align:right;}
 
-/* ═══════════════════════════════════════════
-   STAGE — SCÈNE CINÉMATIQUE
-═══════════════════════════════════════════ */
+/* ── STAGE ── SCÈNE UNIQUE (salon face-à-face) ── */
 #stage{
-  flex:0 0 58%;
-  position:relative;overflow:hidden;
-  background:var(--bg);
+  flex:0 0 56%;position:relative;overflow:hidden;background:var(--bg);
 }
-/* vignette basse */
-#stage::after{
-  content:'';position:absolute;inset:0;
-  background:linear-gradient(to bottom,transparent 65%,rgba(240,236,228,.75));
-  pointer-events:none;z-index:12;
-}
+#stage::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,transparent 65%,rgba(240,236,228,.7));pointer-events:none;z-index:12;}
 
-/* panels */
-.panel{
-  position:absolute;top:0;bottom:0;width:50%;
-  overflow:hidden;
-  transition:filter .4s var(--ease);
-}
-#pl{left:0;}
-#pr{right:0;border-left:1px solid var(--border);}
-.panel.lit{filter:brightness(1.06) saturate(1.12);}
-.panel.dim{filter:brightness(.75) saturate(.6);}
+/* Décor unique plein écran */
+#scene-bg{position:absolute;inset:0;width:100%;height:100%;}
 
-/* timestamps */
-.ts{
-  position:absolute;top:10px;
-  font-size:.5rem;letter-spacing:2px;color:var(--txt-xl);
-  background:rgba(248,246,242,.88);
-  border:1px solid var(--border);
-  padding:3px 9px;z-index:15;border-radius:var(--r4);
-}
-#ts-l{left:12px;}#ts-r{right:12px;}
+/* Timestamp */
+.ts{position:absolute;top:10px;left:12px;font-size:.5rem;letter-spacing:2px;color:var(--txt-xl);background:rgba(248,246,242,.88);border:1px solid var(--border);padding:3px 9px;z-index:15;border-radius:var(--r4);}
 
-/* personnages */
-.char{
-  position:absolute;z-index:20;
-  transition:opacity .5s var(--ease),transform .5s var(--ease);
-}
-#c-lucas{left:7%;bottom:10%;width:17%;aspect-ratio:200/280;}
-#c-durand{right:7%;bottom:10%;width:17%;aspect-ratio:200/280;}
-#c-bruno{
-  left:50%;bottom:0;width:16%;aspect-ratio:200/280;
-  transform:translateX(-50%) translateY(80px);
-  opacity:0;z-index:30;
-}
+/* Personnages : positionnés dans un seul décor */
+.char{position:absolute;z-index:20;transition:opacity .5s var(--ease),transform .5s var(--ease);}
+/* Lucas à gauche du salon */
+#c-lucas{left:12%;bottom:8%;width:15%;aspect-ratio:200/290;}
+/* Mme Durand à droite */
+#c-durand{right:12%;bottom:8%;width:15%;aspect-ratio:200/290;}
+/* Bruno surgit au centre */
+#c-bruno{left:50%;bottom:0;width:14%;aspect-ratio:200/290;transform:translateX(-50%) translateY(90px);opacity:0;z-index:30;}
 #c-bruno.in{transform:translateX(-50%) translateY(0);opacity:1;}
 
+/* Mise en lumière (spot sur le locuteur) */
+#spotlight{position:absolute;inset:0;pointer-events:none;z-index:11;transition:background .5s var(--ease);}
+
 /* ── BULLES ── */
-.bubble{
-  position:absolute;z-index:45;
-  display:none;
-  width:32%;max-width:320px;
-  background:rgba(255,255,255,.97);
-  border:1.5px solid var(--bc,#bbb);
-  border-radius:var(--r8);
-  padding:10px 14px;
-  backdrop-filter:blur(6px);
-  box-shadow:0 3px 14px rgba(0,0,0,.07);
-}
-.bubble.show{
-  display:block;
-  animation:bpop .2s var(--spring);
-}
-@keyframes bpop{
-  from{transform:scale(.9) translateY(4px);opacity:0;}
-  to{transform:scale(1) translateY(0);opacity:1;}
-}
-.b-speaker{
-  font-family:var(--disp);font-size:.52rem;
-  letter-spacing:2px;margin-bottom:4px;
-  text-transform:uppercase;
-}
+.bubble{position:absolute;z-index:45;display:none;width:30%;max-width:300px;background:rgba(255,255,255,.97);border:1.5px solid var(--bc,#bbb);border-radius:var(--r8);padding:10px 14px;backdrop-filter:blur(6px);box-shadow:0 3px 14px rgba(0,0,0,.07);}
+.bubble.show{display:block;animation:bpop .2s var(--spring);}
+@keyframes bpop{from{transform:scale(.9) translateY(4px);opacity:0;}to{transform:scale(1) translateY(0);opacity:1;}}
+.b-speaker{font-family:var(--disp);font-size:.52rem;letter-spacing:2px;margin-bottom:4px;text-transform:uppercase;}
 .b-text{font-size:.72rem;line-height:1.48;color:var(--txt);min-height:1.2em;}
+/* Bulle Lucas : en haut à gauche */
+#bl{left:3%;top:5%;}
+/* Bulle Durand : en haut à droite */
+#br{right:3%;top:5%;}
+/* Bulle Bruno : centre */
+#bc{left:35%;top:3%;}
 
-#bl{left:2%;top:5%;}
-#br{right:2%;top:5%;}
-#bc{left:34%;top:3%;}
+#bl::after,#br::after,#bc::after{content:'';position:absolute;bottom:-7px;width:11px;height:11px;background:rgba(255,255,255,.97);border-right:1.5px solid var(--bc,#bbb);border-bottom:1.5px solid var(--bc,#bbb);transform:rotate(45deg);}
+#bl::after{left:26px;}#br::after{right:26px;}#bc::after{left:calc(50% - 5px);}
 
-#bl::after,#br::after,#bc::after{
-  content:'';position:absolute;
-  bottom:-7px;width:11px;height:11px;
-  background:rgba(255,255,255,.97);
-  border-right:1.5px solid var(--bc,#bbb);
-  border-bottom:1.5px solid var(--bc,#bbb);
-  transform:rotate(45deg);
-}
-#bl::after{left:26px;}
-#br::after{right:26px;}
-#bc::after{left:calc(50% - 5px);}
-
-/* voix off */
-#voff{
-  position:absolute;
-  left:50%;transform:translateX(-50%);
-  bottom:10px;width:88%;max-width:860px;
-  background:rgba(248,246,242,.94);
-  border:1px solid var(--border-em);
-  border-left:3px solid var(--txt-l);
-  padding:9px 16px;z-index:48;
-  display:none;border-radius:0 var(--r4) var(--r4) 0;
-  box-shadow:0 2px 12px rgba(0,0,0,.05);
-}
+/* Voix off */
+#voff{position:absolute;left:50%;transform:translateX(-50%);bottom:10px;width:88%;max-width:860px;background:rgba(248,246,242,.94);border:1px solid var(--border-em);border-left:3px solid var(--txt-l);padding:9px 16px;z-index:48;display:none;border-radius:0 var(--r4) var(--r4) 0;box-shadow:0 2px 12px rgba(0,0,0,.05);}
 #voff.show{display:block;}
-#voff::before{
-  content:'NARRATEUR';display:block;
-  font-family:var(--disp);font-size:.48rem;
-  letter-spacing:3px;color:var(--txt-xl);margin-bottom:3px;
-}
+#voff::before{content:'NARRATEUR';display:block;font-family:var(--disp);font-size:.48rem;letter-spacing:3px;color:var(--txt-xl);margin-bottom:3px;}
 #voff-text{font-size:.74rem;line-height:1.52;color:var(--txt-m);min-height:28px;}
 
-/* clic hint */
-#click-hint{
-  position:absolute;right:14px;bottom:12px;
-  z-index:55;display:none;
-  font-size:.52rem;letter-spacing:2px;color:var(--txt-l);
-  pointer-events:none;animation:blink 1.8s infinite;
-  background:rgba(248,246,242,.85);padding:3px 8px;border-radius:10px;
-}
+/* Clic hint */
+#click-hint{position:absolute;right:14px;bottom:12px;z-index:55;display:none;font-size:.52rem;letter-spacing:2px;color:var(--txt-l);pointer-events:none;animation:blink 1.8s infinite;background:rgba(248,246,242,.85);padding:3px 8px;border-radius:10px;}
 #click-hint.show{display:block;}
 @keyframes blink{0%,100%{opacity:.2;}50%{opacity:1;}}
-
 #clicker{position:absolute;inset:0;z-index:50;display:none;cursor:pointer;}
 #clicker.on{display:block;}
 
-/* ═══════════════════════════════════════════
-   THEORY OVERLAY — PLEIN ÉCRAN
-═══════════════════════════════════════════ */
-#theory-overlay{
-  position:fixed;inset:0;
-  background:rgba(240,236,228,.97);
-  z-index:1000;display:none;
-  align-items:center;justify-content:center;
-  padding:20px;
-  backdrop-filter:blur(8px);
-}
-#theory-overlay.on{
-  display:flex;
-  animation:fadein .3s var(--ease);
-}
+/* ── THEORY OVERLAY ── */
+#theory-overlay{position:fixed;inset:0;background:rgba(240,236,228,.97);z-index:1000;display:none;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(8px);}
+#theory-overlay.on{display:flex;animation:fadein .3s var(--ease);}
 @keyframes fadein{from{opacity:0;}to{opacity:1;}}
-
-.th-inner{
-  display:flex;gap:20px;
-  width:100%;max-width:960px;
-  max-height:90vh;
-  align-items:flex-start;
-}
+.th-inner{display:flex;gap:20px;width:100%;max-width:960px;max-height:90vh;align-items:flex-start;}
 .th-char{flex:0 0 90px;}
 .th-char svg{width:100%;height:auto;display:block;}
-.th-bubble{
-  flex:1;
-  background:var(--bg-card);
-  border:1.5px solid var(--teal);
-  border-radius:var(--r8);
-  padding:18px 22px;
-  position:relative;
-  box-shadow:0 6px 28px rgba(0,0,0,.08);
-  overflow-y:auto;
-  max-height:85vh;
-}
-.th-bubble::before{
-  content:'';position:absolute;left:-9px;top:20px;
-  width:13px;height:13px;
-  background:var(--bg-card);
-  border-left:1.5px solid var(--teal);
-  border-bottom:1.5px solid var(--teal);
-  transform:rotate(45deg);
-}
-.th-kicker{
-  font-family:var(--disp);font-size:.52rem;
-  letter-spacing:3px;color:var(--teal);margin-bottom:5px;
-}
-.th-title{
-  font-family:var(--disp);font-size:1rem;
-  color:var(--txt);margin-bottom:10px;font-weight:600;
-  line-height:1.3;
-}
-.th-count{
-  font-size:.52rem;color:var(--txt-xl);
-  letter-spacing:2px;margin-bottom:10px;
-}
+.th-bubble{flex:1;background:var(--bg-card);border:1.5px solid var(--teal);border-radius:var(--r8);padding:18px 22px;position:relative;box-shadow:0 6px 28px rgba(0,0,0,.08);overflow-y:auto;max-height:85vh;}
+.th-bubble::before{content:'';position:absolute;left:-9px;top:20px;width:13px;height:13px;background:var(--bg-card);border-left:1.5px solid var(--teal);border-bottom:1.5px solid var(--teal);transform:rotate(45deg);}
+.th-kicker{font-family:var(--disp);font-size:.52rem;letter-spacing:3px;color:var(--teal);margin-bottom:5px;}
+.th-title{font-family:var(--disp);font-size:1rem;color:var(--txt);margin-bottom:10px;font-weight:600;line-height:1.3;}
 .th-body{font-size:.72rem;line-height:1.58;color:var(--txt-m);}
 .th-body p{margin-bottom:9px;}
 .th-body b{color:var(--txt);}
-.th-body blockquote{
-  border-left:2px solid var(--gold);
-  padding:7px 13px;margin:10px 0;
-  color:var(--gold-l);font-size:.69rem;
-  background:var(--gold-dim);
-  border-radius:0 var(--r4) var(--r4) 0;
-  font-style:italic;
-}
-.dd{
-  border:1px solid;border-radius:var(--r4);
-  padding:8px 12px;margin:7px 0;
-  font-size:.67rem;line-height:1.5;
-}
+.th-body blockquote{border-left:2px solid var(--gold);padding:7px 13px;margin:10px 0;color:var(--gold-l);font-size:.69rem;background:var(--gold-dim);border-radius:0 var(--r4) var(--r4) 0;font-style:italic;}
+.dd{border:1px solid;border-radius:var(--r4);padding:8px 12px;margin:7px 0;font-size:.67rem;line-height:1.5;}
 .dd em{display:block;margin-top:4px;opacity:.75;font-style:normal;}
-.dd span{
-  font-family:var(--disp);font-size:.5rem;
-  letter-spacing:2px;display:block;margin-bottom:4px;
-}
+.dd span{font-family:var(--disp);font-size:.5rem;letter-spacing:2px;display:block;margin-bottom:4px;}
 .dd.dont{border-color:rgba(196,48,48,.3);color:#7a3a3a;background:var(--red-dim);}
 .dd.dont span{color:var(--red);}
 .dd.do{border-color:rgba(13,122,110,.3);color:#1a5a50;background:var(--teal-dim);}
 .dd.do span{color:var(--teal);}
-.th-nav{
-  display:flex;align-items:center;gap:10px;
-  margin-top:14px;padding-top:12px;
-  border-top:1px solid var(--border);
-}
-.th-btn{
-  background:var(--bg-mid);border:1px solid var(--border-em);
-  color:var(--txt-m);padding:8px 20px;
-  font-family:var(--disp);font-size:.68rem;letter-spacing:2px;
-  cursor:pointer;border-radius:var(--r4);
-  transition:all .15s;text-transform:uppercase;
-}
+.th-nav{display:flex;align-items:center;gap:10px;margin-top:14px;padding-top:12px;border-top:1px solid var(--border);}
+.th-btn{background:var(--bg-mid);border:1px solid var(--border-em);color:var(--txt-m);padding:8px 20px;font-family:var(--disp);font-size:.68rem;letter-spacing:2px;cursor:pointer;border-radius:var(--r4);transition:all .15s;text-transform:uppercase;}
 .th-btn:hover{border-color:var(--teal);color:var(--teal);}
-.th-btn.primary{
-  background:var(--teal);color:#fff;border-color:var(--teal);margin-left:auto;
-}
+.th-btn.primary{background:var(--teal);color:#fff;border-color:var(--teal);margin-left:auto;}
 .th-btn.primary:hover{background:#0e8e80;}
-.th-progress{
-  display:flex;gap:5px;align-items:center;margin-left:auto;
-}
-.th-dot{
-  width:7px;height:7px;border-radius:50%;
-  background:var(--border-em);
-  transition:background .3s;
-}
-.th-dot.cur{background:var(--teal);}
-.th-dot.done{background:rgba(13,122,110,.4);}
+.th-progress{display:flex;gap:5px;align-items:center;margin-left:auto;}
+.th-dot{width:7px;height:7px;border-radius:50%;background:var(--border-em);transition:background .3s;}
+.th-dot.cur{background:var(--teal);}.th-dot.done{background:rgba(13,122,110,.4);}
 
-/* ═══════════════════════════════════════════
-   INTERACTION ZONE
-═══════════════════════════════════════════ */
-#interaction{
-  flex:1;
-  background:var(--bg-mid);
-  border-top:1px solid var(--border);
-  overflow:hidden;
-  position:relative;
-  display:flex;flex-direction:column;
-}
-#izone{
-  padding:16px 24px;
-  flex:1;
-  overflow-y:auto;
-  display:flex;flex-direction:column;
-}
-.idle-msg{
-  color:var(--txt-xl);font-size:.62rem;
-  letter-spacing:2px;text-align:center;
-  margin:auto;
-}
+/* ── INTERACTION ZONE ── */
+#interaction{flex:1;background:var(--bg-mid);border-top:1px solid var(--border);overflow:hidden;position:relative;display:flex;flex-direction:column;}
+#izone{padding:16px 24px;flex:1;overflow-y:auto;display:flex;flex-direction:column;}
+.idle-msg{color:var(--txt-xl);font-size:.62rem;letter-spacing:2px;text-align:center;margin:auto;}
 
-/* ── QCM ── */
+/* QCM */
 .q-wrap{display:flex;flex-direction:column;height:100%;overflow:hidden;}
-.q-head{
-  display:flex;justify-content:space-between;align-items:center;
-  margin-bottom:8px;flex-shrink:0;
-}
-.q-badge{
-  font-family:var(--disp);font-size:.56rem;letter-spacing:3px;
-  color:var(--gold);border:1px solid rgba(154,116,32,.3);
-  padding:2px 10px;background:var(--gold-dim);border-radius:var(--r4);
-}
+.q-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;flex-shrink:0;}
+.q-badge{font-family:var(--disp);font-size:.56rem;letter-spacing:3px;color:var(--gold);border:1px solid rgba(154,116,32,.3);padding:2px 10px;background:var(--gold-dim);border-radius:var(--r4);}
 .q-pts{font-size:.54rem;color:var(--txt-l);}
-.q-question{
-  font-family:var(--disp);font-size:.94rem;
-  color:var(--txt);margin-bottom:11px;
-  line-height:1.35;flex-shrink:0;
-}
+.q-question{font-family:var(--disp);font-size:.94rem;color:var(--txt);margin-bottom:11px;line-height:1.35;flex-shrink:0;}
 .q-options{display:flex;flex-direction:column;gap:6px;flex-shrink:0;}
-.q-btn{
-  display:flex;gap:10px;align-items:flex-start;
-  background:var(--bg-card);border:1px solid var(--border);
-  color:var(--txt-m);padding:10px 13px;
-  font-family:var(--mono);font-size:.7rem;line-height:1.4;
-  text-align:left;cursor:pointer;border-radius:var(--r4);
-  transition:all .14s var(--ease);
-  box-shadow:0 1px 3px rgba(0,0,0,.03);
-}
-.q-btn:hover:not(:disabled){
-  border-color:var(--gold);color:var(--gold-l);
-  transform:translateX(4px);
-  box-shadow:0 2px 8px rgba(0,0,0,.06);
-}
-.q-letter{
-  font-family:var(--disp);color:var(--txt-xl);
-  font-size:.78rem;flex-shrink:0;padding-top:1px;
-}
+.q-btn{display:flex;gap:10px;align-items:flex-start;background:var(--bg-card);border:1px solid var(--border);color:var(--txt-m);padding:10px 13px;font-family:var(--mono);font-size:.7rem;line-height:1.4;text-align:left;cursor:pointer;border-radius:var(--r4);transition:all .14s var(--ease);box-shadow:0 1px 3px rgba(0,0,0,.03);}
+.q-btn:hover:not(:disabled){border-color:var(--gold);color:var(--gold-l);transform:translateX(4px);box-shadow:0 2px 8px rgba(0,0,0,.06);}
+.q-letter{font-family:var(--disp);color:var(--txt-xl);font-size:.78rem;flex-shrink:0;padding-top:1px;}
 .q-btn.right{border-color:var(--teal);background:var(--teal-dim);color:#1a5a50;}
 .q-btn.right .q-letter{color:var(--teal);}
 .q-btn.wrong{border-color:var(--red);background:var(--red-dim);color:#8a3a3a;opacity:.65;pointer-events:none;}
 .q-btn.dim{opacity:.25;pointer-events:none;}
 .q-btn:disabled{pointer-events:none;}
 
-/* ── FEEDBACK ── */
+/* Feedback */
 #feedback-panel{display:none;flex-direction:column;overflow-y:auto;padding:16px 24px;}
 #feedback-panel.show{display:flex;}
-.fb-card{
-  padding:11px 14px;border-left:3px solid #ccc;
-  font-size:.73rem;line-height:1.52;color:var(--txt-m);
-  border-radius:0 var(--r4) var(--r4) 0;
-  background:var(--bg-card);
-  box-shadow:0 1px 4px rgba(0,0,0,.03);
-  margin-bottom:8px;
-}
+.fb-card{padding:11px 14px;border-left:3px solid #ccc;font-size:.73rem;line-height:1.52;color:var(--txt-m);border-radius:0 var(--r4) var(--r4) 0;background:var(--bg-card);box-shadow:0 1px 4px rgba(0,0,0,.03);margin-bottom:8px;}
 .fb-card.good{border-color:var(--teal);background:var(--teal-dim);color:#1a5a50;}
 .fb-card.hint{border-color:var(--gold);background:var(--gold-dim);color:var(--gold-l);}
 .fb-card.bad{border-color:var(--red);background:var(--red-dim);color:#8a3a3a;}
-.fb-card.note{border-color:var(--txt-l);color:var(--txt-m);}
-.fb-name{
-  font-family:var(--disp);font-size:.58rem;
-  letter-spacing:2px;display:block;margin-bottom:4px;
-}
-.pts-line{
-  font-family:var(--disp);color:var(--teal);
-  letter-spacing:2px;margin-bottom:7px;font-size:.74rem;
-}
-.hint-label{
-  font-family:var(--disp);font-size:.52rem;letter-spacing:2px;
-  color:var(--gold);margin:8px 0 4px;
-  border-top:1px dashed var(--border);padding-top:7px;
-}
+.fb-name{font-family:var(--disp);font-size:.58rem;letter-spacing:2px;display:block;margin-bottom:4px;}
+.pts-line{font-family:var(--disp);color:var(--teal);letter-spacing:2px;margin-bottom:7px;font-size:.74rem;}
+.hint-label{font-family:var(--disp);font-size:.52rem;letter-spacing:2px;color:var(--gold);margin:8px 0 4px;border-top:1px dashed var(--border);padding-top:7px;}
 .retry-opts{display:flex;flex-direction:column;gap:5px;margin-top:8px;}
-.retry-btn{
-  display:flex;gap:10px;align-items:flex-start;
-  background:var(--bg-card);border:1px solid var(--border);
-  color:var(--txt-m);padding:8px 12px;
-  font-family:var(--mono);font-size:.69rem;line-height:1.38;
-  text-align:left;cursor:pointer;border-radius:var(--r4);
-  transition:all .14s;
-}
+.retry-btn{display:flex;gap:10px;align-items:flex-start;background:var(--bg-card);border:1px solid var(--border);color:var(--txt-m);padding:8px 12px;font-family:var(--mono);font-size:.69rem;line-height:1.38;text-align:left;cursor:pointer;border-radius:var(--r4);transition:all .14s;}
 .retry-btn:hover:not(:disabled){border-color:var(--gold);color:var(--gold-l);}
 .retry-btn.right{border-color:var(--teal);background:var(--teal-dim);color:#1a5a50;pointer-events:none;}
 .retry-btn.wrong{border-color:var(--red);background:var(--red-dim);opacity:.55;pointer-events:none;}
 .fb-actions{display:flex;gap:8px;margin-top:10px;flex-shrink:0;}
-.btn-go{
-  background:var(--teal);color:#fff;border:none;
-  padding:9px 24px;font-family:var(--disp);
-  font-size:.74rem;letter-spacing:2px;
-  cursor:pointer;border-radius:var(--r4);
-  text-transform:uppercase;transition:all .15s;
-}
+.btn-go{background:var(--teal);color:#fff;border:none;padding:9px 24px;font-family:var(--disp);font-size:.74rem;letter-spacing:2px;cursor:pointer;border-radius:var(--r4);text-transform:uppercase;transition:all .15s;}
 .btn-go:hover{background:#0e8e80;transform:translateY(-1px);}
-.btn-go.ghost{
-  background:transparent;color:var(--txt-m);
-  border:1px solid var(--border-em);
-}
+.btn-go.ghost{background:transparent;color:var(--txt-m);border:1px solid var(--border-em);}
 .btn-go.ghost:hover{border-color:var(--txt-m);}
 
-/* pts pop */
-.pts-pop{
-  position:fixed;top:40%;right:60px;
-  font-family:var(--disp);font-size:1.6rem;
-  color:var(--teal);letter-spacing:2px;
-  animation:ptspop 1.6s var(--ease) forwards;
-  z-index:2000;pointer-events:none;
-  text-shadow:0 2px 8px rgba(13,122,110,.3);
-}
-@keyframes ptspop{
-  from{opacity:0;transform:translateY(14px);}
-  15%{opacity:1;}
-  to{opacity:0;transform:translateY(-40px);}
-}
+/* Pts pop */
+.pts-pop{position:fixed;top:40%;right:60px;font-family:var(--disp);font-size:1.6rem;color:var(--teal);letter-spacing:2px;animation:ptspop 1.6s var(--ease) forwards;z-index:2000;pointer-events:none;text-shadow:0 2px 8px rgba(13,122,110,.3);}
+@keyframes ptspop{from{opacity:0;transform:translateY(14px);}15%{opacity:1;}to{opacity:0;transform:translateY(-40px);}}
 
-/* ═══════════════════════════════════════════
-   OVERLAYS PRINCIPAUX (plein écran)
-═══════════════════════════════════════════ */
-.ov{
-  position:fixed;inset:0;
-  background:var(--bg-mid);
-  z-index:500;display:none;
-  overflow-y:auto;padding:24px 32px 40px;
-}
+/* Micro-récompense "streak" */
+.streak-toast{position:fixed;top:70px;left:50%;transform:translateX(-50%);background:var(--gold);color:#fff;padding:7px 22px;border-radius:20px;font-family:var(--disp);font-size:.72rem;letter-spacing:2px;z-index:2100;animation:streakpop 2.2s var(--ease) forwards;pointer-events:none;box-shadow:0 4px 16px rgba(154,116,32,.35);}
+@keyframes streakpop{0%{opacity:0;transform:translateX(-50%) translateY(-10px);}10%{opacity:1;transform:translateX(-50%) translateY(0);}80%{opacity:1;}100%{opacity:0;transform:translateX(-50%) translateY(-6px);}}
+
+/* ── OVERLAYS ── */
+.ov{position:fixed;inset:0;background:var(--bg-mid);z-index:500;display:none;overflow-y:auto;padding:24px 32px 40px;}
 .ov.on{display:block;animation:fadein .35s var(--ease);}
-.ov-kicker{
-  font-family:var(--disp);font-size:.56rem;
-  letter-spacing:3px;color:var(--gold);margin-bottom:5px;
-}
-.ov-title{
-  font-family:var(--disp);font-size:1.5rem;
-  color:var(--txt);margin-bottom:16px;font-weight:600;
-}
+.ov-kicker{font-family:var(--disp);font-size:.56rem;letter-spacing:3px;color:var(--gold);margin-bottom:5px;}
+.ov-title{font-family:var(--disp);font-size:1.5rem;color:var(--txt);margin-bottom:16px;font-weight:600;}
 .ov-inner{max-width:760px;margin:0 auto;}
+/* Breadcrumb dans les overlays */
+.ov-breadcrumb{font-size:.5rem;letter-spacing:2px;color:var(--txt-xl);margin-bottom:18px;display:flex;align-items:center;gap:8px;}
+.ov-breadcrumb span{color:var(--gold);}
+.ov-progress-mini{flex:1;height:2px;background:var(--border);border-radius:1px;overflow:hidden;max-width:120px;}
+.ov-progress-fill{height:100%;background:var(--gold);border-radius:1px;transition:width .5s var(--ease);}
 
-/* REVEAL */
-.reveal-choice{
-  border:1px dashed var(--border-em);padding:10px 14px;
-  color:var(--gold-l);font-size:.74rem;
-  margin-bottom:14px;border-radius:var(--r4);background:var(--gold-dim);
-}
+/* Reveal */
+.reveal-choice{border:1px dashed var(--border-em);padding:10px 14px;color:var(--gold-l);font-size:.74rem;margin-bottom:14px;border-radius:var(--r4);background:var(--gold-dim);}
 .reveal-body p{font-size:.76rem;line-height:1.6;color:var(--txt-m);margin-bottom:10px;}
 .reveal-body b{color:var(--txt);}
-.rg-row{
-  padding:9px 13px;border-left:3px solid;
-  margin:7px 0;font-size:.72rem;line-height:1.5;
-  border-radius:0 var(--r4) var(--r4) 0;
-}
+.rg-row{padding:9px 13px;border-left:3px solid;margin:7px 0;font-size:.72rem;line-height:1.5;border-radius:0 var(--r4) var(--r4) 0;}
 .rg-row.ok{border-color:var(--teal);color:#1a5a50;background:var(--teal-dim);}
-.reveal-common{
-  margin-top:14px;border-top:1px solid var(--border);
-  padding-top:12px;
-}
+.reveal-common{margin-top:14px;border-top:1px solid var(--border);padding-top:12px;}
 .reveal-common p{font-size:.76rem;line-height:1.6;color:var(--txt-m);}
 
-/* BILAN */
+/* Bilan */
 .bilan-score{font-family:var(--disp);font-size:3.5rem;color:var(--teal);line-height:1;}
 .bs-max{font-family:var(--disp);font-size:.68rem;color:var(--txt-l);letter-spacing:3px;display:block;margin-bottom:18px;}
-.sdr-profile{
-  margin:16px 0;padding:16px 20px;
-  border:1px solid var(--border-em);
-  border-radius:var(--r8);background:var(--bg-card);
-  box-shadow:0 2px 10px rgba(0,0,0,.05);
-}
+.sdr-profile{margin:16px 0;padding:16px 20px;border:1px solid var(--border-em);border-radius:var(--r8);background:var(--bg-card);box-shadow:0 2px 10px rgba(0,0,0,.05);}
 .sp-label{font-size:.5rem;letter-spacing:2.5px;color:var(--txt-xl);font-family:var(--disp);margin-bottom:4px;}
 .sp-title{font-family:var(--disp);font-size:1.15rem;letter-spacing:1px;margin-bottom:5px;}
 .sp-desc{font-size:.72rem;color:var(--txt-m);line-height:1.52;}
@@ -610,335 +226,213 @@ html,body{
 .rp-label{font-size:.58rem;color:var(--txt-l);width:72px;flex-shrink:0;}
 .rp-track{flex:1;height:5px;background:var(--bg);border-radius:3px;overflow:hidden;border:1px solid var(--border);}
 .rp-fill{height:100%;border-radius:3px;transition:width .8s var(--spring);}
-.rp-fill.posture{background:var(--blue);}
-.rp-fill.cadre{background:var(--gold);}
-.rp-fill.auth{background:var(--teal);}
-.rp-fill.conn{background:var(--purple);}
-
-.bilan-row{
-  display:grid;grid-template-columns:1.4fr 65px 1.6fr;
-  gap:12px;align-items:center;
-  padding:10px 14px;border:1px solid var(--border);
-  margin-bottom:7px;background:var(--bg-card);
-  border-radius:var(--r4);box-shadow:0 1px 3px rgba(0,0,0,.03);
-}
+.rp-fill.posture{background:var(--blue);}.rp-fill.cadre{background:var(--gold);}
+.rp-fill.auth{background:var(--teal);}.rp-fill.conn{background:var(--purple);}
+.bilan-row{display:grid;grid-template-columns:1.4fr 65px 1.6fr;gap:12px;align-items:center;padding:10px 14px;border:1px solid var(--border);margin-bottom:7px;background:var(--bg-card);border-radius:var(--r4);box-shadow:0 1px 3px rgba(0,0,0,.03);}
 .br-skill{font-family:var(--disp);font-size:.8rem;color:var(--txt);}
 .br-pts{font-family:var(--disp);font-size:1.05rem;text-align:center;}
 .br-verdict{font-size:.67rem;color:var(--txt-l);line-height:1.4;}
 .bilan-row.ok{border-left:3px solid var(--teal);}.bilan-row.ok .br-pts{color:var(--teal);}
 .bilan-row.mid{border-left:3px solid var(--gold);}.bilan-row.mid .br-pts{color:var(--gold);}
 .bilan-row.ko{border-left:3px solid var(--red);}.bilan-row.ko .br-pts{color:var(--red);}
+.bruno-memo{margin:14px 0;padding:16px 20px;background:var(--bg);border:1px solid var(--border);border-radius:var(--r8);font-size:.71rem;line-height:1.62;color:var(--txt-m);}
+.bruno-memo-head{font-family:var(--disp);font-size:.56rem;letter-spacing:3px;color:var(--teal);margin-bottom:7px;}
+.bruno-memo b{color:var(--txt);}.bruno-memo em{color:var(--gold-l);font-style:normal;}
 
-.bruno-memo{
-  margin:14px 0;padding:16px 20px;
-  background:var(--bg);border:1px solid var(--border);
-  border-radius:var(--r8);font-size:.71rem;
-  line-height:1.62;color:var(--txt-m);
-}
-.bruno-memo-head{
-  font-family:var(--disp);font-size:.56rem;
-  letter-spacing:3px;color:var(--teal);margin-bottom:7px;
-}
-.bruno-memo b{color:var(--txt);}
-.bruno-memo em{color:var(--gold-l);font-style:normal;}
-
-/* PRACTICE */
+/* Practice */
 .practice-desc{font-size:.78rem;line-height:1.62;color:var(--txt-m);margin-bottom:16px;}
-.practice-scenario{
-  background:var(--bg-card);border:1px solid var(--border-em);
-  border-left:3px solid var(--gold);padding:13px 17px;
-  margin-bottom:22px;border-radius:0 var(--r4) var(--r4) 0;
-  font-size:.74rem;color:var(--txt-m);line-height:1.52;
-}
+.practice-scenario{background:var(--bg-card);border:1px solid var(--border-em);border-left:3px solid var(--gold);padding:13px 17px;margin-bottom:22px;border-radius:0 var(--r4) var(--r4) 0;font-size:.74rem;color:var(--txt-m);line-height:1.52;}
 .practice-scenario b{color:var(--txt);}
 .mode-selector{display:flex;gap:14px;margin-bottom:12px;}
-.mode-btn{
-  flex:1;padding:22px 16px;border:2px solid var(--border-em);
-  border-radius:var(--r8);background:var(--bg-card);
-  cursor:pointer;text-align:center;
-  transition:all .2s var(--ease);font-family:var(--mono);
-  position:relative;
-}
-.mode-btn:hover:not(:disabled){
-  border-color:var(--teal);transform:translateY(-2px);
-  box-shadow:0 5px 18px rgba(0,0,0,.07);
-}
+.mode-btn{flex:1;padding:22px 16px;border:2px solid var(--border-em);border-radius:var(--r8);background:var(--bg-card);cursor:pointer;text-align:center;transition:all .2s var(--ease);font-family:var(--mono);position:relative;}
+.mode-btn:hover:not(:disabled){border-color:var(--teal);transform:translateY(-2px);box-shadow:0 5px 18px rgba(0,0,0,.07);}
 .mode-btn:disabled{opacity:.5;cursor:not-allowed;}
 .mode-icon{font-size:2.2rem;display:block;margin-bottom:9px;}
-.mode-label{
-  font-family:var(--disp);font-size:.88rem;letter-spacing:2px;
-  color:var(--txt);display:block;margin-bottom:4px;
-}
+.mode-label{font-family:var(--disp);font-size:.88rem;letter-spacing:2px;color:var(--txt);display:block;margin-bottom:4px;}
 .mode-desc{font-size:.64rem;color:var(--txt-l);line-height:1.42;}
-.mode-soon{
-  display:inline-block;font-size:.53rem;letter-spacing:1.5px;
-  color:var(--red);background:var(--red-dim);
-  padding:2px 8px;border-radius:10px;margin-top:6px;
-  font-family:var(--disp);text-transform:uppercase;
-}
+.mode-soon{display:inline-block;font-size:.53rem;letter-spacing:1.5px;color:var(--red);background:var(--red-dim);padding:2px 8px;border-radius:10px;margin-top:6px;font-family:var(--disp);text-transform:uppercase;}
 .mode-btn.active-mode{border-color:var(--teal);background:var(--teal-dim);}
 .practice-note{font-size:.63rem;color:var(--txt-xl);line-height:1.5;font-style:italic;}
 
-/* FINAL */
+/* Final */
 .final-inner{text-align:center;padding-top:24px;}
-.next-ep{
-  margin:22px auto;max-width:560px;
-  border:1px solid var(--border-em);padding:22px 26px;
-  background:var(--bg-card);border-radius:var(--r8);
-  box-shadow:0 3px 12px rgba(0,0,0,.05);
-  text-align:left;
-}
-.ne-label{font-family:var(--disp);font-size:.54px;letter-spacing:4px;color:var(--red);margin-bottom:7px;}
+.next-ep{margin:22px auto;max-width:560px;border:1px solid var(--border-em);padding:22px 26px;background:var(--bg-card);border-radius:var(--r8);box-shadow:0 3px 12px rgba(0,0,0,.05);text-align:left;}
 .ne-label{font-family:var(--disp);font-size:.58rem;letter-spacing:4px;color:var(--red);margin-bottom:7px;}
 .ne-title{font-family:var(--disp);font-size:1.2rem;color:var(--txt);margin-bottom:11px;}
 .ne-tease{font-size:.73rem;line-height:1.62;color:var(--txt-m);}
-.transcript-locked{
-  margin:18px auto;max-width:500px;
-  border:1px solid var(--border);border-radius:var(--r4);
-  overflow:hidden;background:var(--bg-card);
-}
+.transcript-locked{margin:18px auto;max-width:500px;border:1px solid var(--border);border-radius:var(--r4);overflow:hidden;background:var(--bg-card);}
 .tr-line{padding:9px 15px;font-size:.69rem;color:var(--txt-m);border-bottom:1px solid var(--border);}
 .tr-line:last-child{border-bottom:none;}
 .tr-speaker{font-family:var(--disp);font-size:.53rem;letter-spacing:2px;margin-bottom:2px;}
 .tr-blurred{filter:blur(4px);user-select:none;pointer-events:none;color:var(--txt);}
-.tr-locked{
-  display:flex;align-items:center;justify-content:center;
-  gap:8px;padding:12px 15px;
-  background:var(--red-dim);border-top:2px solid var(--red);
-}
+.tr-locked{display:flex;align-items:center;justify-content:center;gap:8px;padding:12px 15px;background:var(--red-dim);border-top:2px solid var(--red);}
 .tr-locked-text{font-family:var(--disp);font-size:.7rem;letter-spacing:2px;color:var(--red);}
-.final-actions{
-  margin-top:22px;display:flex;gap:12px;justify-content:center;
-}
+.final-actions{margin-top:22px;display:flex;gap:12px;justify-content:center;}
 
-/* Confetti (Surprise & Delight) */
-.confetti-piece{
-  position:fixed;width:8px;height:8px;
-  border-radius:2px;z-index:3000;pointer-events:none;
-  animation:fall 2.5s ease-in forwards;
-}
-@keyframes fall{
-  from{transform:translateY(-20px) rotate(0);opacity:1;}
-  to{transform:translateY(110vh) rotate(720deg);opacity:0;}
-}
+/* Confetti */
+.confetti-piece{position:fixed;width:8px;height:8px;border-radius:2px;z-index:3000;pointer-events:none;animation:fall 2.5s ease-in forwards;}
+@keyframes fall{from{transform:translateY(-20px) rotate(0);opacity:1;}to{transform:translateY(110vh) rotate(720deg);opacity:0;}}
 
 /* Scrollbar */
 ::-webkit-scrollbar{width:4px;}
 ::-webkit-scrollbar-track{background:var(--bg-mid);}
 ::-webkit-scrollbar-thumb{background:var(--border-em);border-radius:2px;}
+
+/* ── RESPONSIVE MOBILE ── */
+@media(max-width:600px){
+  #stage{flex:0 0 48%;}
+  #c-lucas{left:5%;width:20%;}
+  #c-durand{right:5%;width:20%;}
+  .bubble{width:44%;font-size:.65rem;}
+  #rep-bar{flex-wrap:wrap;height:auto;padding:4px 8px;gap:2px;}
+  .rep-item{flex:1 0 45%;padding:2px 4px;}
+  .rep-label{font-size:.42rem;}
+  .hud-ep{display:none;}
+  .profile-tag{display:none;}
+  #progress-bar{padding:0 8px;}
+  .step-label{font-size:.38rem;}
+}
 </style>
 </head>
 <body>
 <div id="shell">
+
   <!-- HUD -->
   <div id="hud">
     <div class="hud-ep">ALIZÉO · S1·E1 · LA RÉACTANCE</div>
     <div class="hud-score">Score <b id="score-val">0</b>/12</div>
     <div class="profile-tag">
       <span class="profile-name">Vous</span>
-      <span class="profile-title" id="profile-title-hud">Commercial</span>
+      <span class="profile-title" id="profile-title-hud">SDR</span>
     </div>
     <div class="hud-status"><span class="dot"></span><span id="status-lbl">INTRODUCTION</span></div>
   </div>
 
-  <!-- ÉTAPES ÉPISODE -->
+  <!-- ÉTAPES -->
   <div id="progress-bar">
-    <div class="step-item active" data-step="0">
-      <div class="step-dot"></div>
-      <span class="step-label">Intro</span>
-    </div>
+    <div class="step-item active" data-step="0"><div class="step-dot"></div><span class="step-label">Intro</span></div>
     <div class="step-line"></div>
-    <div class="step-item" data-step="1">
-      <div class="step-dot"></div>
-      <span class="step-label">Scène 1</span>
-    </div>
+    <div class="step-item" data-step="1"><div class="step-dot"></div><span class="step-label">Scène 1</span></div>
     <div class="step-line"></div>
-    <div class="step-item" data-step="2">
-      <div class="step-dot"></div>
-      <span class="step-label">Théorie</span>
-    </div>
+    <div class="step-item" data-step="2"><div class="step-dot"></div><span class="step-label">Analyse</span></div>
     <div class="step-line"></div>
-    <div class="step-item" data-step="3">
-      <div class="step-dot"></div>
-      <span class="step-label">Rejeu</span>
-    </div>
+    <div class="step-item" data-step="3"><div class="step-dot"></div><span class="step-label">Théorie</span></div>
     <div class="step-line"></div>
-    <div class="step-item" data-step="4">
-      <div class="step-dot"></div>
-      <span class="step-label">Questions</span>
-    </div>
+    <div class="step-item" data-step="4"><div class="step-dot"></div><span class="step-label">Rejeu</span></div>
     <div class="step-line"></div>
-    <div class="step-item" data-step="5">
-      <div class="step-dot"></div>
-      <span class="step-label">Bilan</span>
-    </div>
+    <div class="step-item" data-step="5"><div class="step-dot"></div><span class="step-label">Questions</span></div>
     <div class="step-line"></div>
-    <div class="step-item" data-step="6">
-      <div class="step-dot"></div>
-      <span class="step-label">Suite</span>
-    </div>
+    <div class="step-item" data-step="6"><div class="step-dot"></div><span class="step-label">Bilan</span></div>
+    <div class="step-line"></div>
+    <div class="step-item" data-step="7"><div class="step-dot"></div><span class="step-label">Suite</span></div>
   </div>
 
   <!-- RÉPUTATION -->
   <div id="rep-bar">
-    <div class="rep-item">
-      <span class="rep-label">Posture</span>
-      <div class="rep-track"><div class="rep-fill posture" id="rp-posture"></div></div>
-      <span class="rep-val" id="rv-posture">--</span>
-    </div>
-    <div class="rep-item">
-      <span class="rep-label">Cadre</span>
-      <div class="rep-track"><div class="rep-fill cadre" id="rp-cadre"></div></div>
-      <span class="rep-val" id="rv-cadre">--</span>
-    </div>
-    <div class="rep-item">
-      <span class="rep-label">Authenticité</span>
-      <div class="rep-track"><div class="rep-fill auth" id="rp-auth"></div></div>
-      <span class="rep-val" id="rv-auth">--</span>
-    </div>
-    <div class="rep-item">
-      <span class="rep-label">Connexion</span>
-      <div class="rep-track"><div class="rep-fill conn" id="rp-conn"></div></div>
-      <span class="rep-val" id="rv-conn">--</span>
-    </div>
+    <div class="rep-item"><span class="rep-label">Posture</span><div class="rep-track"><div class="rep-fill posture" id="rp-posture"></div></div><span class="rep-val" id="rv-posture">--</span></div>
+    <div class="rep-item"><span class="rep-label">Cadre</span><div class="rep-track"><div class="rep-fill cadre" id="rp-cadre"></div></div><span class="rep-val" id="rv-cadre">--</span></div>
+    <div class="rep-item"><span class="rep-label">Authenticité</span><div class="rep-track"><div class="rep-fill auth" id="rp-auth"></div></div><span class="rep-val" id="rv-auth">--</span></div>
+    <div class="rep-item"><span class="rep-label">Connexion</span><div class="rep-track"><div class="rep-fill conn" id="rp-conn"></div></div><span class="rep-val" id="rv-conn">--</span></div>
   </div>
 
-  <!-- SCÈNE -->
+  <!-- SCÈNE UNIQUE : salon face-à-face -->
   <div id="stage">
-    <div class="panel" id="pl">
-      <!-- Décor salon -->
-      <svg style="position:absolute;inset:0;width:100%;height:100%;" viewBox="0 0 500 600" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
-        <!-- Sol -->
-        <rect x="0" y="0" width="500" height="420" fill="#f5f0e8"/>
-        <rect x="0" y="410" width="500" height="12" fill="#ddd4c0"/>
-        <rect x="0" y="422" width="500" height="178" fill="#e8ddd0"/>
-        <!-- Fenêtre gauche grande -->
-        <rect x="30" y="50" width="160" height="220" rx="4" fill="#c8dfe8" stroke="#c0b090" stroke-width="3"/>
-        <line x1="110" y1="50" x2="110" y2="270" stroke="#c0b090" stroke-width="3"/>
-        <line x1="30" y1="160" x2="190" y2="160" stroke="#c0b090" stroke-width="3"/>
-        <rect x="38" y="58" width="62" height="92" rx="2" fill="#dceef4" opacity=".65"/>
-        <rect x="118" y="58" width="62" height="92" rx="2" fill="#dceef4" opacity=".55"/>
-        <rect x="38" y="168" width="62" height="92" rx="2" fill="#dceef4" opacity=".45"/>
-        <rect x="118" y="168" width="62" height="92" rx="2" fill="#dceef4" opacity=".4"/>
-        <!-- Rebord fenêtre -->
-        <rect x="22" y="44" width="176" height="12" rx="3" fill="#c8b898"/>
-        <rect x="22" y="274" width="176" height="10" rx="3" fill="#c8b898"/>
-        <!-- Canapé -->
-        <rect x="50" y="310" width="280" height="90" rx="16" fill="#6a8fa8"/>
-        <rect x="38" y="322" width="32" height="66" rx="12" fill="#5a7f98"/>
-        <rect x="310" y="322" width="32" height="66" rx="12" fill="#5a7f98"/>
-        <rect x="62" y="300" width="256" height="22" rx="10" fill="#7aafc8"/>
-        <!-- Coussins -->
-        <rect x="80" y="318" width="50" height="44" rx="9" fill="#e0c090" transform="rotate(-3 105 340)"/>
-        <rect x="160" y="316" width="50" height="44" rx="9" fill="#d4a880" transform="rotate(2 185 338)"/>
-        <rect x="238" y="318" width="50" height="44" rx="9" fill="#e0c090" transform="rotate(-2 263 340)"/>
-        <!-- Pieds canapé -->
-        <rect x="110" y="400" width="10" height="22" rx="3" fill="#a08060"/>
-        <rect x="228" y="400" width="10" height="22" rx="3" fill="#a08060"/>
-        <!-- Table basse -->
-        <rect x="118" y="392" width="112" height="8" rx="3" fill="#c0a070"/>
-        <!-- Tapis -->
-        <ellipse cx="200" cy="415" rx="140" ry="20" fill="#d4c4a8" opacity=".5"/>
-        <!-- Plante -->
-        <rect x="380" y="358" width="22" height="42" rx="4" fill="#c8a870"/>
-        <circle cx="391" cy="340" r="24" fill="#4a8a4a"/>
-        <circle cx="376" cy="330" r="17" fill="#5a9a5a"/>
-        <circle cx="406" cy="335" r="15" fill="#3a7a3a"/>
-        <!-- Cadre mural -->
-        <rect x="240" y="65" width="90" height="68" rx="3" fill="#eae2d4" stroke="#c8b898" stroke-width="3"/>
-        <rect x="248" y="73" width="74" height="52" rx="2" fill="#d4e0d0"/>
-        <path d="M258 108 Q285 88 310 102 Q325 110 320 95" stroke="#7aaa7a" stroke-width="2.5" fill="none"/>
-        <circle cx="270" cy="95" r="7" fill="#e8d060" opacity=".65"/>
-        <!-- Luminaire -->
-        <line x1="360" y1="0" x2="360" y2="70" stroke="#b8a888" stroke-width="3"/>
-        <ellipse cx="360" cy="85" rx="28" ry="15" fill="#f0e8d0" stroke="#c8b898" stroke-width="2"/>
-        <ellipse cx="360" cy="78" rx="18" ry="8" fill="#f8f0dc" opacity=".8"/>
-      </svg>
-      <div class="ts" id="ts-l">SALON MME DURAND · 14H30</div>
-    </div>
-    <div class="panel" id="pr">
-      <!-- Décor extérieur/toit -->
-      <svg style="position:absolute;inset:0;width:100%;height:100%;" viewBox="0 0 500 600" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
-        <!-- Ciel -->
-        <rect x="0" y="0" width="500" height="360" fill="#a8ccdc"/>
-        <rect x="0" y="0" width="500" height="120" fill="#b8d8e8"/>
-        <!-- Nuages -->
-        <ellipse cx="90" cy="65" rx="50" ry="22" fill="#e0eef4" opacity=".85"/>
-        <ellipse cx="125" cy="58" rx="36" ry="18" fill="#e0eef4" opacity=".9"/>
-        <ellipse cx="60" cy="70" rx="28" ry="14" fill="#fff" opacity=".7"/>
-        <ellipse cx="360" cy="95" rx="44" ry="18" fill="#e0eef4" opacity=".78"/>
-        <ellipse cx="395" cy="88" rx="30" ry="14" fill="#fff" opacity=".7"/>
-        <!-- Soleil -->
-        <circle cx="410" cy="55" r="28" fill="#f0d860" opacity=".85"/>
-        <circle cx="410" cy="55" r="36" fill="#f0d860" opacity=".18"/>
-        <!-- Rayons -->
-        <g stroke="#f0d860" stroke-width="1.5" opacity=".5">
-          <line x1="410" y1="10" x2="410" y2="18"/>
-          <line x1="440" y1="25" x2="434" y2="31"/>
-          <line x1="455" y1="55" x2="447" y2="55"/>
-          <line x1="440" y1="85" x2="434" y2="79"/>
-          <line x1="410" y1="100" x2="410" y2="92"/>
-          <line x1="380" y1="85" x2="386" y2="79"/>
-          <line x1="365" y1="55" x2="373" y2="55"/>
-          <line x1="380" y1="25" x2="386" y2="31"/>
-        </g>
-        <!-- Maison / Toit -->
-        <rect x="38" y="195" width="424" height="305" fill="#f0e8d8" stroke="#c8b898" stroke-width="3"/>
-        <path d="M20" y1="200" d="M20 200 L250 50 L480 200 Z" fill="#a05030" stroke="#804020" stroke-width="3"/>
-        <!-- Lucarnes / Velux -->
-        <rect x="120" y="115" width="70" height="50" rx="3" fill="#2a4a6a" stroke="#1a3a5a" stroke-width="2"/>
-        <line x1="155" y1="115" x2="155" y2="165" stroke="#4a6a8a" stroke-width="1.2"/>
-        <line x1="120" y1="140" x2="190" y2="140" stroke="#4a6a8a" stroke-width="1.2"/>
-        <rect x="125" y="120" width="26" height="16" fill="#3a8ab8" opacity=".5"/>
-        <rect x="158" y="120" width="26" height="16" fill="#3a8ab8" opacity=".5"/>
-        <!-- Panneaux solaires sur le toit -->
-        <g transform="rotate(-22 250 140)">
-          <rect x="168" y="100" width="56" height="38" rx="2" fill="#2a3a5a" stroke="#1a2a4a" stroke-width="1.5"/>
-          <line x1="180" y1="100" x2="180" y2="138" stroke="#3a5a7a" stroke-width="1"/>
-          <line x1="196" y1="100" x2="196" y2="138" stroke="#3a5a7a" stroke-width="1"/>
-          <line x1="212" y1="100" x2="212" y2="138" stroke="#3a5a7a" stroke-width="1"/>
-          <line x1="168" y1="113" x2="224" y2="113" stroke="#3a5a7a" stroke-width="1"/>
-          <line x1="168" y1="126" x2="224" y2="126" stroke="#3a5a7a" stroke-width="1"/>
-          <!-- Reflet solaire -->
-          <rect x="172" y="102" width="12" height="6" rx="1" fill="#7aadd8" opacity=".4"/>
-        </g>
-        <g transform="rotate(-22 320 115)">
-          <rect x="234" y="88" width="56" height="38" rx="2" fill="#2a3a5a" stroke="#1a2a4a" stroke-width="1.5"/>
-          <line x1="246" y1="88" x2="246" y2="126" stroke="#3a5a7a" stroke-width="1"/>
-          <line x1="262" y1="88" x2="262" y2="126" stroke="#3a5a7a" stroke-width="1"/>
-          <line x1="278" y1="88" x2="278" y2="126" stroke="#3a5a7a" stroke-width="1"/>
-          <line x1="234" y1="101" x2="290" y2="101" stroke="#3a5a7a" stroke-width="1"/>
-          <line x1="234" y1="114" x2="290" y2="114" stroke="#3a5a7a" stroke-width="1"/>
-          <rect x="238" y="90" width="12" height="6" rx="1" fill="#7aadd8" opacity=".4"/>
-        </g>
-        <!-- Fenêtres maison -->
-        <rect x="80" y="245" width="82" height="94" rx="4" fill="#c8dfe8" stroke="#c0b090" stroke-width="3"/>
-        <line x1="121" y1="245" x2="121" y2="339" stroke="#c0b090" stroke-width="3"/>
-        <line x1="80" y1="292" x2="162" y2="292" stroke="#c0b090" stroke-width="3"/>
-        <!-- Porte -->
-        <rect x="298" y="278" width="68" height="152" rx="4" fill="#8a6a4a" stroke="#6a4a2a" stroke-width="3"/>
-        <circle cx="355" cy="360" r="5" fill="#c0a060"/>
-        <rect x="308" y="290" width="20" height="30" rx="2" fill="#7a5a3a" opacity=".6"/>
-        <rect x="340" y="290" width="20" height="30" rx="2" fill="#7a5a3a" opacity=".6"/>
-        <!-- Jardin -->
-        <rect x="0" y="470" width="500" height="130" fill="#5a9a4a"/>
-        <rect x="0" y="465" width="500" height="8" fill="#4a8a3a"/>
-        <!-- Allée -->
-        <path d="M298 470 L316 600 L368 600 L350 470 Z" fill="#d8d0b8"/>
-        <!-- Arbres -->
-        <circle cx="56" cy="488" r="24" fill="#3a7a2a"/>
-        <circle cx="74" cy="480" r="20" fill="#4a8a3a"/>
-        <rect x="62" y="504" width="9" height="28" fill="#6a4a2a"/>
-        <circle cx="440" cy="486" r="26" fill="#3a7a2a"/>
-        <circle cx="458" cy="492" r="18" fill="#4a8a3a"/>
-        <rect x="446" y="508" width="9" height="28" fill="#6a4a2a"/>
-        <!-- Boîte aux lettres -->
-        <rect x="182" y="476" width="44" height="32" rx="3" fill="#c8b898" stroke="#a89878" stroke-width="1.5"/>
-        <circle cx="204" cy="492" r="9" fill="#5a5a5a"/>
-        <rect x="198" y="488" width="12" height="2" fill="#888"/>
-      </svg>
-      <div class="ts" id="ts-r">EXTÉRIEUR · TOIT SOLAIRE</div>
-    </div>
+    <!-- Décor salon plein écran -->
+    <svg id="scene-bg" viewBox="0 0 900 540" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+      <!-- Fond mur -->
+      <rect x="0" y="0" width="900" height="540" fill="#f2ece0"/>
+      <!-- Papier peint subtil haut -->
+      <rect x="0" y="0" width="900" height="320" fill="#ede7d8"/>
+      <!-- Plinthe -->
+      <rect x="0" y="318" width="900" height="10" fill="#c8b898"/>
+      <!-- Sol parquet -->
+      <rect x="0" y="328" width="900" height="212" fill="#d4a96a"/>
+      <!-- Lames de parquet -->
+      <g stroke="#c09050" stroke-width=".8" opacity=".35">
+        <line x1="0" y1="355" x2="900" y2="355"/><line x1="0" y1="382" x2="900" y2="382"/>
+        <line x1="0" y1="409" x2="900" y2="409"/><line x1="0" y1="436" x2="900" y2="436"/>
+        <line x1="0" y1="463" x2="900" y2="463"/><line x1="0" y1="490" x2="900" y2="490"/>
+        <line x1="0" y1="517" x2="900" y2="517"/>
+        <line x1="150" y1="328" x2="150" y2="540"/><line x1="300" y1="328" x2="300" y2="540"/>
+        <line x1="450" y1="328" x2="450" y2="540"/><line x1="600" y1="328" x2="600" y2="540"/>
+        <line x1="750" y1="328" x2="750" y2="540"/>
+      </g>
+      <!-- Tapis salon -->
+      <ellipse cx="450" cy="430" rx="280" ry="80" fill="#b8a080" opacity=".3"/>
+      <ellipse cx="450" cy="430" rx="260" ry="68" fill="none" stroke="#c0a878" stroke-width="2" opacity=".4"/>
+
+      <!-- Grande fenêtre à gauche avec lumière naturelle -->
+      <rect x="40" y="40" width="180" height="240" rx="6" fill="#b8d4e8" stroke="#c0a878" stroke-width="3"/>
+      <line x1="130" y1="40" x2="130" y2="280" stroke="#c0a878" stroke-width="3"/>
+      <line x1="40" y1="160" x2="220" y2="160" stroke="#c0a878" stroke-width="3"/>
+      <rect x="48" y="48" width="74" height="104" rx="2" fill="#cce0f0" opacity=".55"/>
+      <rect x="138" y="48" width="74" height="104" rx="2" fill="#cce0f0" opacity=".5"/>
+      <rect x="48" y="168" width="74" height="104" rx="2" fill="#cce0f0" opacity=".4"/>
+      <rect x="138" y="168" width="74" height="104" rx="2" fill="#cce0f0" opacity=".38"/>
+      <!-- Embrasure fenêtre -->
+      <rect x="30" y="32" width="196" height="14" rx="4" fill="#c8b898"/>
+      <rect x="30" y="284" width="196" height="10" rx="4" fill="#c8b898"/>
+      <!-- Rideau gauche -->
+      <path d="M30 32 Q38 160 34 290 L54 290 Q56 160 50 32Z" fill="#d4c0a0" opacity=".7"/>
+      <!-- Rideau droit -->
+      <path d="M226 32 Q218 160 222 290 L202 290 Q200 160 206 32Z" fill="#d4c0a0" opacity=".7"/>
+      <!-- Lumière soleil qui entre -->
+      <path d="M220 80 L420 250 L400 270 L200 100Z" fill="#f8f0d0" opacity=".12"/>
+
+      <!-- Canapé 3 places au centre-fond -->
+      <rect x="260" y="260" width="380" height="90" rx="18" fill="#6a7a8a"/>
+      <rect x="245" y="272" width="38" height="72" rx="14" fill="#5a6a7a"/>
+      <rect x="617" y="272" width="38" height="72" rx="14" fill="#5a6a7a"/>
+      <rect x="272" y="250" width="356" height="24" rx="12" fill="#7a9aaa"/>
+      <!-- Coussins canapé -->
+      <rect x="290" y="268" width="80" height="52" rx="10" fill="#e8d0a0" transform="rotate(-2 330 294)"/>
+      <rect x="400" y="266" width="80" height="52" rx="10" fill="#d8b888" transform="rotate(1 440 292)"/>
+      <rect x="510" y="268" width="80" height="52" rx="10" fill="#e8d0a0" transform="rotate(-1 550 294)"/>
+      <!-- Pieds canapé -->
+      <rect x="308" y="350" width="12" height="20" rx="3" fill="#8a6a40"/>
+      <rect x="438" y="350" width="12" height="20" rx="3" fill="#8a6a40"/>
+      <rect x="568" y="350" width="12" height="20" rx="3" fill="#8a6a40"/>
+
+      <!-- Table basse devant le canapé -->
+      <rect x="330" y="358" width="240" height="10" rx="4" fill="#b8904a"/>
+      <rect x="340" y="368" width="6" height="30" rx="2" fill="#a07838"/>
+      <rect x="554" y="368" width="6" height="30" rx="2" fill="#a07838"/>
+      <!-- Objet sur table : tasse et dossier -->
+      <ellipse cx="390" cy="356" rx="14" ry="7" fill="#e8e0d0"/>
+      <ellipse cx="390" cy="352" rx="12" ry="6" fill="#f5f0e8"/>
+      <rect x="450" y="342" width="60" height="14" rx="2" fill="#ddd8cc"/>
+      <rect x="452" y="344" width="56" height="10" rx="1" fill="#eee9df"/>
+
+      <!-- Étagère murale droite -->
+      <rect x="680" y="80" width="190" height="12" rx="3" fill="#c0a878"/>
+      <rect x="680" y="92" width="190" height="2" rx="1" fill="#a08858"/>
+      <!-- Livres sur étagère -->
+      <rect x="690" y="48" width="18" height="32" rx="2" fill="#2a5a7a"/><rect x="710" y="52" width="14" height="28" rx="2" fill="#8a4a2a"/><rect x="726" y="46" width="20" height="34" rx="2" fill="#4a7a4a"/><rect x="748" y="54" width="12" height="26" rx="2" fill="#7a5a2a"/><rect x="762" y="49" width="16" height="31" rx="2" fill="#6a3a6a"/>
+
+      <!-- Tableau mural -->
+      <rect x="380" y="45" width="140" height="100" rx="4" fill="#e8e0d0" stroke="#c8b080" stroke-width="3"/>
+      <rect x="390" y="55" width="120" height="80" rx="2" fill="#d0e0d8"/>
+      <circle cx="450" cy="95" r="18" fill="#a0c0b0" opacity=".6"/>
+      <path d="M418 110 Q438 85 458 95 Q478 105 502 88" stroke="#6a9a80" stroke-width="2" fill="none"/>
+
+      <!-- Plante verte droite -->
+      <rect x="800" y="280" width="28" height="48" rx="5" fill="#c8a060"/>
+      <ellipse cx="814" cy="275" rx="35" ry="38" fill="#4a8a3a"/>
+      <ellipse cx="795" cy="260" rx="22" ry="25" fill="#5a9a4a"/>
+      <ellipse cx="832" cy="265" rx="20" ry="22" fill="#3a7a2a"/>
+      <ellipse cx="814" cy="248" rx="18" ry="20" fill="#4a8a3a"/>
+
+      <!-- Luminaire plafond -->
+      <line x1="450" y1="0" x2="450" y2="40" stroke="#b0a080" stroke-width="3"/>
+      <ellipse cx="450" cy="52" rx="40" ry="16" fill="#f0e8c8" stroke="#c8b080" stroke-width="2"/>
+      <ellipse cx="450" cy="44" rx="26" ry="10" fill="#f8f4e0" opacity=".8"/>
+      <!-- Halo lumière douce -->
+      <ellipse cx="450" cy="200" rx="200" ry="120" fill="#fff9e0" opacity=".06"/>
+    </svg>
+
+    <div class="ts" id="ts-scene">SALON MME DURAND · ST-ÉTIENNE · 14H30</div>
+    <!-- Spotlight dynamique (overlay semi-transparent sur un côté) -->
+    <div id="spotlight"></div>
 
     <!-- Personnages -->
     <div class="char" id="c-lucas"></div>
@@ -963,18 +457,13 @@ html,body{
   </div>
 </div>
 
-<!-- ══════════════════════════════════════════
-     OVERLAYS PLEIN ÉCRAN (position:fixed)
-══════════════════════════════════════════ -->
-
-<!-- Théorie -->
+<!-- ══ THEORY OVERLAY ══ -->
 <div id="theory-overlay">
   <div class="th-inner">
     <div class="th-char" id="th-char"></div>
     <div class="th-bubble">
       <div class="th-kicker" id="th-kicker"></div>
       <div class="th-title" id="th-title"></div>
-      <div class="th-count" id="th-count"></div>
       <div class="th-body" id="th-body"></div>
       <div class="th-nav">
         <button class="th-btn" id="th-prev" style="visibility:hidden;">← Précédent</button>
@@ -985,15 +474,16 @@ html,body{
   </div>
 </div>
 
-<!-- Reveal -->
+<!-- ══ REVEAL ══ -->
 <div class="ov" id="ov-reveal">
   <div class="ov-inner">
-    <div class="ov-kicker">Réponse à votre question d'intro</div>
-    <h2 class="ov-title">Quand un prospect dit « c'est trop cher », que se passe-t-il ?</h2>
+    <div class="ov-breadcrumb">INTRO <span>›</span> Révélation <div class="ov-progress-mini"><div class="ov-progress-fill" style="width:14%"></div></div></div>
+    <div class="ov-kicker">Ce que la science dit vraiment</div>
+    <h2 class="ov-title">Quand un prospect dit « c'est trop cher »…</h2>
     <div id="rv-choice" class="reveal-choice"></div>
     <div id="rv-body" class="reveal-body"></div>
     <div class="reveal-common">
-      <p>Retenez l'essentiel : ce n'est pas le prix qui bloque. C'est la façon dont vous répondez au prix. Chaque argument que vous avancez <b>renforce le mur</b> au lieu de le franchir. Lucas va le découvrir à ses dépens.</p>
+      <p>Retenez ça : ce n'est pas le prix qui bloque. C'est la façon dont vous y répondez. Chaque argument que vous avancez <b>renforce le mur</b> au lieu de le franchir. Lucas va en faire la douloureuse expérience dans quelques secondes.</p>
     </div>
     <div style="margin-top:18px;">
       <button class="btn-go" id="btn-enter-scene">Entrer dans le salon →</button>
@@ -1001,41 +491,43 @@ html,body{
   </div>
 </div>
 
-<!-- Practice mid -->
+<!-- ══ PRACTICE MID ══ -->
 <div class="ov" id="ov-practice-mid">
   <div class="ov-inner">
-    <div class="ov-kicker">Mise en pratique · 1/2</div>
-    <h2 class="ov-title">À vous de jouer</h2>
-    <p class="practice-desc">Vous venez de voir la méthode en trois temps. Avant de voir Lucas l'appliquer, mettez-vous en situation mentalement.</p>
+    <div class="ov-breadcrumb">THÉORIE <span>›</span> Mise en pratique · 1/2 <div class="ov-progress-mini"><div class="ov-progress-fill" style="width:57%"></div></div></div>
+    <div class="ov-kicker">À vous de jouer</div>
+    <h2 class="ov-title">Avant de voir Lucas l'appliquer</h2>
+    <p class="practice-desc">Vous venez de voir la méthode en trois temps. Avant le rejeu, mettez-vous mentalement en situation : que diriez-vous en premier ?</p>
     <div class="practice-scenario">
-      <b>Contexte :</b> Vous êtes chez un prospect. Il vient de dire : <em>« 18 000 euros, c'est vraiment beaucoup pour des panneaux. »</em>
+      <b>Contexte :</b> Vous êtes assis en face d'un prospect. Il vient de dire : <em>« 18 000 euros, c'est vraiment beaucoup pour nous. »</em><br><br>
+      <b>Votre première réaction ?</b> Prenez 15 secondes. Formulez votre question de clarification mentalement avant de continuer.
     </div>
     <div class="mode-selector">
       <button class="mode-btn" disabled>
         <span class="mode-icon">🎙️</span>
         <span class="mode-label">Mode Vocal</span>
-        <span class="mode-desc">Parlez au micro pour répondre</span>
+        <span class="mode-desc">Parlez au micro — analyse en temps réel</span>
         <span class="mode-soon">Prochainement</span>
       </button>
       <button class="mode-btn active-mode" id="mode-keyboard-mid">
-        <span class="mode-icon">⌨</span>
-        <span class="mode-label">Continuer</span>
-        <span class="mode-desc">Voir Lucas appliquer la méthode</span>
+        <span class="mode-icon">▶</span>
+        <span class="mode-label">Voir le rejeu</span>
+        <span class="mode-desc">Observer Lucas appliquer la méthode</span>
       </button>
     </div>
-    <p class="practice-note">Le mode vocal utilisera la Web Speech API (Chrome/Edge) pour une simulation de dialogue oral en temps réel. Disponible dans la prochaine mise à jour.</p>
   </div>
 </div>
 
-<!-- Bilan -->
+<!-- ══ BILAN ══ -->
 <div class="ov" id="ov-bilan">
   <div class="ov-inner">
-    <div class="ov-kicker">Bilan personnalisé</div>
+    <div class="ov-breadcrumb">QUESTIONS <span>›</span> Bilan <div class="ov-progress-mini"><div class="ov-progress-fill" style="width:86%"></div></div></div>
+    <div class="ov-kicker">Diagnostic personnalisé · Épisode 1</div>
     <h2 class="ov-title" id="bil-title">Analyse de votre session</h2>
     <div class="bilan-score" id="bil-pts">0</div>
     <span class="bs-max">POINTS SUR 12</span>
     <div class="sdr-profile">
-      <div class="sp-label">PROFIL COMMERCIAL · ÉPISODE 1</div>
+      <div class="sp-label">PROFIL SDR · ÉPISODE 1</div>
       <div class="sp-title" id="sdr-profile-title"></div>
       <div class="sp-desc" id="sdr-profile-desc"></div>
       <div class="rep-profile" id="rep-profile-bars"></div>
@@ -1048,40 +540,47 @@ html,body{
   </div>
 </div>
 
-<!-- Practice end -->
+<!-- ══ PRACTICE END ══ -->
 <div class="ov" id="ov-practice-end">
   <div class="ov-inner">
+    <div class="ov-breadcrumb">BILAN <span>›</span> Pratique finale <div class="ov-progress-mini"><div class="ov-progress-fill" style="width:93%"></div></div></div>
     <div class="ov-kicker">Mise en pratique · 2/2</div>
-    <h2 class="ov-title">Récapitulatif : les trois temps</h2>
-    <p class="practice-desc">Vous avez vu Lucas appliquer la méthode. Maintenant, imaginez ce prospect : <em>« Je ne suis pas sûr que ça marche chez moi, mon toit n'est pas bien orienté. »</em></p>
+    <h2 class="ov-title">Une dernière situation</h2>
+    <p class="practice-desc">Même prospect. Nouvelle objection. Elle vient de dire :</p>
     <div class="practice-scenario">
-      <b>Votre mission :</b> Formulez mentalement vos trois étapes — clarification, réflexion, comparaison — avant de passer à l'épisode suivant.
+      <em>« Je ne suis pas sûre que ça marche chez moi — mon toit n'est pas bien orienté. »</em><br><br>
+      <b>Votre mission :</b> Formulez mentalement votre réponse en trois temps. Pas d'argument. Une question de clarification. Une question de réflexion. Une comparaison.<br><br>
+      <b>Question bonus :</b> Quelle image concrète utiliseriez-vous pour cette objection précise ?
     </div>
     <div class="mode-selector">
       <button class="mode-btn" disabled>
         <span class="mode-icon">🎙️</span>
         <span class="mode-label">Mode Vocal</span>
-        <span class="mode-desc">Parlez au micro pour répondre</span>
+        <span class="mode-desc">Entraînement oral avec feedback</span>
         <span class="mode-soon">Prochainement</span>
       </button>
       <button class="mode-btn active-mode" id="mode-keyboard-end">
-        <span class="mode-icon">⌨</span>
-        <span class="mode-label">Terminer l'épisode</span>
-        <span class="mode-desc">Passer à la fin</span>
+        <span class="mode-icon">✓</span>
+        <span class="mode-label">Valider l'épisode</span>
+        <span class="mode-desc">Voir la fin et l'aperçu de l'épisode 2</span>
       </button>
     </div>
   </div>
 </div>
 
-<!-- Final -->
+<!-- ══ FINAL ══ -->
 <div class="ov" id="ov-final">
   <div class="ov-inner final-inner">
-    <div class="ov-kicker" style="color:var(--red);">Fin de l'épisode 1</div>
-    <h2 class="ov-title" style="font-size:2.2rem;">La Réactance</h2>
+    <div class="ov-breadcrumb" style="justify-content:center;">ÉPISODE 1 TERMINÉ <div class="ov-progress-mini" style="max-width:80px;"><div class="ov-progress-fill" style="width:100%;background:var(--teal);"></div></div></div>
+    <div class="ov-kicker" style="color:var(--red);text-align:center;">Fin de l'épisode 1</div>
+    <h2 class="ov-title" style="font-size:2.2rem;text-align:center;">La Réactance</h2>
+    <p style="font-size:.76rem;color:var(--txt-m);margin-bottom:24px;max-width:520px;margin-left:auto;margin-right:auto;line-height:1.65;">
+      Lucas vient de comprendre quelque chose que 90 % des commerciaux ne comprennent jamais. Mais comprendre et <em>faire</em> sont deux choses très différentes.
+    </p>
     <div class="next-ep">
       <div class="ne-label">ÉPISODE 2 · PROCHAINEMENT</div>
-      <div class="ne-title">Les trois temps face au mur idéologique</div>
-      <p class="ne-tease">Lucas va rencontrer quelqu'un que les techniques ne peuvent pas toucher. Pas d'objection de prix. Pas de doute sur la garantie. Un mur construit depuis des années, ciment et tout. La méthode suffit-elle vraiment ?</p>
+      <div class="ne-title">Le mur idéologique</div>
+      <p class="ne-tease">Lucas va rencontrer quelqu'un que la méthode ne peut pas toucher — pas encore. Pas d'objection de prix. Pas de doute sur la garantie. Un système de croyances construit depuis des années. La prochaine fois, il va faire quelque chose que 99 % des commerciaux n'essaient jamais. Et qui lui a coûté une vente, deux ans plus tôt.</p>
     </div>
     <div class="transcript-locked">
       <div class="tr-line">
@@ -1090,16 +589,16 @@ html,body{
       </div>
       <div class="tr-line">
         <div class="tr-speaker" style="color:var(--blue);">M. LEROY</div>
-        <div class="tr-blurred">Mon voisin en a installé il y a deux ans et il ne m'a jamais dit que...</div>
+        <div class="tr-blurred">Mon voisin en a installé il y a deux ans. Il m'a dit que la facture n'a pas bougé d'un centime. Ces trucs-là, c'est du flan marketing.</div>
       </div>
       <div class="tr-line">
         <div class="tr-speaker" style="color:var(--gold);">LUCAS</div>
-        <div class="tr-blurred">Ce qui est intéressant dans ce que vous dites, c'est que vous avez une source directe. Est-ce que...</div>
+        <div class="tr-blurred">Ce que vous décrivez, c'est exactement le scénario qui m'intéresse. Qu'est-ce qui ferait que vous changeriez d'avis sur ce point précis ?</div>
       </div>
-      <div class="tr-locked"><span class="tr-locked-text">⛔ ACCÈS REFUSÉ — ÉPISODE 2 VERROUILLÉ</span></div>
+      <div class="tr-locked"><span class="tr-locked-text">⛔ ÉPISODE 2 VERROUILLÉ</span></div>
     </div>
     <div class="final-actions">
-      <button class="btn-go ghost" onclick="location.reload()">Revoir l'épisode</button>
+      <button class="btn-go ghost" onclick="location.reload()">↺ Revoir l'épisode</button>
     </div>
   </div>
 </div>
@@ -1108,219 +607,289 @@ html,body{
 (function(){
 "use strict";
 
-/* ═══════════════════════════════════════════
-   SVG PERSONNAGES
-═══════════════════════════════════════════ */
+/* ══════════════════════════════════════════
+   SVG PERSONNAGES — version corrigée
+   - Pas de casque, pas d'écouteurs
+   - Anatomie cohérente (têtes proportionnées)
+   - Bouches animées via stroke-dashoffset (organique)
+══════════════════════════════════════════ */
 
-/* ── Lucas (commercial jeune, veste bleue) ── */
-var SVG_LUCAS = '<svg viewBox="0 0 200 300" xmlns="http://www.w3.org/2000/svg">'
-/* Corps / veste */
-+ '<path d="M42 300 L42 238 Q42 205 72 192 L128 192 Q158 205 158 238 L158 300 Z" fill="#3a5a7a"/>'
-/* Chemise col */
-+ '<path d="M88 192 L100 214 L112 192 L106 188 L100 206 L94 188 Z" fill="#5a7a9a"/>'
-/* Cravate */
-+ '<path d="M96 192 L100 230 L104 192 L102 188 L100 194 L98 188 Z" fill="#1a3a6a" opacity=".6"/>'
-/* Bras gauche (neutre) */
-+ '<g id="lk-arm-n"><path d="M42 218 Q22 228 20 252" stroke="#3a5a7a" stroke-width="18" fill="none" stroke-linecap="round"/><ellipse cx="20" cy="256" rx="10" ry="8" fill="#e0ac7d"/></g>'
-/* Bras gauche (geste pointage = eager) */
-+ '<g id="lk-arm-g" style="display:none"><path d="M42 218 Q18 198 14 170" stroke="#3a5a7a" stroke-width="18" fill="none" stroke-linecap="round"/><ellipse cx="14" cy="166" rx="9" ry="8" fill="#e0ac7d"/><path d="M10 160 L22 170" stroke="#e0ac7d" stroke-width="4" stroke-linecap="round"/></g>'
-/* Bras droit (neutre) */
-+ '<g id="lk-arm-r"><path d="M158 218 Q178 228 180 252" stroke="#3a5a7a" stroke-width="18" fill="none" stroke-linecap="round"/><ellipse cx="180" cy="256" rx="10" ry="8" fill="#e0ac7d"/></g>'
-/* Bras ouverts (calm/accueil) */
-+ '<g id="lk-arms-open" style="display:none"><path d="M42 218 Q14 212 10 188" stroke="#3a5a7a" stroke-width="16" fill="none" stroke-linecap="round"/><ellipse cx="10" cy="184" rx="9" ry="8" fill="#e0ac7d"/><path d="M158 218 Q186 212 190 188" stroke="#3a5a7a" stroke-width="16" fill="none" stroke-linecap="round"/><ellipse cx="190" cy="184" rx="9" ry="8" fill="#e0ac7d"/></g>'
-/* Cou */
-+ '<rect x="89" y="162" width="22" height="34" rx="9" fill="#e0ac7d"/>'
-/* Oreilles */
-+ '<ellipse cx="57" cy="140" rx="9" ry="12" fill="#e0ac7d"/>'
-+ '<ellipse cx="143" cy="140" rx="9" ry="12" fill="#e0ac7d"/>'
-/* Tête */
-+ '<ellipse cx="100" cy="128" rx="45" ry="52" fill="#f0bd90"/>'
-/* Cheveux */
-+ '<path d="M55 126 Q52 66 100 62 Q148 66 145 126 Q143 96 122 88 Q112 78 88 84 Q68 90 60 108 Q55 118 55 126 Z" fill="#3a2a1a"/>'
-/* Lunettes monture fine */
-+ '<path d="M55 128 Q100 66 145 128" stroke="#ddd8cc" stroke-width="6" fill="none" stroke-linecap="round"/>'
-+ '<ellipse cx="57" cy="140" rx="11" ry="14" fill="#ddd8cc"/>'
-+ '<path d="M62 152 Q78 178 98 174" stroke="#ddd8cc" stroke-width="4" fill="none" stroke-linecap="round"/>'
-+ '<circle cx="100" cy="175" r="7" fill="#ddd8cc"/>'
-/* Sourcils */
-+ '<g id="lk-brow-n"><path d="M74 118 q12-5 22 0" stroke="#3a2a1a" stroke-width="4.5" fill="none" stroke-linecap="round"/><path d="M104 118 q12-5 22 0" stroke="#3a2a1a" stroke-width="4.5" fill="none" stroke-linecap="round"/></g>'
-+ '<g id="lk-brow-s" style="display:none"><path d="M76 112 q10-3 18 6" stroke="#3a2a1a" stroke-width="4" fill="none" stroke-linecap="round"/><path d="M108 118 q10-10 18-5" stroke="#3a2a1a" stroke-width="4" fill="none" stroke-linecap="round"/></g>'
-+ '<g id="lk-brow-c" style="display:none"><path d="M74 116 h22" stroke="#3a2a1a" stroke-width="4.5" stroke-linecap="round"/><path d="M104 114 h22" stroke="#3a2a1a" stroke-width="4.5" stroke-linecap="round"/></g>'
-+ '<g id="lk-brow-t" style="display:none"><path d="M76 116 q12-7 20 0" stroke="#3a2a1a" stroke-width="4" fill="none" stroke-linecap="round"/><path d="M106 122 q10 2 20-3" stroke="#3a2a1a" stroke-width="4" fill="none" stroke-linecap="round"/></g>'
-/* Yeux */
-+ '<ellipse cx="84" cy="132" rx="6" ry="7" fill="#1c1c24"/>'
-+ '<ellipse cx="116" cy="132" rx="6" ry="7" fill="#1c1c24"/>'
-+ '<ellipse cx="86" cy="130" rx="2.2" ry="2.5" fill="#fff"/>'
-+ '<ellipse cx="118" cy="130" rx="2.2" ry="2.5" fill="#fff"/>'
-/* Nez */
-+ '<path d="M100 136 q5 10-3 15" stroke="#c98d5f" stroke-width="3" fill="none" stroke-linecap="round"/>'
-/* Bouche fermée */
-+ '<path class="mouth-closed" d="M88 158 q12 5 22 0" stroke="#8a4a34" stroke-width="4" fill="none" stroke-linecap="round"/>'
-/* Bouche ouverte (parole via animateMotion) */
-+ '<g class="mouth-open" style="display:none">'
-+ '<path d="M88 156 q12 6 22 0" stroke="#8a4a34" stroke-width="3.5" fill="none" stroke-linecap="round"/>'
-+ '<path d="M90 157 Q100 168 110 157" fill="#7a3a28" stroke="none"/>'
-+ '<animateTransform attributeName="transform" type="scale" values="1 0.7;1 1;1 0.8;1 1.05;1 0.75;1 1" dur="0.45s" repeatCount="indefinite" additive="sum"/>'
-+ '</g>'
-/* Bouche triste */
-+ '<path class="mouth-sad" style="display:none" d="M90 162 q10-7 20 0" stroke="#8a4a34" stroke-width="3.5" fill="none" stroke-linecap="round"/>'
-/* Bouche sourire */
-+ '<path class="mouth-ok" style="display:none" d="M86 153 q14 11 26 0" stroke="#8a4a34" stroke-width="4" fill="none" stroke-linecap="round"/>'
-/* Bouche neutre pensive */
-+ '<path class="mouth-think" style="display:none" d="M92 158 q8 1 14 0" stroke="#8a4a34" stroke-width="3.5" fill="none" stroke-linecap="round"/>'
-/* Goutte de sueur (stressed) */
-+ '<path class="sweat" style="display:none" d="M150 106 q8 13 0 19 q-8-6 0-19" fill="#7fd4ff"/>'
-'</svg>';
+/* ── LUCAS — commercial 30 ans, veste bleue marine, chemise claire ── */
+var SVG_LUCAS = `<svg viewBox="0 0 200 320" xmlns="http://www.w3.org/2000/svg">
+  <!-- Corps / veste bleue marine -->
+  <path d="M45 320 L45 240 Q45 208 72 196 L128 196 Q155 208 155 240 L155 320 Z" fill="#2a4a72"/>
+  <!-- Revers veste -->
+  <path d="M90 196 L100 218 L110 196 L105 192 L100 210 L95 192 Z" fill="#4a6a92"/>
+  <!-- Chemise bleue claire visible au col -->
+  <path d="M88 196 L92 214 L100 206 L108 214 L112 196" fill="#7a9ab8" stroke="#5a7a98" stroke-width="1"/>
+  <!-- Bras gauche — neutre le long du corps -->
+  <g id="lk-arm-n">
+    <path d="M45 228 Q24 240 22 268" stroke="#2a4a72" stroke-width="20" fill="none" stroke-linecap="round"/>
+    <ellipse cx="22" cy="272" rx="11" ry="9" fill="#e0ac7d"/>
+  </g>
+  <!-- Bras gauche — geste d'ouverture (expliquer) -->
+  <g id="lk-arm-g" style="display:none">
+    <path d="M45 228 Q20 210 16 182" stroke="#2a4a72" stroke-width="20" fill="none" stroke-linecap="round"/>
+    <ellipse cx="16" cy="178" rx="10" ry="9" fill="#e0ac7d"/>
+  </g>
+  <!-- Bras droit — neutre -->
+  <g id="lk-arm-r">
+    <path d="M155 228 Q176 240 178 268" stroke="#2a4a72" stroke-width="20" fill="none" stroke-linecap="round"/>
+    <ellipse cx="178" cy="272" rx="11" ry="9" fill="#e0ac7d"/>
+  </g>
+  <!-- Bras ouverts — accueil / écoute -->
+  <g id="lk-arms-open" style="display:none">
+    <path d="M45 228 Q16 218 12 192" stroke="#2a4a72" stroke-width="18" fill="none" stroke-linecap="round"/>
+    <ellipse cx="12" cy="188" rx="10" ry="8" fill="#e0ac7d"/>
+    <path d="M155 228 Q184 218 188 192" stroke="#2a4a72" stroke-width="18" fill="none" stroke-linecap="round"/>
+    <ellipse cx="188" cy="188" rx="10" ry="8" fill="#e0ac7d"/>
+  </g>
+  <!-- Cou -->
+  <rect x="88" y="168" width="24" height="32" rx="10" fill="#e0ac7d"/>
+  <!-- Oreilles — sans casque -->
+  <ellipse cx="62" cy="148" rx="10" ry="13" fill="#d4a070"/>
+  <ellipse cx="138" cy="148" rx="10" ry="13" fill="#d4a070"/>
+  <!-- Tête — proportions normales (légèrement ovale) -->
+  <ellipse cx="100" cy="136" rx="42" ry="48" fill="#f0bd90"/>
+  <!-- Cheveux bruns courts structurés -->
+  <path d="M58 132 Q56 76 100 70 Q144 76 142 132 Q140 98 122 90 Q110 82 88 86 Q68 92 62 110 Q58 120 58 132Z" fill="#2a1a0e"/>
+  <path d="M58 132 Q56 78 100 70 Q72 76 62 100 Q57 116 58 132Z" fill="#1e1208"/>
+  <!-- Sourcils — neutre -->
+  <g id="lk-brow-n">
+    <path d="M74 122 q14-5 24 0" stroke="#2a1a0e" stroke-width="4" fill="none" stroke-linecap="round"/>
+    <path d="M102 122 q14-5 24 0" stroke="#2a1a0e" stroke-width="4" fill="none" stroke-linecap="round"/>
+  </g>
+  <!-- Sourcils — stressé / trop insistant -->
+  <g id="lk-brow-s" style="display:none">
+    <path d="M76 116 q10-2 18 8" stroke="#2a1a0e" stroke-width="4" fill="none" stroke-linecap="round"/>
+    <path d="M106 124 q10-10 18-5" stroke="#2a1a0e" stroke-width="4" fill="none" stroke-linecap="round"/>
+  </g>
+  <!-- Sourcils — confiant / calme -->
+  <g id="lk-brow-c" style="display:none">
+    <path d="M74 122 h24" stroke="#2a1a0e" stroke-width="4" stroke-linecap="round"/>
+    <path d="M102 122 h24" stroke="#2a1a0e" stroke-width="4" stroke-linecap="round"/>
+  </g>
+  <!-- Sourcils — souriant / chaleureux -->
+  <g id="lk-brow-t" style="display:none">
+    <path d="M74 120 q14-6 22 0" stroke="#2a1a0e" stroke-width="4" fill="none" stroke-linecap="round"/>
+    <path d="M104 126 q10 2 22-2" stroke="#2a1a0e" stroke-width="4" fill="none" stroke-linecap="round"/>
+  </g>
+  <!-- Yeux marron -->
+  <ellipse cx="84" cy="138" rx="7" ry="8" fill="#1e1818"/>
+  <ellipse cx="116" cy="138" rx="7" ry="8" fill="#1e1818"/>
+  <ellipse cx="86" cy="136" rx="2.5" ry="3" fill="#fff"/>
+  <ellipse cx="118" cy="136" rx="2.5" ry="3" fill="#fff"/>
+  <!-- Nez -->
+  <path d="M100 142 q5 11-3 16" stroke="#c08050" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <!-- ====== BOUCHE animée organiquement ====== -->
+  <!-- Bouche fermée neutre -->
+  <path class="mouth-closed" d="M88 164 q12 4 22 0" stroke="#8a4a34" stroke-width="4" fill="none" stroke-linecap="round"/>
+  <!-- Bouche ouverte parole : s'ouvre/ferme via JS sur l'ellipse -->
+  <g class="mouth-open" style="display:none">
+    <path d="M88 162 q12 5 22 0" stroke="#7a3a28" stroke-width="3" fill="none" stroke-linecap="round"/>
+    <ellipse id="lk-mouth-ellipse" cx="99" cy="165" rx="8" ry="4" fill="#6a2a1a"/>
+  </g>
+  <!-- Bouche triste / bafouillage -->
+  <path class="mouth-sad" style="display:none" d="M90 168 q10-6 20 0" stroke="#8a4a34" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+  <!-- Bouche sourire confiant -->
+  <path class="mouth-smile" style="display:none" d="M86 160 q14 10 26 0" stroke="#8a4a34" stroke-width="4" fill="none" stroke-linecap="round"/>
+  <!-- Bouche réflexion / pause -->
+  <path class="mouth-think" style="display:none" d="M92 164 q8 1 14 0" stroke="#8a4a34" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+  <!-- Sueur de stress -->
+  <path class="sweat" style="display:none" d="M148 112 q8 12 0 18 q-8-6 0-18" fill="#7fd4ff"/>
+</svg>`;
 
-/* ── Mme Durand (retraitée, tenue chic simple) ── */
-var SVG_DURAND = '<svg viewBox="0 0 200 300" xmlns="http://www.w3.org/2000/svg">'
-/* Corps / cardigan mauve */
-+ '<path d="M36 300 L36 235 Q36 202 65 192 L135 192 Q164 202 164 235 L164 300 Z" fill="#8a6a8a"/>'
-/* Col */
-+ '<path d="M86 192 L100 215 L114 192 L108 188 L100 206 L92 188 Z" fill="#9a7a9a"/>'
-/* Bras croisés (résistante) */
-+ '<g id="du-arms-cross"><path d="M36 218 Q58 235 90 225" stroke="#8a6a8a" stroke-width="18" fill="none" stroke-linecap="round"/><path d="M164 218 Q142 235 110 225" stroke="#8a6a8a" stroke-width="18" fill="none" stroke-linecap="round"/></g>'
-/* Bras neutres */
-+ '<g id="du-arms-n" style="display:none"><path d="M36 218 Q16 225 14 248" stroke="#8a6a8a" stroke-width="16" fill="none" stroke-linecap="round"/><ellipse cx="14" cy="252" rx="9" ry="7" fill="#e6bd97"/><path d="M164 218 Q184 225 186 248" stroke="#8a6a8a" stroke-width="16" fill="none" stroke-linecap="round"/><ellipse cx="186" cy="252" rx="9" ry="7" fill="#e6bd97"/></g>'
-/* Bras ouverts (open) */
-+ '<g id="du-arms-open" style="display:none"><path d="M36 218 Q14 210 12 186" stroke="#8a6a8a" stroke-width="16" fill="none" stroke-linecap="round"/><ellipse cx="12" cy="182" rx="8" ry="7" fill="#e6bd97"/><path d="M164 218 Q186 210 188 186" stroke="#8a6a8a" stroke-width="16" fill="none" stroke-linecap="round"/><ellipse cx="188" cy="182" rx="8" ry="7" fill="#e6bd97"/></g>'
-/* Cou */
-+ '<rect x="88" y="165" width="24" height="30" rx="9" fill="#e6bd97"/>'
-/* Oreilles */
-+ '<ellipse cx="59" cy="138" rx="9" ry="11" fill="#e6bd97"/>'
-+ '<ellipse cx="141" cy="138" rx="9" ry="11" fill="#e6bd97"/>'
-/* Boucles d'oreilles */
-+ '<circle cx="59" cy="148" r="4" fill="#c8a060" stroke="#b09050" stroke-width="1"/>'
-+ '<circle cx="141" cy="148" r="4" fill="#c8a060" stroke="#b09050" stroke-width="1"/>'
-/* Tête */
-+ '<ellipse cx="100" cy="126" rx="43" ry="50" fill="#f0c8a4"/>'
-/* Cheveux gris courts */
-+ '<path d="M57 124 Q55 72 100 68 Q145 72 143 124 Q141 86 100 84 Q59 86 57 124 Z" fill="#9a9aaa"/>'
-+ '<path d="M57 124 Q55 74 100 68 Q76 74 64 96 Q58 110 57 124 Z" fill="#8a8a9a"/>'
-+ '<path d="M143 124 Q145 74 100 68 Q124 74 136 96 Q142 110 143 124 Z" fill="#8a8a9a"/>'
-/* Lunettes rondes */
-+ '<circle cx="84" cy="128" r="16" fill="none" stroke="#c8c0b8" stroke-width="2.5"/>'
-+ '<circle cx="116" cy="128" r="16" fill="none" stroke="#c8c0b8" stroke-width="2.5"/>'
-+ '<path d="M100 128 L100 128" stroke="#c8c0b8" stroke-width="2.5"/>'
-+ '<line x1="100" y1="128" x2="100" y2="128"/>'
-+ '<path d="M98 128 L102 128" stroke="#c8c0b8" stroke-width="2.5"/>'
-/* Sourcils */
-+ '<g id="du-brow-n"><path d="M74 118 q12-4 22 0" stroke="#6a5a4a" stroke-width="3.5" fill="none" stroke-linecap="round"/><path d="M104 118 q12-4 22 0" stroke="#6a5a4a" stroke-width="3.5" fill="none" stroke-linecap="round"/></g>'
-+ '<g id="du-brow-r" style="display:none"><path d="M76 110 q10-8 20-2" stroke="#6a5a4a" stroke-width="3.5" fill="none" stroke-linecap="round"/><path d="M106 112 q10-6 20-2" stroke="#6a5a4a" stroke-width="3.5" fill="none" stroke-linecap="round"/></g>'
-+ '<g id="du-brow-t" style="display:none"><path d="M76 120 q12-2 20 2" stroke="#6a5a4a" stroke-width="3" fill="none" stroke-linecap="round"/><path d="M108 122 q10 0 18-2" stroke="#6a5a4a" stroke-width="3" fill="none" stroke-linecap="round"/></g>'
-/* Yeux */
-+ '<ellipse cx="84" cy="128" rx="5" ry="6" fill="#2a2a32"/>'
-+ '<ellipse cx="116" cy="128" rx="5" ry="6" fill="#2a2a32"/>'
-+ '<ellipse cx="85.5" cy="127" rx="2" ry="2.2" fill="#fff"/>'
-+ '<ellipse cx="117.5" cy="127" rx="2" ry="2.2" fill="#fff"/>'
-/* Nez */
-+ '<path d="M100 134 q4 9-2 13" stroke="#cf9a72" stroke-width="3" fill="none" stroke-linecap="round"/>'
-/* Bouche */
-+ '<path class="mouth-closed" d="M88 158 L112 158" stroke="#8a4a48" stroke-width="4" stroke-linecap="round"/>'
-+ '<g class="mouth-open" style="display:none"><path d="M88 157 L112 157" stroke="#8a4a48" stroke-width="3" stroke-linecap="round"/><ellipse cx="100" cy="161" rx="7" ry="5" fill="#8a4a48"/></g>'
-+ '<path class="mouth-smile" style="display:none" d="M86 154 q14 10 26 0" stroke="#8a4a48" stroke-width="4" fill="none" stroke-linecap="round"/>'
-+ '<path class="mouth-think" style="display:none" d="M92 160 q8-2 14 0" stroke="#8a4a48" stroke-width="3" fill="none" stroke-linecap="round"/>'
-/* Collier discret */
-+ '<path d="M72 192 Q100 200 128 192" stroke="#c8a060" stroke-width="2.5" fill="none" opacity=".6"/>'
-'</svg>';
+/* ── MME DURAND — retraitée 62 ans, cardigan mauve, cheveux gris ── */
+var SVG_DURAND = `<svg viewBox="0 0 200 320" xmlns="http://www.w3.org/2000/svg">
+  <!-- Corps cardigan mauve -->
+  <path d="M38 320 L38 238 Q38 205 65 195 L135 195 Q162 205 162 238 L162 320 Z" fill="#8a6a8a"/>
+  <!-- Col arrondi -->
+  <path d="M86 195 L100 218 L114 195 Q108 190 100 208 Q92 190 86 195Z" fill="#9a7a9a"/>
+  <!-- Boutons cardigan -->
+  <circle cx="100" cy="230" r="3" fill="#c8a8c8" stroke="#a888a8" stroke-width="1"/>
+  <circle cx="100" cy="252" r="3" fill="#c8a8c8" stroke="#a888a8" stroke-width="1"/>
+  <!-- Bras croisés — résistance -->
+  <g id="du-arms-cross">
+    <path d="M38 222 Q60 238 95 228" stroke="#8a6a8a" stroke-width="18" fill="none" stroke-linecap="round"/>
+    <path d="M162 222 Q140 238 105 228" stroke="#8a6a8a" stroke-width="18" fill="none" stroke-linecap="round"/>
+    <!-- Mains croisées -->
+    <ellipse cx="95" cy="228" rx="12" ry="9" fill="#e6bd97"/>
+    <ellipse cx="105" cy="228" rx="12" ry="9" fill="#e6bd97"/>
+  </g>
+  <!-- Bras neutres -->
+  <g id="du-arms-n" style="display:none">
+    <path d="M38 222 Q16 232 14 256" stroke="#8a6a8a" stroke-width="17" fill="none" stroke-linecap="round"/>
+    <ellipse cx="14" cy="260" rx="10" ry="8" fill="#e6bd97"/>
+    <path d="M162 222 Q184 232 186 256" stroke="#8a6a8a" stroke-width="17" fill="none" stroke-linecap="round"/>
+    <ellipse cx="186" cy="260" rx="10" ry="8" fill="#e6bd97"/>
+  </g>
+  <!-- Bras ouverts — ouverture, réceptivité -->
+  <g id="du-arms-open" style="display:none">
+    <path d="M38 222 Q15 212 13 188" stroke="#8a6a8a" stroke-width="17" fill="none" stroke-linecap="round"/>
+    <ellipse cx="13" cy="184" rx="9" ry="8" fill="#e6bd97"/>
+    <path d="M162 222 Q185 212 187 188" stroke="#8a6a8a" stroke-width="17" fill="none" stroke-linecap="round"/>
+    <ellipse cx="187" cy="184" rx="9" ry="8" fill="#e6bd97"/>
+  </g>
+  <!-- Cou -->
+  <rect x="88" y="168" width="24" height="30" rx="10" fill="#e6bd97"/>
+  <!-- Oreilles -->
+  <ellipse cx="60" cy="144" rx="10" ry="12" fill="#dab088"/>
+  <ellipse cx="140" cy="144" rx="10" ry="12" fill="#dab088"/>
+  <!-- Boucles d'oreilles perles -->
+  <circle cx="60" cy="154" r="5" fill="#e8e0d0" stroke="#c8b898" stroke-width="1.2"/>
+  <circle cx="140" cy="154" r="5" fill="#e8e0d0" stroke="#c8b898" stroke-width="1.2"/>
+  <!-- Tête — proportions normales -->
+  <ellipse cx="100" cy="132" rx="42" ry="48" fill="#f0c8a4"/>
+  <!-- Cheveux gris courts permanentés -->
+  <path d="M58 128 Q56 74 100 70 Q144 74 142 128 Q140 88 120 82 Q100 78 80 84 Q62 90 58 128Z" fill="#9898a8"/>
+  <path d="M58 128 Q56 76 100 70 Q72 78 62 100 Q57 114 58 128Z" fill="#888898"/>
+  <path d="M142 128 Q144 76 100 70 Q128 78 138 100 Q143 114 142 128Z" fill="#888898"/>
+  <!-- Mèches sur le front -->
+  <path d="M76 82 Q82 76 88 80 Q82 84 76 82Z" fill="#8888a0"/>
+  <path d="M112 80 Q118 74 126 80 Q120 84 112 80Z" fill="#8888a0"/>
+  <!-- Lunettes rondes fine monture -->
+  <circle cx="84" cy="132" r="17" fill="rgba(200,220,240,.2)" stroke="#9898a8" stroke-width="2"/>
+  <circle cx="116" cy="132" r="17" fill="rgba(200,220,240,.2)" stroke="#9898a8" stroke-width="2"/>
+  <path d="M101 132 L115 132" stroke="#9898a8" stroke-width="2"/>
+  <path d="M67 128 L67 132" stroke="#9898a8" stroke-width="2"/>
+  <path d="M133 128 L133 132" stroke="#9898a8" stroke-width="2"/>
+  <!-- Sourcils — neutre -->
+  <g id="du-brow-n">
+    <path d="M74 120 q12-4 22 0" stroke="#6a5848" stroke-width="3" fill="none" stroke-linecap="round"/>
+    <path d="M104 120 q12-4 22 0" stroke="#6a5848" stroke-width="3" fill="none" stroke-linecap="round"/>
+  </g>
+  <!-- Sourcils — méfiance / résistance (V légèrement froncé) -->
+  <g id="du-brow-r" style="display:none">
+    <path d="M76 113 q10-7 20-1" stroke="#6a5848" stroke-width="3" fill="none" stroke-linecap="round"/>
+    <path d="M104 112 q12-5 20 1" stroke="#6a5848" stroke-width="3" fill="none" stroke-linecap="round"/>
+  </g>
+  <!-- Sourcils — réflexion (légèrement levés) -->
+  <g id="du-brow-t" style="display:none">
+    <path d="M74 120 q14-1 22 3" stroke="#6a5848" stroke-width="3" fill="none" stroke-linecap="round"/>
+    <path d="M104 123 q12 0 22-2" stroke="#6a5848" stroke-width="3" fill="none" stroke-linecap="round"/>
+  </g>
+  <!-- Yeux noisette -->
+  <ellipse cx="84" cy="132" rx="6" ry="7" fill="#3a2818"/>
+  <ellipse cx="116" cy="132" rx="6" ry="7" fill="#3a2818"/>
+  <ellipse cx="85.5" cy="130" rx="2" ry="2.5" fill="#fff"/>
+  <ellipse cx="117.5" cy="130" rx="2" ry="2.5" fill="#fff"/>
+  <!-- Nez doux -->
+  <path d="M100 138 q4 9-2 13" stroke="#c89070" stroke-width="2.8" fill="none" stroke-linecap="round"/>
+  <!-- Bouche -->
+  <path class="mouth-closed" d="M88 160 L112 160" stroke="#8a4a48" stroke-width="3.5" stroke-linecap="round"/>
+  <g class="mouth-open" style="display:none">
+    <path d="M88 158 L112 158" stroke="#7a3838" stroke-width="3" stroke-linecap="round"/>
+    <ellipse id="du-mouth-ellipse" cx="100" cy="162" rx="9" ry="5" fill="#7a3838"/>
+  </g>
+  <path class="mouth-smile" style="display:none" d="M86 157 q14 9 26 0" stroke="#8a4a48" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+  <path class="mouth-think" style="display:none" d="M92 162 q8-2 14 0" stroke="#8a4a48" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <!-- Collier discret -->
+  <path d="M74 195 Q100 204 126 195" stroke="#c8a868" stroke-width="2" fill="none" opacity=".6"/>
+</svg>`;
 
-/* ── Bruno (mentor, 40s, barbe, gilet vert forêt) ── */
-var SVG_BRUNO = '<svg viewBox="0 0 200 300" xmlns="http://www.w3.org/2000/svg">'
-/* Corps gilet */
-+ '<path d="M38 300 L38 232 Q38 200 66 190 L134 190 Q162 200 162 232 L162 300 Z" fill="#2a4a2a"/>'
-/* Chemise sous le gilet */
-+ '<path d="M88 190 L100 215 L112 190 L106 186 L100 202 L94 186 Z" fill="#4a6a4a"/>'
-/* Bras (neutre) */
-+ '<path d="M38 222 Q60 244 86 250" stroke="#2a4a2a" stroke-width="20" fill="none" stroke-linecap="round"/>'
-+ '<ellipse cx="90" cy="251" rx="10" ry="8" fill="#cf9a6c"/>'
-/* Carnet dans la main */
-+ '<rect x="80" y="234" width="28" height="22" rx="3" fill="#5a7a5a"/>'
-+ '<path d="M86 228 q3-7 0-14 M92 228 q3-7 0-14" stroke="#8a9a88" stroke-width="2" fill="none" opacity=".5"/>'
-/* Bras droit */
-+ '<path d="M162 222 Q180 228 182 250" stroke="#2a4a2a" stroke-width="18" fill="none" stroke-linecap="round"/>'
-+ '<ellipse cx="182" cy="254" rx="9" ry="7" fill="#cf9a6c"/>'
-/* Cou */
-+ '<rect x="89" y="162" width="22" height="32" rx="9" fill="#cf9a6c"/>'
-/* Oreilles */
-+ '<ellipse cx="57" cy="136" rx="9" ry="12" fill="#cf9a6c"/>'
-+ '<ellipse cx="143" cy="136" rx="9" ry="12" fill="#cf9a6c"/>'
-/* Tête */
-+ '<ellipse cx="100" cy="124" rx="44" ry="51" fill="#e2a878"/>'
-/* Cheveux et barbe */
-+ '<path d="M56 120 Q54 66 100 62 Q146 66 144 120 Q142 86 100 84 Q58 86 56 120 Z" fill="#5a5a62"/>'
-+ '<path d="M56 120 Q54 66 100 62 Q76 68 64 92 Q57 108 56 120 Z" fill="#4a4a52"/>'
-/* Barbe courte */
-+ '<path d="M58 154 Q62 185 80 196 Q100 202 120 196 Q138 185 142 154 Q128 168 100 170 Q72 168 58 154 Z" fill="#5a5a62"/>'
-/* Sourcils épais */
-+ '<path d="M72 114 q14-6 24-1" stroke="#4a4a52" stroke-width="5.5" fill="none" stroke-linecap="round"/>'
-+ '<path d="M104 110 q14-5 24 3" stroke="#4a4a52" stroke-width="5.5" fill="none" stroke-linecap="round"/>'
-/* Yeux profonds */
-+ '<ellipse cx="85" cy="126" rx="6" ry="7" fill="#1e1e28"/>'
-+ '<ellipse cx="115" cy="126" rx="6" ry="7" fill="#1e1e28"/>'
-+ '<ellipse cx="87" cy="124" rx="2.2" ry="2.5" fill="#fff"/>'
-+ '<ellipse cx="117" cy="124" rx="2.2" ry="2.5" fill="#fff"/>'
-/* Nez marqué */
-+ '<path d="M100 130 q6 12-3 17" stroke="#b57e50" stroke-width="3.5" fill="none" stroke-linecap="round"/>'
-/* Bouche */
-+ '<path class="mouth-closed" d="M86 162 q16 11 28-3" stroke="#4a3428" stroke-width="4" fill="none" stroke-linecap="round"/>'
-+ '<g class="mouth-open" style="display:none"><path d="M86 160 q16 10 28-2" stroke="#4a3428" stroke-width="3.5" fill="none" stroke-linecap="round"/><ellipse cx="100" cy="163" rx="8" ry="6" fill="#4a3428"/></g>'
-+ '<path class="mouth-smile" style="display:none" d="M84 156 q16 14 30 0" stroke="#4a3428" stroke-width="4" fill="none" stroke-linecap="round"/>'
-'</svg>';
+/* ── BRUNO — mentor 42 ans, barbe, gilet kaki, posture détendue ── */
+var SVG_BRUNO = `<svg viewBox="0 0 200 320" xmlns="http://www.w3.org/2000/svg">
+  <!-- Corps / gilet kaki -->
+  <path d="M40 320 L40 235 Q40 203 66 192 L134 192 Q160 203 160 235 L160 320 Z" fill="#4a5a2a"/>
+  <!-- Chemise sous le gilet -->
+  <path d="M86 192 L100 216 L114 192 L108 188 L100 204 L92 188 Z" fill="#6a7a4a"/>
+  <!-- Bras gauche — carnet dans la main -->
+  <path d="M40 224 Q62 246 88 252" stroke="#4a5a2a" stroke-width="20" fill="none" stroke-linecap="round"/>
+  <ellipse cx="92" cy="253" rx="11" ry="9" fill="#c89a6a"/>
+  <!-- Carnet -->
+  <rect x="82" y="238" width="30" height="24" rx="3" fill="#6a8a5a"/>
+  <line x1="88" y1="241" x2="88" y2="259" stroke="#8aaa78" stroke-width="1.5" opacity=".6"/>
+  <line x1="94" y1="241" x2="94" y2="259" stroke="#8aaa78" stroke-width="1" opacity=".4"/>
+  <!-- Bras droit -->
+  <path d="M160 224 Q180 232 182 256" stroke="#4a5a2a" stroke-width="18" fill="none" stroke-linecap="round"/>
+  <ellipse cx="182" cy="260" rx="10" ry="8" fill="#c89a6a"/>
+  <!-- Cou -->
+  <rect x="88" y="165" width="24" height="30" rx="10" fill="#c89a6a"/>
+  <!-- Oreilles -->
+  <ellipse cx="58" cy="140" rx="10" ry="13" fill="#be9060"/>
+  <ellipse cx="142" cy="140" rx="10" ry="13" fill="#be9060"/>
+  <!-- Tête -->
+  <ellipse cx="100" cy="128" rx="44" ry="50" fill="#d8a070"/>
+  <!-- Cheveux gris-brun courts -->
+  <path d="M56 124 Q54 68 100 64 Q146 68 144 124 Q142 88 100 86 Q58 88 56 124Z" fill="#4a4848"/>
+  <path d="M56 124 Q54 70 100 64 Q72 70 62 94 Q56 110 56 124Z" fill="#3a3838"/>
+  <!-- Barbe 3 jours fournie mais soignée -->
+  <path d="M60 158 Q62 186 78 198 Q100 205 122 198 Q138 186 140 158 Q125 172 100 175 Q75 172 60 158Z" fill="#4a4040"/>
+  <!-- Moustache -->
+  <path d="M84 160 Q92 157 100 160 Q108 157 116 160 Q108 167 100 164 Q92 167 84 160Z" fill="#4a4040"/>
+  <!-- Sourcils épais et expressifs -->
+  <path d="M70 116 q16-7 26-1" stroke="#3a3838" stroke-width="5.5" fill="none" stroke-linecap="round"/>
+  <path d="M104 112 q16-5 26 3" stroke="#3a3838" stroke-width="5.5" fill="none" stroke-linecap="round"/>
+  <!-- Yeux verts-gris, regard perçant -->
+  <ellipse cx="85" cy="128" rx="7" ry="8" fill="#1a2a1a"/>
+  <ellipse cx="115" cy="128" rx="7" ry="8" fill="#1a2a1a"/>
+  <ellipse cx="87" cy="126" rx="2.5" ry="3" fill="#fff"/>
+  <ellipse cx="117" cy="126" rx="2.5" ry="3" fill="#fff"/>
+  <!-- Nez marqué, viril -->
+  <path d="M100 132 q7 14-3 19" stroke="#a87040" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+  <!-- Bouche (visible au-dessus de la barbe) -->
+  <path class="mouth-closed" d="M88 162 q14 9 26-2" stroke="#3a2418" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+  <g class="mouth-open" style="display:none">
+    <path d="M88 160 q14 8 26-1" stroke="#3a2418" stroke-width="3" fill="none" stroke-linecap="round"/>
+    <ellipse id="br-mouth-ellipse" cx="101" cy="163" rx="9" ry="5" fill="#3a2418"/>
+  </g>
+  <path class="mouth-smile" style="display:none" d="M84 158 q18 13 32 0" stroke="#3a2418" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+</svg>`;
 
-/* ═══════════════════════════════════════════
+/* ══════════════════════════════════════════
    ÉTAT GLOBAL
-═══════════════════════════════════════════ */
+══════════════════════════════════════════ */
 var state = {
   score: 0,
   trapChosen: null,
   rep: {posture:0, cadre:0, auth:0, conn:0},
-  results: [],         /* {skill, pts, max, ok, qIdx} */
-  pendingCb: null,
-  currentPhase: 0      /* index dans STEPS */
+  results: [],
+  correctStreak: 0,
+  pendingCb: null
 };
-var LETTERS = ['A','B','C','D'];
+var LETTERS = ['A','B','C'];
 
-/* ═══════════════════════════════════════════
+/* ══════════════════════════════════════════
    DOM REFS
-═══════════════════════════════════════════ */
+══════════════════════════════════════════ */
 var $ = function(id){ return document.getElementById(id); };
-var scoreVal   = $('score-val');
-var statusLbl  = $('status-lbl');
-var izone      = $('izone');
-var fbPanel    = $('feedback-panel');
-var clicker    = $('clicker');
-var clickHint  = $('click-hint');
-var voff       = $('voff');
-var voffText   = $('voff-text');
-var panelL     = $('pl');
-var panelR     = $('pr');
-var cLucas     = $('c-lucas');
-var cDurand    = $('c-durand');
-var cBruno     = $('c-bruno');
+var scoreVal  = $('score-val');
+var statusLbl = $('status-lbl');
+var izone     = $('izone');
+var fbPanel   = $('feedback-panel');
+var clicker   = $('clicker');
+var clickHint = $('click-hint');
+var voff      = $('voff');
+var voffText  = $('voff-text');
+var cLucas    = $('c-lucas');
+var cDurand   = $('c-durand');
+var cBruno    = $('c-bruno');
+var spotlight = $('spotlight');
 
-/* ═══════════════════════════════════════════
+/* ══════════════════════════════════════════
    INIT PERSONNAGES
-═══════════════════════════════════════════ */
+══════════════════════════════════════════ */
 function initChars(){
   cLucas.innerHTML  = SVG_LUCAS;
   cDurand.innerHTML = SVG_DURAND;
   cBruno.innerHTML  = SVG_BRUNO;
-  /* Cacher tous les chars au départ */
   cLucas.style.opacity  = '0';
   cDurand.style.opacity = '0';
 }
 
-/* ═══════════════════════════════════════════
-   TYPEWRITER — INTERRUPTIBLE
-═══════════════════════════════════════════ */
-var typeTimer = null;
-var typeTarget = null;
+/* ══════════════════════════════════════════
+   TYPEWRITER — interruptible au clic
+══════════════════════════════════════════ */
+var typeTimer    = null;
+var typeTarget   = null;
 var typeFullText = '';
+var typeCb       = null;
 
 function typeText(el, text, speed, cb){
   if(typeTimer){ clearTimeout(typeTimer); typeTimer = null; }
-  typeTarget = el;
+  typeTarget   = el;
   typeFullText = text;
+  typeCb       = cb;
   el.textContent = '';
   var i = 0;
   function tick(){
@@ -1329,54 +898,48 @@ function typeText(el, text, speed, cb){
       i++;
       typeTimer = setTimeout(tick, speed);
     } else {
-      typeTimer = null;
-      typeTarget = null;
-      if(cb) cb();
+      typeTimer    = null;
+      typeTarget   = null;
+      var c = typeCb; typeCb = null;
+      if(c) c();
     }
   }
   tick();
 }
 
-function completeType(cb){
-  /* Si typage en cours, on affiche tout immédiatement */
-  if(typeTimer && typeTarget){
-    clearTimeout(typeTimer);
-    typeTimer = null;
-    typeTarget.textContent = typeFullText;
-    typeTarget = null;
-    if(cb) cb();
-  }
-}
-
-/* ═══════════════════════════════════════════
-   ANIMATION BOUCHE
-═══════════════════════════════════════════ */
-var mouthTimer = null;
+/* ══════════════════════════════════════════
+   ANIMATION BOUCHE — organique via ellipse ry
+══════════════════════════════════════════ */
+var mouthTimer  = null;
+var mouthCharEl = null;
+var mouthRy     = 4;
+var mouthDir    = 1;
 
 function startMouth(charEl){
   stopMouth();
+  mouthCharEl = charEl;
   var closed = charEl.querySelector('.mouth-closed');
   var open   = charEl.querySelector('.mouth-open');
   var sad    = charEl.querySelector('.mouth-sad');
   var smile  = charEl.querySelector('.mouth-smile');
   var think  = charEl.querySelector('.mouth-think');
-  var ok     = charEl.querySelector('.mouth-ok');
-
-  /* Cacher toutes les bouches sauf open */
-  [closed,sad,smile,think,ok].forEach(function(el){ if(el) el.style.display='none'; });
+  [closed,sad,smile,think].forEach(function(el){ if(el) el.style.display='none'; });
   if(open) open.style.display = 'block';
-
-  var isOpen = true;
+  /* Ellipse qui varie doucement entre ry=2 et ry=6 */
+  var ellipse = charEl.querySelector('[id$="-mouth-ellipse"]');
+  mouthRy = 3;
+  mouthDir = 1;
   mouthTimer = setInterval(function(){
-    isOpen = !isOpen;
-    if(open) open.style.display = isOpen ? 'block' : 'none';
-    if(closed) closed.style.display = isOpen ? 'none' : 'block';
-  }, 160 + Math.random()*80);
+    mouthRy += mouthDir * (0.6 + Math.random()*0.4);
+    if(mouthRy > 5.5){ mouthDir = -1; }
+    if(mouthRy < 1.5){ mouthDir = 1; }
+    if(ellipse) ellipse.setAttribute('ry', mouthRy.toFixed(1));
+  }, 80);
 }
 
 function stopMouth(){
   if(mouthTimer){ clearInterval(mouthTimer); mouthTimer = null; }
-  /* Rétablir bouche fermée sur tous */
+  mouthCharEl = null;
   document.querySelectorAll('.char').forEach(function(ch){
     var closed = ch.querySelector('.mouth-closed');
     var open   = ch.querySelector('.mouth-open');
@@ -1385,103 +948,92 @@ function stopMouth(){
   });
 }
 
-/* ═══════════════════════════════════════════
-   EXPRESSIONS
-═══════════════════════════════════════════ */
+/* ══════════════════════════════════════════
+   SPOTLIGHT — met en lumière le locuteur
+══════════════════════════════════════════ */
+function setSpotlight(side){
+  /* side: 'left' (Lucas), 'right' (Durand), 'center' (Bruno), 'none' */
+  if(side === 'left'){
+    spotlight.style.background = 'linear-gradient(to right, transparent 30%, rgba(26,26,46,.2) 100%)';
+  } else if(side === 'right'){
+    spotlight.style.background = 'linear-gradient(to left, transparent 30%, rgba(26,26,46,.2) 100%)';
+  } else if(side === 'center'){
+    spotlight.style.background = 'linear-gradient(to right, rgba(26,26,46,.15) 0%, transparent 40%, transparent 60%, rgba(26,26,46,.15) 100%)';
+  } else {
+    spotlight.style.background = 'none';
+  }
+}
+
+/* ══════════════════════════════════════════
+   EXPRESSIONS FACIALES
+══════════════════════════════════════════ */
 function setExpr(who, expr){
-  var el = who === 'LUCAS'  ? cLucas
-         : who === 'DURAND' ? cDurand
-         : cBruno;
+  var el = who==='LUCAS' ? cLucas : who==='DURAND' ? cDurand : cBruno;
   if(!el) return;
 
-  /* Réinitialiser tous les éléments dynamiques */
-  function showOnly(ids, showId){
-    ids.forEach(function(id){
-      var e = el.querySelector('#'+id) || el.querySelector('.'+id);
-      if(e) e.style.display = (id === showId) ? '' : 'none';
-    });
-  }
-
   if(who === 'LUCAS'){
-    /* sourcils */
     var brows = ['lk-brow-n','lk-brow-s','lk-brow-c','lk-brow-t'];
-    var bowId = expr==='stressed'?'lk-brow-s':expr==='confident'?'lk-brow-c':expr==='calm'?'lk-brow-t':'lk-brow-n';
-    brows.forEach(function(b){ var e=el.querySelector('#'+b); if(e) e.style.display=(b===bowId)?'':'none'; });
-    /* bras */
+    var browId = expr==='stressed'?'lk-brow-s':expr==='confident'?'lk-brow-c':expr==='calm'?'lk-brow-t':'lk-brow-n';
+    brows.forEach(function(b){ var e=el.querySelector('#'+b); if(e) e.style.display=(b===browId)?'':'none'; });
     var armN  = el.querySelector('#lk-arm-n');
     var armG  = el.querySelector('#lk-arm-g');
     var armR  = el.querySelector('#lk-arm-r');
     var armsO = el.querySelector('#lk-arms-open');
-    if(armN)  armN.style.display  = (expr==='eager'||expr==='neutral'||expr==='stressed'||expr==='confident') ? '' : 'none';
-    if(armR)  armR.style.display  = (expr==='eager'||expr==='neutral'||expr==='stressed'||expr==='confident') ? '' : 'none';
-    if(armG)  armG.style.display  = expr==='eager' ? '' : 'none';
-    if(armsO) armsO.style.display = expr==='calm' ? '' : 'none';
-    /* bouche */
-    var mc  = el.querySelector('.mouth-closed');
-    var ms  = el.querySelector('.mouth-sad');
-    var mok = el.querySelector('.mouth-ok');
-    var mt  = el.querySelector('.mouth-think');
+    [armN,armG,armR,armsO].forEach(function(a){ if(a) a.style.display='none'; });
+    if(expr==='calm'){ if(armsO) armsO.style.display=''; }
+    else if(expr==='eager'){ if(armG) armG.style.display=''; if(armR) armR.style.display=''; }
+    else { if(armN) armN.style.display=''; if(armR) armR.style.display=''; }
+    var mc=el.querySelector('.mouth-closed'), ms=el.querySelector('.mouth-sad'),
+        mok=el.querySelector('.mouth-smile'), mt=el.querySelector('.mouth-think');
     [mc,ms,mok,mt].forEach(function(m){ if(m) m.style.display='none'; });
     var target = expr==='stressed'?ms:expr==='confident'?mok:expr==='calm'?mt:mc;
     if(target) target.style.display='';
-    /* sueur */
-    var sw = el.querySelector('.sweat');
-    if(sw) sw.style.display = expr==='stressed' ? '' : 'none';
+    var sw=el.querySelector('.sweat');
+    if(sw) sw.style.display=expr==='stressed'?'':'none';
   }
 
   if(who === 'DURAND'){
-    /* sourcils */
-    var db = ['du-brow-n','du-brow-r','du-brow-t'];
-    var dbId = expr==='skeptical'?'du-brow-r':expr==='thinking'||expr==='resistant'?'du-brow-t':'du-brow-n';
+    var db=['du-brow-n','du-brow-r','du-brow-t'];
+    var dbId=expr==='skeptical'?'du-brow-r':expr==='thinking'||expr==='resistant'?'du-brow-t':'du-brow-n';
     db.forEach(function(b){ var e=el.querySelector('#'+b); if(e) e.style.display=(b===dbId)?'':'none'; });
-    /* bras */
-    var dac  = el.querySelector('#du-arms-cross');
-    var dan  = el.querySelector('#du-arms-n');
-    var dao  = el.querySelector('#du-arms-open');
-    if(dac) dac.style.display = (expr==='resistant'||expr==='skeptical') ? '' : 'none';
-    if(dan) dan.style.display = (expr==='neutral') ? '' : 'none';
-    if(dao) dao.style.display = (expr==='open'||expr==='thinking') ? '' : 'none';
-    /* bouche */
-    var dmc  = el.querySelector('.mouth-closed');
-    var dms  = el.querySelector('.mouth-smile');
-    var dmt  = el.querySelector('.mouth-think');
+    var dac=el.querySelector('#du-arms-cross'),dan=el.querySelector('#du-arms-n'),dao=el.querySelector('#du-arms-open');
+    [dac,dan,dao].forEach(function(a){ if(a) a.style.display='none'; });
+    if(expr==='resistant'||expr==='skeptical'){ if(dac) dac.style.display=''; }
+    else if(expr==='open'||expr==='thinking'){ if(dao) dao.style.display=''; }
+    else { if(dan) dan.style.display=''; }
+    var dmc=el.querySelector('.mouth-closed'),dms=el.querySelector('.mouth-smile'),dmt=el.querySelector('.mouth-think');
     [dmc,dms,dmt].forEach(function(m){ if(m) m.style.display='none'; });
-    var dtarget = expr==='open'?dms:expr==='thinking'?dmt:dmc;
+    var dtarget=expr==='open'?dms:expr==='thinking'?dmt:dmc;
     if(dtarget) dtarget.style.display='';
   }
 
   if(who === 'BRUNO'){
-    if(expr==='in') el.classList.add('in');
-    var bmc = el.querySelector('.mouth-closed');
-    var bms = el.querySelector('.mouth-smile');
+    if(expr==='in'){ el.classList.add('in'); }
+    var bmc=el.querySelector('.mouth-closed'),bms=el.querySelector('.mouth-smile');
     [bmc,bms].forEach(function(m){ if(m) m.style.display='none'; });
-    var btarget = expr==='teaching'?bms:bmc;
+    var btarget=expr==='teaching'?bms:bmc;
     if(btarget) btarget.style.display='';
   }
 }
 
 function showChar(who){
-  var el = who==='LUCAS'?cLucas:who==='DURAND'?cDurand:cBruno;
+  var el=who==='LUCAS'?cLucas:who==='DURAND'?cDurand:cBruno;
   el.style.opacity='1';
   if(who==='BRUNO') el.classList.add('in');
 }
 function hideChar(who){
-  var el = who==='LUCAS'?cLucas:who==='DURAND'?cDurand:cBruno;
+  var el=who==='LUCAS'?cLucas:who==='DURAND'?cDurand:cBruno;
   el.style.opacity='0';
   if(who==='BRUNO') el.classList.remove('in');
 }
-function setLit(side){
-  panelL.className='panel'+(side==='left'?' lit':side==='none'?'':' dim');
-  panelR.className='panel'+(side==='right'?' lit':side==='none'?'':' dim');
-}
 
-/* ═══════════════════════════════════════════
+/* ══════════════════════════════════════════
    BULLES & VOIX OFF
-═══════════════════════════════════════════ */
+══════════════════════════════════════════ */
 var SP = {
-  LUCAS:  {color:'#9a7420', label:'LUCAS',      bub:'bl'},
-  DURAND: {color:'#8a5a8a', label:'MME DURAND', bub:'br'},
-  BRUNO:  {color:'#0d7a6e', label:'BRUNO',      bub:'bc'}
+  LUCAS:  {color:'#9a7420', label:'LUCAS',      bub:'bl', side:'left'},
+  DURAND: {color:'#8a5a8a', label:'MME DURAND', bub:'br', side:'right'},
+  BRUNO:  {color:'#0d7a6e', label:'BRUNO',      bub:'bc', side:'center'}
 };
 
 function hideAllBubbles(){
@@ -1490,23 +1042,15 @@ function hideAllBubbles(){
   stopMouth();
 }
 
-function disableClick(){
-  clicker.classList.remove('on');
-  clickHint.classList.remove('show');
-}
-function enableClick(){
-  clicker.classList.add('on');
-  clickHint.classList.add('show');
-}
+function disableClick(){ clicker.classList.remove('on'); clickHint.classList.remove('show'); }
+function enableClick(){  clicker.classList.add('on');    clickHint.classList.add('show'); }
 
 function showVoff(text, cb){
   hideAllBubbles();
+  setSpotlight('none');
   voff.classList.add('show');
   disableClick();
-  typeText(voffText, text, 20, function(){
-    enableClick();
-    state.pendingCb = cb;
-  });
+  typeText(voffText, text, 18, function(){ enableClick(); state.pendingCb=cb; });
 }
 
 function showBubble(who, text, cb){
@@ -1518,9 +1062,10 @@ function showBubble(who, text, cb){
   bub.querySelector('.b-speaker').style.color  = info.color;
   bub.style.setProperty('--bc', info.color);
   bub.classList.add('show');
+  setSpotlight(info.side);
   startMouth(charEl);
   disableClick();
-  typeText(bub.querySelector('.b-text'), text, 20, function(){
+  typeText(bub.querySelector('.b-text'), text, 18, function(){
     stopMouth();
     enableClick();
     state.pendingCb = cb;
@@ -1528,11 +1073,15 @@ function showBubble(who, text, cb){
 }
 
 clicker.addEventListener('click', function(){
-  /* Si typage en cours, on complète d'abord */
+  /* Clic pendant typage = affichage immédiat */
   if(typeTimer && typeTarget){
-    completeType(function(){
-      enableClick();
-    });
+    clearTimeout(typeTimer); typeTimer = null;
+    typeTarget.textContent = typeFullText;
+    typeTarget = null;
+    var c = typeCb; typeCb = null;
+    stopMouth();
+    enableClick();
+    if(c) c();
     return;
   }
   if(state.pendingCb){
@@ -1543,117 +1092,88 @@ clicker.addEventListener('click', function(){
   }
 });
 
-/* ═══════════════════════════════════════════
+/* ══════════════════════════════════════════
    SCENE RUNNER
-═══════════════════════════════════════════ */
-var sceneSteps = [];
-var sceneIdx   = 0;
-var sceneCb    = null;
-
-function runScene(steps, cb){
-  sceneSteps = steps;
-  sceneIdx   = 0;
-  sceneCb    = cb;
-  nextStep();
-}
+══════════════════════════════════════════ */
+var sceneSteps = [], sceneIdx = 0, sceneCb = null;
+function runScene(steps, cb){ sceneSteps=steps; sceneIdx=0; sceneCb=cb; nextStep(); }
 function nextStep(){
   if(sceneIdx >= sceneSteps.length){ if(sceneCb) sceneCb(); return; }
-  var s = sceneSteps[sceneIdx];
-  sceneIdx++;
+  var s = sceneSteps[sceneIdx++];
   switch(s.type){
-    case 'voff':    showVoff(s.text, nextStep);   break;
-    case 'bubble':
-      if(s.expr) setExpr(s.who, s.expr);
-      showBubble(s.who, s.text, nextStep);
-      break;
-    case 'show':    showChar(s.who); if(s.expr) setExpr(s.who,s.expr); nextStep(); break;
-    case 'hide':    hideChar(s.who); nextStep(); break;
-    case 'expr':    setExpr(s.who, s.expr); nextStep(); break;
-    case 'lit':     setLit(s.panel); nextStep(); break;
-    default:        nextStep();
+    case 'voff':   showVoff(s.text, nextStep); break;
+    case 'bubble': if(s.expr) setExpr(s.who,s.expr); showBubble(s.who,s.text,nextStep); break;
+    case 'show':   showChar(s.who); if(s.expr) setExpr(s.who,s.expr); nextStep(); break;
+    case 'hide':   hideChar(s.who); nextStep(); break;
+    case 'expr':   setExpr(s.who,s.expr); nextStep(); break;
+    default:       nextStep();
   }
 }
 
-/* ═══════════════════════════════════════════
-   QCM ENGINE
-═══════════════════════════════════════════ */
-function clearInteraction(){
-  izone.innerHTML   = '';
-  fbPanel.innerHTML = '';
-  fbPanel.classList.remove('show');
-}
+/* ══════════════════════════════════════════
+   QCM ENGINE — retry CORRIGÉ (bonne réponse incluse)
+══════════════════════════════════════════ */
+function clearInteraction(){ izone.innerHTML=''; fbPanel.innerHTML=''; fbPanel.classList.remove('show'); }
 
 function showQuiz(qData, onDone){
   clearInteraction();
   var html = '<div class="q-wrap">'
-    + '<div class="q-head">'
-    + (qData.skill ? '<span class="q-badge">'+qData.skill+'</span>' : '')
-    + '<span class="q-pts">'+qData.pts+' pts</span>'
-    + '</div>'
+    + '<div class="q-head">'+(qData.skill?'<span class="q-badge">'+qData.skill+'</span>':'')
+    + '<span class="q-pts">'+qData.pts+' pt'+(qData.pts>1?'s':'')+'</span></div>'
     + '<div class="q-question">'+qData.q+'</div>'
     + '<div class="q-options">';
   qData.opts.forEach(function(o,i){
-    html += '<button class="q-btn" data-idx="'+i+'">'
-          + '<span class="q-letter">'+LETTERS[i]+'</span>'
-          + '<span>'+o.t+'</span>'
-          + '</button>';
+    html += '<button class="q-btn" data-idx="'+i+'"><span class="q-letter">'+LETTERS[i]+'</span><span>'+o.t+'</span></button>';
   });
   html += '</div></div>';
   izone.innerHTML = html;
   statusLbl.textContent = qData.skill || 'QUESTION';
-
   izone.querySelectorAll('.q-btn').forEach(function(btn){
-    btn.addEventListener('click', function(){
-      var idx = parseInt(btn.getAttribute('data-idx'));
-      handleAnswer(qData, idx, onDone);
-    });
+    btn.addEventListener('click', function(){ handleAnswer(qData, parseInt(btn.getAttribute('data-idx')), onDone); });
   });
 }
 
 function handleAnswer(qData, chosen, onDone){
   var isRight = chosen === qData.correct;
-  var btns = izone.querySelectorAll('.q-btn');
-
-  btns.forEach(function(b){
+  izone.querySelectorAll('.q-btn').forEach(function(b){
     b.disabled = true;
     var i = parseInt(b.getAttribute('data-idx'));
-    if(i === qData.correct) b.classList.add('right');
-    if(i === chosen && !isRight) b.classList.add('wrong');
-    if(i !== chosen && i !== qData.correct) b.classList.add('dim');
+    if(i===qData.correct) b.classList.add('right');
+    if(i===chosen && !isRight) b.classList.add('wrong');
+    if(i!==chosen && i!==qData.correct) b.classList.add('dim');
   });
-
   if(isRight){
     state.score += qData.pts;
     scoreVal.textContent = state.score;
     ptsPopup(qData.pts);
-    if(qData.rep) state.rep[qData.rep] = Math.min(100,(state.rep[qData.rep]||0)+35);
-    state.results.push({skill:qData.skill, pts:qData.pts, max:qData.pts, ok:true, qIdx:qData.idx});
+    state.correctStreak++;
+    if(state.rep[qData.rep] !== undefined) state.rep[qData.rep] = Math.min(100,(state.rep[qData.rep]||0)+35);
+    state.results.push({skill:qData.skill, pts:qData.pts, max:qData.pts, ok:true, okFirst:true});
+    if(state.correctStreak >= 2) showStreakToast(state.correctStreak);
   } else {
-    if(qData.rep) state.rep[qData.rep] = Math.min(100,(state.rep[qData.rep]||0)+9);
-    state.results.push({skill:qData.skill, pts:0, max:qData.pts, ok:false, qIdx:qData.idx});
+    state.correctStreak = 0;
+    if(state.rep[qData.rep] !== undefined) state.rep[qData.rep] = Math.min(100,(state.rep[qData.rep]||0)+9);
+    state.results.push({skill:qData.skill, pts:0, max:qData.pts, ok:false, okFirst:false, chosen:chosen});
   }
   updateRep();
   showFeedback(qData, chosen, isRight, onDone);
 }
 
 function showFeedback(qData, chosen, isRight, onDone){
-  var html = '<div class="pts-line">'+(isRight?'+'+qData.pts+' pts':'+0 pt')+'</div>'
+  var html = '<div class="pts-line">'+(isRight?'+'+qData.pts+' pt'+(qData.pts>1?'s':''):'+0 pt')+'</div>'
     + '<div class="fb-card '+(isRight?'good':'bad')+'">'
     + '<span class="fb-name">'+(isRight?'CORRECT':'INCORRECT')+'</span>'
-    + qData.opts[chosen].fb
-    + '</div>';
+    + qData.opts[chosen].fb + '</div>';
 
   if(!isRight){
-    /* Indices Bruno */
     if(qData.hint){
-      html += '<div class="hint-label">INDICE DE BRUNO</div>'
+      html += '<div class="hint-label">💡 INDICE DE BRUNO</div>'
              + '<div class="fb-card hint">'+qData.hint+'</div>';
     }
-    /* Options de repêchage — inclut toutes les options sauf la choisie */
+    /* OPTIONS DE REPÊCHAGE — inclut TOUTES les options sauf celle déjà choisie */
     html += '<div class="retry-opts">';
     qData.opts.forEach(function(o,i){
-      if(i === chosen) return; /* seulement exclure celle déjà choisie */
-      var cls = i === qData.correct ? '' : '';
+      if(i === chosen) return; /* exclure seulement la déjà choisie */
       html += '<button class="retry-btn" data-ridx="'+i+'">'
              + '<span class="q-letter">'+LETTERS[i]+'</span>'
              + '<span>'+o.t+'</span>'
@@ -1661,51 +1181,37 @@ function showFeedback(qData, chosen, isRight, onDone){
     });
     html += '</div>';
   }
-
-  html += '<div class="fb-actions"><button class="btn-go" id="fb-cont">Continuer</button></div>';
+  html += '<div class="fb-actions"><button class="btn-go" id="fb-cont">Continuer →</button></div>';
   fbPanel.innerHTML = html;
   fbPanel.classList.add('show');
-
   $('fb-cont').addEventListener('click', onDone);
 
   if(!isRight){
     fbPanel.querySelectorAll('.retry-btn').forEach(function(rb){
       rb.addEventListener('click', function(){
         var ridx = parseInt(rb.getAttribute('data-ridx'));
-        var allR = fbPanel.querySelectorAll('.retry-btn');
-        allR.forEach(function(r){ r.disabled=true; r.classList.add('wrong'); });
+        fbPanel.querySelectorAll('.retry-btn').forEach(function(r){ r.disabled=true; r.classList.add('wrong'); });
+        var hl=fbPanel.querySelector('.hint-label'), hc=fbPanel.querySelector('.fb-card.hint'), ro=fbPanel.querySelector('.retry-opts');
 
         if(ridx === qData.correct){
-          rb.classList.remove('wrong');
-          rb.classList.add('right');
-          /* +1 pt pour bonne réponse au deuxième essai */
-          state.score += 1;
-          scoreVal.textContent = state.score;
-          ptsPopup(1);
-          /* Mettre à jour résultat */
+          rb.classList.remove('wrong'); rb.classList.add('right');
+          state.score += 1; scoreVal.textContent = state.score; ptsPopup(1);
           var last = state.results[state.results.length-1];
-          if(last && !last.ok) last.pts = 1;
-          /* Feedback succès */
+          if(last && !last.ok){ last.pts=1; last.okSecond=true; }
           var goodCard = document.createElement('div');
-          goodCard.className = 'fb-card good';
-          goodCard.innerHTML = '<span class="fb-name">TROUVÉ AU 2E ESSAI · +1 PT</span>'+qData.opts[ridx].fb;
+          goodCard.className='fb-card good';
+          goodCard.innerHTML='<span class="fb-name">TROUVÉ AU 2E ESSAI · +1 PT</span>'+qData.opts[ridx].fb;
           fbPanel.insertBefore(goodCard, $('fb-cont').parentNode);
         } else {
           rb.classList.remove('wrong');
-          /* Montrer la bonne réponse */
-          allR.forEach(function(r){
-            var ri = parseInt(r.getAttribute('data-ridx'));
-            if(ri === qData.correct){ r.classList.remove('wrong'); r.classList.add('right'); }
+          fbPanel.querySelectorAll('.retry-btn').forEach(function(r){
+            if(parseInt(r.getAttribute('data-ridx'))===qData.correct){ r.classList.remove('wrong'); r.classList.add('right'); }
           });
-          var wrongCard = document.createElement('div');
-          wrongCard.className = 'fb-card bad';
-          wrongCard.innerHTML = '<span class="fb-name">RATÉ</span>'+qData.opts[ridx].fb+'<br><br><b>La bonne réponse :</b> '+qData.opts[qData.correct].t;
-          fbPanel.insertBefore(wrongCard, $('fb-cont').parentNode);
+          var wrongCard=document.createElement('div');
+          wrongCard.className='fb-card bad';
+          wrongCard.innerHTML='<span class="fb-name">RATÉ</span>'+qData.opts[ridx].fb+'<br><br><b>La bonne réponse :</b> '+qData.opts[qData.correct].t;
+          fbPanel.insertBefore(wrongCard,$('fb-cont').parentNode);
         }
-        /* Masquer hint et retries après interaction */
-        var hl = fbPanel.querySelector('.hint-label');
-        var hc = fbPanel.querySelector('.fb-card.hint');
-        var ro = fbPanel.querySelector('.retry-opts');
         if(hl) hl.style.display='none';
         if(hc) hc.style.display='none';
         if(ro) ro.style.display='none';
@@ -1715,238 +1221,230 @@ function showFeedback(qData, chosen, isRight, onDone){
 }
 
 function ptsPopup(pts){
-  var el = document.createElement('div');
-  el.className = 'pts-pop';
-  el.textContent = '+'+pts;
+  var el=document.createElement('div'); el.className='pts-pop'; el.textContent='+'+pts;
   document.body.appendChild(el);
   setTimeout(function(){ if(el.parentNode) el.parentNode.removeChild(el); }, 1700);
 }
 
+function showStreakToast(n){
+  var msgs={2:'2 bonnes réponses d\'affilée !', 3:'3 en série — vous êtes dans le flux.', 4:'4 de suite. Bruno est impressionné.', 5:'SÉRIE PARFAITE — 5/5 !'};
+  var msg = msgs[n] || (n+' bonnes réponses d\'affilée !');
+  var el=document.createElement('div'); el.className='streak-toast'; el.textContent='🔥 '+msg;
+  document.body.appendChild(el);
+  setTimeout(function(){ if(el.parentNode) el.parentNode.removeChild(el); }, 2300);
+}
+
 function updateRep(){
-  var keys = ['posture','cadre','auth','conn'];
-  keys.forEach(function(k){
-    var v = state.rep[k]||0;
-    var fill = $('rp-'+k);
-    var val  = $('rv-'+k);
-    if(fill) fill.style.width = v+'%';
-    if(val)  val.textContent  = v>0 ? v+'%' : '--';
+  ['posture','cadre','auth','conn'].forEach(function(k){
+    var v=state.rep[k]||0;
+    var fill=$('rp-'+k), val=$('rv-'+k);
+    if(fill) fill.style.width=v+'%';
+    if(val)  val.textContent=v>0?v+'%':'--';
   });
 }
 
-/* ═══════════════════════════════════════════
-   STEPS (barre de progression)
-═══════════════════════════════════════════ */
+/* ══════════════════════════════════════════
+   STEPS
+══════════════════════════════════════════ */
 function setStep(idx){
   document.querySelectorAll('.step-item').forEach(function(el,i){
     el.classList.remove('active','done');
-    if(i < idx)      el.classList.add('done');
+    if(i<idx) el.classList.add('done');
     else if(i===idx) el.classList.add('active');
   });
 }
 
-/* ═══════════════════════════════════════════
-   THÉORIE (plein écran)
-═══════════════════════════════════════════ */
-var theoryIdx  = 0;
-var theoryCb   = null;
-
+/* ══════════════════════════════════════════
+   THÉORIE — slides Bruno
+══════════════════════════════════════════ */
+var theoryIdx=0, theoryCb=null;
 var THEORY = [
-  {kicker:'COMPRENDRE LA RÉACTANCE · 1/4',
-   key:'Quand on pousse, l\'autre résiste.',
-   h:'<p>En 1966, le psychologue Jack Brehm démontre un phénomène contre-intuitif : <b>plus vous essayez de convaincre quelqu\'un, plus il résiste</b>. C\'est la réactance psychologique.</p><p>Le mécanisme est inconscient et immédiat. Quand le cerveau du prospect détecte une tentative d\'influence, il active un réflexe de défense — exactement comme un bras qui se lève pour se protéger.</p><blockquote>La réactance n\'est pas un choix. C\'est un réflexe. Vous ne pouvez pas la combattre : vous pouvez seulement ne pas la déclencher.</blockquote><p>En 2026, les prospects sont exposés à des milliers de tentatives de persuasion par jour. Leur réactance est <b>chroniquement activée</b>. Les anciennes techniques d\'argumentation font exactement l\'inverse de ce qu\'on attend.</p>'},
+  {kicker:'LA RÉACTANCE · 1/4',
+   key:'Pousser, c\'est fermer la porte soi-même.',
+   h:'<p>En 1966, Jack Brehm démontre quelque chose que les commerciaux mettent des années à admettre : <b>plus vous essayez de convaincre quelqu\'un, plus il résiste.</b> Ce n\'est pas de la mauvaise volonté. C\'est un réflexe câblé dans le cerveau.</p><p>Le mécanisme est automatique. Dès que le cerveau de votre prospect détecte une tentative d\'influence, il active un bouclier. Exactement comme un bras qui se lève sans qu\'on décide de le lever.</p><blockquote>La réactance n\'est pas un choix. C\'est un réflexe. Vous ne pouvez pas la combattre — vous pouvez seulement éviter de la déclencher.</blockquote><p>En 2026, les prospects ont vu défiler des centaines de commerciaux. Leur réactance est <b>chroniquement activée</b> avant même que vous ouvriez la bouche. Les vieilles techniques d\'argumentation font exactement ce que vous voulez éviter : elles confirment qu\'ils ont raison de se méfier.</p>'},
   {kicker:'L\'ERREUR UNIVERSELLE · 2/4',
-   key:'Répondre aux objections par des arguments.',
-   h:'<p>La formation commerciale classique enseigne : objection → réfutation → conclusion. Ce modèle était pertinent quand les prospects faisaient confiance par défaut. En 2026, c\'est un piège.</p><div class="dd dont"><span>❌ Erreur classique</span>Prospect : C\'est trop cher.<br>Commercial : Je comprends, <b>mais</b> si on calcule sur 25 ans... [Il argumente. Le prospect se braque.]</div><p>Le mot <em>mais</em> est un signal d\'attaque. Le cerveau du prospect l\'entend comme : <em>ce que vous venez de dire est faux.</em> Résultat : il se ferme davantage.</p><div class="dd dont"><span>❌ Autre piège fréquent</span>Prospect : Je ne suis pas sûr que ça marche.<br>Commercial : Nos études montrent que... [Il prouve. L\'émotion reçoit un argument rationnel. Deux registres différents — deux échecs garantis.]</div>'},
+   key:'Répondre à une objection par un argument — c\'est perdre.',
+   h:'<p>La formation commerciale classique enseigne : objection → réfutation → conclusion. Ce modèle marchait quand les prospects faisaient confiance par défaut. Ce n\'est plus le cas.</p><div class="dd dont"><span>❌ Ce que fait Lucas en scène 1</span>Prospect : C\'est trop cher.<br>Lucas : Je comprends, <b>mais</b> si on calcule sur 25 ans... [Il argumente. Elle se ferme davantage.]</div><p>Le mot <em>mais</em> est perçu comme une attaque directe. Le cerveau du prospect l\'entend : <em>ce que tu viens de dire est faux.</em> Il se braque encore plus.</p><div class="dd dont"><span>❌ L\'autre piège classique</span>Prospect : Et si les panneaux s\'usent avant ?<br>Commercial : Nos panneaux sont garantis 25 ans. Les études montrent... [Il sort des chiffres. Elle avait une émotion. Deux registres différents — deux échecs garantis.]</div>'},
   {kicker:'LA MÉTHODE EN 3 TEMPS · 3/4',
-   key:'Clarifier · Faire réfléchir · Comparer.',
-   h:'<p>Au lieu de répondre, on va <b>faire répondre le prospect</b>. Trois étapes, dans cet ordre précis :</p><div class="dd do"><span>⏱ Temps 1 — Clarifier</span>« Qu\'est-ce qui vous fait dire que c\'est beaucoup ? »<em>But : comprendre la vraie nature de l\'objection sans jamais la contredire.</em></div><div class="dd do"><span>⏱ Temps 2 — Faire réfléchir</span>« Si vous investissiez 18 000 € dans quelque chose qui vous rapportait bien plus sur 25 ans, vous hésiteriez ? »<em>But : amener le prospect à recadrer lui-même la question.</em></div><div class="dd do"><span>⏱ Temps 3 — Comparer</span>« C\'est un peu comme planter un verger : les premières années vous arrosez sans récolter, puis pendant 20 ans vous récoltez sans arroser. »<em>But : contourner la résistance en activant l\'imagination plutôt que la logique.</em></div><p>Aucun des trois temps ne contredit le prospect. Aucun ne déclenche la réactance.</p>'},
-  {kicker:'LE POUVOIR DES COMPARAISONS · 4/4',
-   key:'Penser X, c\'est comme... : le pont qui contourne le mur.',
-   h:'<p>La comparaison est l\'outil le plus sous-estimé de la vente moderne. Pourquoi ça marche ?</p><p>Quand vous argumentez, vous activez le cortex préfrontal du prospect : la zone analytique, critique, méfiante. Quand vous utilisez une comparaison, vous activez le système limbique : l\'imagination, l\'émotion.</p><blockquote>L\'argument parle au juge. La comparaison parle à l\'enfant. Et c\'est l\'enfant qui décide.</blockquote><div class="dd do"><span>✓ Structure d\'une bonne comparaison</span>Penser/vouloir/faire [X], c\'est comme [Y] — [explication courte].<br><br>Exemple : Hésiter parce qu\'il faut attendre 5 ans pour le ROI, c\'est comme refuser de planter un arbre parce qu\'il ne donne pas de fruits le lendemain.</div><p>La comparaison ne <b>contredit pas</b> le prospect : elle <b>déplace</b> son cadre de pensée. Et ce déplacement se fait sans résistance.</p>'}
+   key:'Clarifier · Faire réfléchir · Déplacer le cadre.',
+   h:'<p>Au lieu de répondre, on va <b>faire répondre le prospect</b>. Trois étapes, dans cet ordre précis :</p><div class="dd do"><span>⏱ Temps 1 — Clarifier sans contredire</span>« Qu\'est-ce qui vous fait dire que c\'est beaucoup ? »<em>But : comprendre la vraie nature de l\'objection. Et envoyer le signal : je ne suis pas là pour vous attaquer.</em></div><div class="dd do"><span>⏱ Temps 2 — Faire réfléchir</span>« Si vous étiez certaine de rester dans cette maison 15 ans — ce serait encore une dépense, ou un choix ? »<em>But : amener le prospect à recadrer la question lui-même. Ce qu\'il dit en réponse est bien plus puissant que tout ce que vous pourriez dire.</em></div><div class="dd do"><span>⏱ Temps 3 — Déplacer le cadre par une image</span>« C\'est un peu comme planter un verger : les premières années vous arrosez sans récolter, et pendant 20 ans vous récoltez sans arroser. »<em>But : contourner la résistance en activant l\'imagination plutôt que la logique.</em></div><p>Aucun des trois temps ne contredit. Aucun ne déclenche la réactance.</p>'},
+  {kicker:'LE POUVOIR DES IMAGES · 4/4',
+   key:'L\'argument parle au juge. L\'image parle à l\'enfant. L\'enfant décide.',
+   h:'<p>Quand vous argumentez, vous activez le cortex préfrontal du prospect : la zone analytique, critique, méfiante. Quand vous utilisez une image concrète, vous activez le système limbique : l\'imagination, les émotions.</p><blockquote>On ne change pas d\'avis avec des faits. On change d\'avis quand on voit les choses autrement.</blockquote><div class="dd do"><span>✓ Structure d\'une bonne image</span>C\'est comme [situation familière] : [mécanisme] — et ça se passe aussi quand [votre contexte].<br><br>Exemple : Hésiter parce qu\'il faut 5 ans pour le ROI, c\'est comme refuser de planter un arbre parce qu\'il ne donne pas de fruits le lendemain.</div><p>L\'image ne contredit pas le prospect. Elle <b>déplace</b> son cadre de pensée. Et ce déplacement se fait sans résistance — parce qu\'il n\'y a rien à défendre contre une histoire.</p><p>C\'est ce que Lucas va faire en scène 2. Et Mme Durand va se convaincre toute seule.</p>'}
 ];
 
 function showTheory(cb){
-  theoryCb  = cb;
-  theoryIdx = 0;
-  $('th-char').innerHTML = SVG_BRUNO;
+  theoryCb=cb; theoryIdx=0;
+  $('th-char').innerHTML=SVG_BRUNO;
   setExpr('BRUNO','teaching');
   clearInteraction();
   renderTheory();
   $('theory-overlay').classList.add('on');
-  statusLbl.textContent = 'THÉORIE';
-  setStep(2);
+  statusLbl.textContent='THÉORIE';
+  setStep(3);
 }
 
 function renderTheory(){
-  var t = THEORY[theoryIdx];
-  $('th-kicker').textContent = t.kicker;
-  $('th-title').textContent  = t.key;
-  $('th-count').textContent  = '';
-  $('th-body').innerHTML     = t.h;
-  /* Prev */
-  $('th-prev').style.visibility = theoryIdx > 0 ? 'visible' : 'hidden';
-  /* Dots */
-  var dots = '';
+  var t=THEORY[theoryIdx];
+  $('th-kicker').textContent=t.kicker;
+  $('th-title').textContent=t.key;
+  $('th-body').innerHTML=t.h;
+  $('th-prev').style.visibility=theoryIdx>0?'visible':'hidden';
+  var dots='';
   THEORY.forEach(function(_,i){
-    var cls = i < theoryIdx ? 'done' : i === theoryIdx ? 'cur' : '';
-    dots += '<div class="th-dot '+cls+'"></div>';
+    var cls=i<theoryIdx?'done':i===theoryIdx?'cur':'';
+    dots+='<div class="th-dot '+cls+'"></div>';
   });
-  $('th-progress').innerHTML = dots;
-  /* Btn next */
-  $('th-next').textContent = theoryIdx < THEORY.length-1 ? 'Suivant →' : 'Compris, on avance ✓';
+  $('th-progress').innerHTML=dots;
+  $('th-next').textContent=theoryIdx<THEORY.length-1?'Suivant →':'C\'est compris, on avance ✓';
 }
 
-$('th-prev').addEventListener('click', function(){
-  if(theoryIdx > 0){ theoryIdx--; renderTheory(); }
-});
+$('th-prev').addEventListener('click', function(){ if(theoryIdx>0){ theoryIdx--; renderTheory(); } });
 $('th-next').addEventListener('click', function(){
-  if(theoryIdx < THEORY.length-1){ theoryIdx++; renderTheory(); }
-  else {
-    $('theory-overlay').classList.remove('on');
-    if(theoryCb) theoryCb();
-  }
+  if(theoryIdx<THEORY.length-1){ theoryIdx++; renderTheory(); }
+  else { $('theory-overlay').classList.remove('on'); if(theoryCb) theoryCb(); }
 });
 
-/* ═══════════════════════════════════════════
-   DONNÉES QCM
-═══════════════════════════════════════════ */
+/* ══════════════════════════════════════════
+   DONNÉES QCM — 3 options (pas 4 — plus adapté)
+══════════════════════════════════════════ */
 var D1 = {
-  idx:0, q:"Qu'est-ce qui a déclenché la fermeture de Mme Durand ?",
+  idx:0, q:"Dans la scène 1, Lucas vient de dire : « Je comprends votre réserve, <em>mais</em> si on calcule sur 25 ans… » — Mme Durand se ferme. Qu'est-ce qui vient de se passer ?",
   correct:1, pts:3, skill:'Posture', rep:'posture',
-  hint:"Regardez la séquence : Lucas reçoit l'objection, et que fait-il dans la seconde qui suit ? Le mot qu'il utilise juste après « Je comprends » est le détonateur.",
+  hint:"Concentrez-vous sur le mot que Lucas utilise juste après « Je comprends ». Ce mot a un effet neurologique précis sur le cerveau du prospect.",
   opts:[
-    {t:'Le prix de 18 000 € était objectivement trop élevé pour son budget.', fb:"Le prix n'a jamais été le problème réel. Quand Lucas a arrêté de parler, Mme Durand ne parlait plus de chiffres — elle parlait de confiance et d'incertitude. Le prix était un symptôme, pas la cause."},
-    {t:"Lucas a répondu à l'objection par des arguments, déclenchant la réactance de Mme Durand.", fb:"Exactement. <em>« Je comprends, mais si on calcule... »</em> — chaque <em>mais</em> est une micro-attaque contre la position du prospect. Son cerveau a répondu en renforçant sa résistance. Lucas a perdu parce qu'il a gagné le débat."},
-    {t:"Lucas n'a pas assez personnalisé son argumentaire au profil de Mme Durand.", fb:'La personnalisation aide, mais ce n\'est pas ce qui a causé l\'échec. Même un argumentaire ultra-personnalisé, délivré en mode argumentation, déclenche la même réactance. La question est : <em>comment</em> vous répondez, pas <em>ce que</em> vous dites.'}
+    {t:'Le prix de 18 000 € dépasse le budget réel de Mme Durand — c\'est une objection légitime.', fb:"Le prix n'est pas le problème. Quand Lucas a fini de parler, Mme Durand ne parlait plus de chiffres — elle parlait d'incertitude et de confiance. Le prix était un symptôme, pas la cause."},
+    {t:'Le « mais » de Lucas a déclenché sa réactance — son cerveau a entendu une attaque et s\'est défendu.', fb:"Exactement. Le mot <em>mais</em> annule tout ce qui précède — même le <em>« Je comprends »</em>. Le cerveau du prospect l'entend comme : <em>ce que tu viens de dire est faux</em>. Lucas a perdu au moment précis où il pensait commencer à convaincre."},
+    {t:'Lucas n\'a pas suffisamment personnalisé son argumentaire au profil de Mme Durand.', fb:"La personnalisation aide, mais ce n'est pas ce qui a causé l'échec ici. Un argumentaire ultra-personnalisé, délivré en mode argumentation, déclenche la même réactance. La question, c'est <em>comment</em> vous répondez — pas <em>ce que</em> vous dites."}
   ]
 };
 
 var D2 = {
   idx:1, q:"Face à « c'est trop cher », quel doit être le premier réflexe ?",
   correct:0, pts:2, skill:'Cadre', rep:'cadre',
-  hint:"Un médecin ne prescrit pas avant d'avoir examiné. Un commercial ne devrait pas répondre avant d'avoir compris l'origine du blocage.",
+  hint:"Un médecin ne prescrit jamais avant d'avoir examiné. Quel est l'équivalent commercial de cet examen ?",
   opts:[
-    {t:'Poser une question de clarification : « Qu\'est-ce qui vous fait dire que c\'est beaucoup ? »', fb:"Parfait. Vous ne niez pas, ne justifiez pas, n'argumentez pas. Vous cherchez à comprendre. Et dans le même temps, vous envoyez un signal au cerveau du prospect : <em>cette personne ne m'attaque pas.</em> La réactance baisse d'un cran."},
-    {t:'Rassurer sur le retour sur investissement avec des chiffres concrets.', fb:"C'est exactement ce que Lucas a fait — et c'est ce qui a déclenché la réactance. Les chiffres rassurent ceux qui sont déjà convaincus. Pour les autres, ils ressentent une tentative de persuasion, et ils se braquent."},
-    {t:"Acknowledgez l'objection puis pivoter vers un autre bénéfice non lié au prix.", fb:"Le pivot est une technique de contournement — et le prospect le sent. <em>« Je comprends, mais parlons plutôt de... »</em> signale implicitement : <em>je ne veux pas traiter votre vraie objection.</em> La confiance chute."}
+    {t:'Poser une question de clarification : « Qu\'est-ce qui vous fait dire que c\'est beaucoup ? »', fb:"Parfait. Vous ne niez pas, ne justifiez pas, n'argumentez pas. Vous cherchez à comprendre. Et dans le même temps, vous envoyez un signal au cerveau du prospect : <em>cette personne ne m'attaque pas.</em> La réactance baisse."},
+    {t:'Rassurer sur le retour sur investissement avec des chiffres et des études.', fb:"C'est exactement ce que Lucas a fait — et c'est ce qui a tout déclenché. Les chiffres rassurent ceux qui sont déjà convaincus. Pour les autres, ils perçoivent une tentative de persuasion, et se braquent."},
+    {t:"Pivoter vers un bénéfice que le prix ne couvre pas — l'indépendance énergétique, par exemple.", fb:"Le pivot est une esquive — et le prospect le sent. <em>« Je comprends, mais parlons plutôt de... »</em> signale : <em>je ne veux pas traiter votre vraie objection.</em> La confiance chute."}
   ]
 };
 
 var D3 = {
-  idx:2, q:"Pourquoi la question de clarification est-elle si puissante ?",
+  idx:2, q:"Pourquoi la question de clarification est-elle si puissante, neurologiquement ?",
   correct:2, pts:2, skill:'Authenticité', rep:'auth',
-  hint:"Quand vous posez une vraie question, que signalez-vous à votre interlocuteur sur vos intentions ?",
+  hint:"Quand vous posez une vraie question, que signalez-vous sur vos intentions — et que fait le cerveau de l'autre en réponse ?",
   opts:[
-    {t:'Elle permet de gagner du temps en repoussant le moment de répondre.', fb:"Ce n'est pas une tactique de temporisation — c'est un acte d'écoute sincère. Si vous posez la question juste pour gagner du temps, le prospect le sentira. L'authenticité est indispensable."},
-    {t:'Elle force le prospect à justifier son objection, ce qui l\'affaiblit.', fb:"C'est une lecture cynique et dangereuse. Si le prospect perçoit votre question comme un piège pour le mettre en difficulté, la réactance explose. La clarification doit être sincère, pas stratégique."},
-    {t:"Elle envoie le signal : votre avis mérite d'être compris — ce qui désarme la réactance.", fb:"Exactement. Le cerveau du prospect est programmé pour se défendre contre la persuasion. Mais il n'est pas programmé pour se défendre contre l'écoute. En posant une vraie question, vous changez de camp : vous n'êtes plus dans l'attaque, vous êtes dans la compréhension."}
+    {t:'Elle force le prospect à justifier son objection, ce qui l\'affaiblit progressivement.', fb:"C'est une lecture cynique et dangereuse. Si le prospect perçoit votre question comme un piège pour le mettre en difficulté, la réactance explose. La clarification ne marche que si elle est sincère."},
+    {t:'Elle vous donne du temps pour formuler votre contre-argument sans être pris de court.', fb:"Si vous posez la question pour gagner du temps pendant que vous réfléchissez à votre réfutation, vous êtes encore dans le schéma argumentation. Le prospect le sentira — et se fermera."},
+    {t:"Elle envoie le signal : votre point de vue mérite d'être compris. Le cerveau du prospect suspend sa défense.", fb:"Exactement. Le cerveau est programmé pour se défendre contre la persuasion. Mais pas contre l'écoute. En posant une vraie question, vous changez de camp : vous n'êtes plus dans l'attaque, vous êtes dans la compréhension. La réactance n'a plus de raison d'être."}
   ]
 };
 
 var D4 = {
-  idx:3, q:"Mme Durand dit : « Je ne suis pas sûre que ça marche chez moi, mon toit n'est pas bien orienté. » Quelle est la meilleure réponse ?",
+  idx:3, q:"Mme Durand vient de dire : « 18 000 €, non... quand vous le dites comme ça, ça change la perspective. » Lucas doit maintenant ancrer cette ouverture. Que fait-il ?",
   correct:1, pts:3, skill:'Connexion', rep:'conn',
-  hint:"Clarifiez d'abord — sans contredire — puis utilisez une image qui déplace le cadre mental du problème technique.",
+  hint:"L'ouverture vient de se créer. Ce n'est pas le moment de déverser des arguments — c'est le moment d'aller plus loin dans la même direction.",
   opts:[
-    {t:"Nos installateurs font une étude technique gratuite. Dans 90 % des cas, on trouve une solution même avec une orientation imparfaite.", fb:"Argument pur. Vous rassurez avec des chiffres — mais elle n'est pas dans le rationnel, elle est dans le doute. Et <em>90 % des cas</em> sous-entend : <em>vous êtes peut-être dans les 10 %.</em> Mauvais signal."},
-    {t:"« Qu'est-ce qui vous fait penser que votre toit est mal orienté ? » [...] « C'est un peu comme un jardin : même avec une exposition partielle au soleil, on peut cultiver beaucoup de choses si on sait quoi planter et où. »", fb:"Parfait. Clarification d'abord, sans contredire. Puis comparaison qui déplace le cadre : du problème technique vers l'image d'un jardin qui s'adapte. Le prospect imagine au lieu d'analyser — la résistance baisse."},
-    {t:"Vous savez, l'orientation parfaite c'est le sud, mais même au sud-est ou sud-ouest on obtient 85 à 92 % du rendement. C'est négligeable.", fb:"<em>C'est négligeable</em> = votre inquiétude n'a pas de valeur. Même si c'est techniquement vrai, vous venez de dévalider son ressenti. La réactance se réactive immédiatement. Les faits ont raison — mais le commercial a perdu."}
+    {t:'Confirmer le ROI avec des chiffres concrets — elle est maintenant prête à les recevoir.', fb:"Erreur classique. Elle venait de changer de cadre mental — elle était dans l'image, dans l'émotion. En sortant des chiffres, Lucas la ramènerait dans le registre analytique, méfiant. On ne renforce pas un moment d'ouverture avec des statistiques."},
+    {t:'Poser une question qui prolonge l\'ouverture : « Qu\'est-ce qui ferait que ce choix vous semblerait évident dans 5 ans ? »', fb:"Parfait. Elle vient de se déplacer mentalement. Vous prolongez ce déplacement en la faisant imaginer, pas en la persuadant. Elle se projette elle-même dans un futur positif — vous n'avez rien à forcer."},
+    {t:'Proposer directement de passer à l\'étude technique — l\'hésitation est levée.', fb:"Trop vite. Elle a ouvert une porte, pas signé. Proposer l'étude technique à ce stade, c'est reprendre la main — et la réactance peut se réactiver. Laissez le silence et la question faire leur travail d'abord."}
   ]
 };
 
 var D5 = {
-  idx:4, q:"Quel est le danger de la méthode en 3 temps si elle est mal exécutée ?",
+  idx:4, q:"Quel est le danger réel de la méthode en 3 temps si elle est exécutée de façon mécanique ?",
   correct:0, pts:2, skill:'Posture', rep:'posture',
-  hint:"La méthode est un outil, pas un masque. Que se passe-t-il si le prospect sent que vous jouez un rôle plutôt que d'écouter sincèrement ?",
+  hint:"La méthode est un outil. Que se passe-t-il quand un outil est utilisé sans que la main qui le tient soit sincère ?",
   opts:[
-    {t:"Si les questions sonnent mécaniques, le prospect détecte la manipulation — et la réactance explose.", fb:"Exactement. La méthode en 3 temps n'est efficace que si elle est animée par une curiosité sincère. Le prospect ressent la différence entre <em>je pose cette question parce que je veux comprendre</em> et <em>je pose cette question parce qu'on me l'a dit de la poser.</em> L'authenticité n'est pas un bonus : c'est le carburant."},
-    {t:'Les trois temps prennent trop de temps et le prospect perd patience.', fb:"Au contraire — les trois temps prennent souvent moins de temps qu'un long argumentaire. Et le prospect ne perd jamais patience quand on s'intéresse sincèrement à lui : il perd patience quand on lui parle de soi."},
-    {t:'La méthode ne fonctionne que sur les objections de prix, pas sur les objections techniques.', fb:"La méthode fonctionne sur toutes les objections — y compris les plus techniques. La clarification sert à comprendre, la réflexion à recadrer, la comparaison à imaginer. Ces trois mouvements sont universels."}
+    {t:'Si les questions sonnent comme un script, le prospect détecte la manipulation — et la réactance explose plus fort qu\'avec un argument classique.', fb:"Exactement. La méthode ne fonctionne que si elle est animée par une curiosité sincère. Le prospect ressent la différence entre <em>je pose cette question parce que je veux vraiment comprendre</em> et <em>je pose cette question parce qu'on me l'a appris</em>. L'authenticité n'est pas un bonus — c'est le carburant."},
+    {t:'La séquence prend trop de temps et le prospect perd patience.', fb:"Au contraire — les 3 temps prennent souvent moins de temps qu'un long argumentaire. Et le prospect ne perd jamais patience quand quelqu'un s'intéresse sincèrement à lui. Il perd patience quand on lui parle de soi."},
+    {t:'La méthode ne fonctionne que sur les objections de prix — pas sur les objections techniques ou émotionnelles.', fb:"La méthode est universelle. La clarification sert à comprendre n'importe quelle objection. La réflexion sert à recadrer n'importe quelle croyance. L'image sert à déplacer n'importe quel blocage. On le verra dans l'épisode 2 — avec une objection autrement plus difficile."}
   ]
 };
 
-/* ═══════════════════════════════════════════
-   SCÈNES
-═══════════════════════════════════════════ */
+/* ══════════════════════════════════════════
+   SCÈNES — dialogues réécrits
+══════════════════════════════════════════ */
 var SCENE1 = [
-  {type:'voff', text:"Mardi 14h30. Lucas sonne à la porte d'une maison individuelle à Saint-Étienne. Mme Durand, 62 ans, retraitée. Elle a rempli un formulaire en ligne il y a trois semaines, après avoir vu sa facture EDF grimper."},
+  {type:'voff', text:"Mardi 14h30. Mme Durand ouvre la porte de son pavillon à Saint-Étienne. Elle a 62 ans. Retraitée de l'Éducation nationale. Elle a rempli un formulaire en ligne il y a trois semaines — le soir où elle a ouvert sa facture EDF."},
   {type:'show', who:'LUCAS',  expr:'neutral'},
   {type:'show', who:'DURAND', expr:'neutral'},
-  {type:'lit',  panel:'left'},
-  {type:'bubble', who:'DURAND', text:'Bonjour, c\'est bien pour les panneaux solaires ? Entrez, je vous en prie.', expr:'neutral'},
-  {type:'bubble', who:'LUCAS',  text:'Bonjour Madame Durand. Lucas Ferrand, Alizéo. Merci de me recevoir.', expr:'neutral'},
-  {type:'voff', text:"Lucas pose son dossier, montre des photos de chantiers, déroule ses chiffres. Dix minutes de présentation impeccable. Mme Durand écoute poliment."},
-  {type:'bubble', who:'DURAND', text:'C\'est intéressant, mais... 18 000 euros, c\'est beaucoup d\'argent quand même.', expr:'skeptical'},
-  {type:'bubble', who:'LUCAS',  text:'Je comprends votre réserve, mais si on calcule sur 25 ans avec les économies d\'énergie et les aides de l\'État, votre retour sur investissement dépasse les 38 000 euros. C\'est plus du double.', expr:'eager'},
-  {type:'bubble', who:'DURAND', text:'Oui mais... on ne sait jamais ce qui peut se passer dans 25 ans. Et si les panneaux s\'usent avant ?', expr:'resistant'},
-  {type:'bubble', who:'LUCAS',  text:'Justement, nos panneaux sont garantis 25 ans. Et les études montrent qu\'ils fonctionnent encore à 85 % de leur capacité après 30 ans. C\'est un investissement extrêmement sûr.', expr:'eager'},
+  {type:'bubble', who:'DURAND', text:'Bonjour, oui, c\'est pour les panneaux solaires ? Entrez, je vous en prie. Mon mari n\'est pas là mais... il est d\'accord pour qu\'on regarde.', expr:'neutral'},
+  {type:'bubble', who:'LUCAS',  text:'Bonjour Madame Durand, Lucas Ferrand, Alizéo. Merci de me recevoir. Je vais vous montrer quelque chose d\'intéressant sur votre situation.', expr:'eager'},
+  {type:'voff', text:"Lucas pose son dossier sur la table basse. Il sort ses planches, montre des chantiers, déroule ses tableaux Excel. Dix minutes de présentation. Mme Durand écoute, les mains croisées."},
+  {type:'bubble', who:'DURAND', text:'C\'est... complet. Mais 18 000 euros, c\'est quand même beaucoup d\'argent pour nous. On est à la retraite, vous comprenez.', expr:'skeptical'},
+  {type:'bubble', who:'LUCAS',  text:'Je vous comprends tout à fait, mais si on calcule sur 25 ans — avec les économies d\'énergie et les aides de l\'État — votre retour dépasse les 38 000 euros. C\'est plus du double.', expr:'eager'},
+  {type:'bubble', who:'DURAND', text:'Oui, mais... 25 ans. On ne sait pas ce qui peut arriver. Et si les panneaux s\'usent avant ?', expr:'resistant'},
+  {type:'bubble', who:'LUCAS',  text:'Nos panneaux sont garantis 25 ans. Des études montrent qu\'ils fonctionnent encore à 85 % après 30 ans. Et les aides de l\'État ne vont pas durer éternellement, donc c\'est vraiment le bon moment pour...', expr:'eager'},
   {type:'expr',   who:'LUCAS',  expr:'stressed'},
-  {type:'expr',   who:'DURAND', expr:'resistant'},
-  {type:'bubble', who:'DURAND', text:'Je vois... Écoutez, c\'est très complet mais je vais en discuter avec mon mari. On vous rappellera.', expr:'resistant'},
-  {type:'voff', text:"Lucas sort de la maison. Il a tout bien expliqué. Les chiffres étaient bons. Les arguments étaient solides. Et il a perdu."},
-  {type:'hide', who:'DURAND'},
-  {type:'voff', text:"Ce que Lucas ne sait pas encore : ce n'est pas son produit qui a été rejeté. C'est sa méthode. Chaque argument qu'il a avancé a renforcé le mur au lieu de le franchir."}
+  {type:'bubble', who:'DURAND', text:'Oui, vous l\'avez dit. Mais... non, vraiment, je dois en parler avec mon mari. On vous rappellera.', expr:'resistant'},
+  {type:'voff', text:"Lucas range ses planches. Il a tout bien expliqué. Les chiffres étaient bons. Les garanties étaient là. Et Mme Durand vient de lui servir la formule la plus douce pour dire non."},
+  {type:'hide',   who:'DURAND'},
+  {type:'voff', text:"Ce que Lucas ne comprend pas encore : chaque fois qu'il a dit « mais », chaque fois qu'il a sorti un chiffre, il a renforcé le mur. Il a gagné le débat. Et perdu la vente."}
 ];
 
 var SCENE2 = [
-  {type:'voff', text:"Même salon. Même objection. Mais cette fois, Bruno a montré à Lucas une autre voie."},
+  {type:'voff', text:"Même salon. Même objection. Sauf que cette fois, Bruno a passé une heure avec Lucas avant la visite. Lucas sait ce qu'il ne doit pas faire."},
   {type:'show', who:'LUCAS',  expr:'calm'},
   {type:'show', who:'DURAND', expr:'neutral'},
-  {type:'lit',  panel:'left'},
-  {type:'bubble', who:'DURAND', text:'18 000 euros, c\'est beaucoup d\'argent quand même.', expr:'skeptical'},
+  {type:'bubble', who:'DURAND', text:'18 000 euros... c\'est quand même beaucoup pour nous. On est à la retraite.', expr:'skeptical'},
   {type:'expr',   who:'LUCAS',  expr:'calm'},
   {type:'bubble', who:'LUCAS',  text:'Qu\'est-ce qui vous fait dire que c\'est beaucoup ?', expr:'calm'},
+  {type:'voff', text:"Lucas se tait. Il attend. Quatre secondes. Cinq. Le silence travaille à sa place."},
   {type:'expr',   who:'DURAND', expr:'thinking'},
-  {type:'bubble', who:'DURAND', text:'Bah... c\'est un gros investissement pour nous. On a une retraite modeste et on ne sait pas combien de temps on restera dans cette maison.', expr:'thinking'},
-  {type:'bubble', who:'LUCAS',  text:'Je comprends. Et si vous étiez certaine d\'y rester 15 ans — ce serait encore une dépense, ou plutôt un choix ?', expr:'calm'},
+  {type:'bubble', who:'DURAND', text:'Bah... c\'est un gros montant d\'un coup. Et on ne sait pas combien de temps on va rester ici. Si on revend dans 8 ans...', expr:'thinking'},
+  {type:'bubble', who:'LUCAS',  text:'Si vous étiez certaine de rester ici 15 ans — est-ce que 18 000 euros ce serait encore une dépense ? Ou un choix ?', expr:'calm'},
+  {type:'voff', text:"Mme Durand ne répond pas immédiatement. Elle regarde vers la fenêtre. Lucas ne remplit pas le silence."},
   {type:'expr',   who:'DURAND', expr:'thinking'},
-  {type:'bubble', who:'DURAND', text:'Non... si on reste, évidemment que c\'est un choix. Mais c\'est l\'incertitude qui me freine.', expr:'thinking'},
+  {type:'bubble', who:'DURAND', text:'Non... si on reste, c\'est clairement un choix. Mais c\'est l\'incertitude sur l\'avenir qui me freine.', expr:'thinking'},
   {type:'expr',   who:'LUCAS',  expr:'confident'},
-  {type:'bubble', who:'LUCAS',  text:'C\'est un peu comme planter un verger. Les premières années vous arrosez sans récolter. Et puis pendant 20 ans, vous récoltez sans arroser — même si vous vendez la maison, la valeur que vous avez plantée reste.', expr:'confident'},
+  {type:'bubble', who:'LUCAS',  text:'C\'est un peu comme planter un verger. Les premières années, vous arrosez sans récolter. Et puis pendant 20 ans, vous récoltez sans arroser — même si vous vendez la maison, ce que vous avez planté reste dans les murs.', expr:'confident'},
   {type:'expr',   who:'DURAND', expr:'open'},
-  {type:'bubble', who:'DURAND', text:'C\'est vrai que vu comme ça, ça change la perspective... Qu\'est-ce qui se passe si on revend avant les 25 ans ?', expr:'open'},
-  {type:'bubble', who:'LUCAS',  text:'Excellente question. Une maison avec des panneaux se revend en moyenne 6 à 8 % plus cher. Vous n\'avez pas planté pour rien.', expr:'confident'},
-  {type:'voff', text:"Lucas n'a rien argumenté. Il a posé deux questions, laissé le silence faire son travail, et utilisé une image. Mme Durand s'est convaincue toute seule."},
-  {type:'voff', text:"La réactance n'a jamais été activée — parce qu'elle n'a jamais eu de raison de se défendre."}
+  {type:'bubble', who:'DURAND', text:'Non... quand vous le dites comme ça, ça change la perspective. Qu\'est-ce qu\'il se passe si on revend avant les 25 ans ?', expr:'open'},
+  {type:'bubble', who:'LUCAS',  text:'Bonne question. Une maison avec des panneaux se revend en moyenne 6 à 8 % plus cher. Ce que vous plantez là, l\'acheteur suivant vous le paiera.', expr:'confident'},
+  {type:'bubble', who:'DURAND', text:'Alors finalement... ce n\'est pas vraiment un risque, c\'est ça ?', expr:'open'},
+  {type:'voff', text:"Lucas n'a pas argumenté. Il a posé deux questions, laissé le silence travailler, et utilisé une image. Mme Durand vient de se convaincre elle-même."},
+  {type:'voff', text:"La réactance n'a jamais été activée — parce qu'elle n'avait rien à défendre contre une écoute sincère."}
 ];
 
-/* ═══════════════════════════════════════════
-   QUESTION PIÈGE (intro)
-═══════════════════════════════════════════ */
+/* ══════════════════════════════════════════
+   QUESTION PIÈGE (intro copywritée)
+══════════════════════════════════════════ */
 var TRAP = [
-  "Il évalue rationnellement le rapport qualité/prix et votre offre ne passe pas le test.",
-  "Son cerveau active un mécanisme de défense psychologique : la réactance.",
-  "Il n'est pas vraiment intéressé et cherche une excuse polie pour vous congédier."
+  "Il fait une analyse rationnelle : votre offre ne passe pas le test coût/bénéfice.",
+  "Son cerveau active un mécanisme de défense automatique : la réactance psychologique.",
+  "Il n\'est pas vraiment intéressé — il cherche une sortie polie."
 ];
 var REVEALS = [
-  "<p><b>Pas exactement.</b> Si c'était une question de calcul, un tableau Excel suffirait à vendre. Mais les prospects qui reçoivent un chiffre parfait et restent bloqués existent par milliers. Le rationnel n'est pas le problème ici.</p>",
-  "<p><b>Exactement.</b> La réactance, décrite par Brehm en 1966, est un mécanisme profond : quand quelqu'un sent qu'on essaie de le convaincre, son cerveau active une résistance proportionnelle à la pression ressentie. Plus vous argumentez, plus il se braque.</p>",
-  "<p><b>Rarement.</b> La majorité des <em>c'est trop cher</em> sont sincères — le prospect ressent un blocage réel. Le problème n'est pas dans ce qu'il dit, mais dans la façon dont vous réagissez. Et la réaction standard aggrave ce blocage.</p>"
+  "<p><b>Pas tout à fait.</b> Si c'était une question de calcul, un tableau Excel suffirait à vendre. Mais des milliers de prospects reçoivent le tableau Excel parfait — et ne signent pas. Le rationnel n'est pas le problème.</p>",
+  "<p><b>Exact.</b> La réactance psychologique, décrite par Brehm en 1966, est un réflexe câblé. Dès que le cerveau du prospect détecte une tentative d'influence, il active un bouclier. Et le paradoxe ? Plus vous argumentez, plus le bouclier se renforce. Lucas va en faire la douloureuse expérience.</p>",
+  "<p><b>Rarement.</b> La grande majorité des « c'est trop cher » sont sincères — le prospect ressent un vrai blocage. Le problème n'est pas dans ce qu'il dit. C'est dans la façon dont vous réagissez à ce qu'il dit. Et la réaction naturelle est toujours la mauvaise.</p>"
 ];
 
 function showTrap(){
   clearInteraction();
-  statusLbl.textContent = 'INTRODUCTION';
+  statusLbl.textContent='INTRODUCTION';
+  /* Intro copywritée — tension avant la question */
   var html = '<div class="q-wrap">'
-    + '<div class="q-head"><span class="q-badge">QUESTION D\'INTRO</span><span class="q-pts">0 pt — pas de bonne réponse attendue</span></div>'
-    + '<div class="q-question">Avant d\'entrer chez Mme Durand : quand un prospect vous dit <em>« c\'est trop cher »</em>, que se passe-t-il réellement dans son cerveau ?</div>'
+    + '<div class="q-head"><span class="q-badge">QUESTION D\'INTRO</span><span class="q-pts">Aucun point — votre instinct compte</span></div>'
+    + '<div class="q-question">Avant d\'entrer dans le salon. Trois semaines après avoir rempli un formulaire en ligne, Mme Durand va dire : <em>« c\'est trop cher »</em>.<br><br>Dans son cerveau, que se passe-t-il réellement à ce moment-là ?</div>'
     + '<div class="q-options">';
   TRAP.forEach(function(t,i){
-    html += '<button class="q-btn" data-idx="'+i+'"><span class="q-letter">'+LETTERS[i]+'</span><span>'+t+'</span></button>';
+    html+='<button class="q-btn" data-idx="'+i+'"><span class="q-letter">'+LETTERS[i]+'</span><span>'+t+'</span></button>';
   });
-  html += '</div></div>';
-  izone.innerHTML = html;
-
+  html+='</div></div>';
+  izone.innerHTML=html;
   izone.querySelectorAll('.q-btn').forEach(function(btn){
     btn.addEventListener('click', function(){
-      var idx = parseInt(btn.getAttribute('data-idx'));
-      state.trapChosen = idx;
+      var idx=parseInt(btn.getAttribute('data-idx'));
+      state.trapChosen=idx;
       izone.querySelectorAll('.q-btn').forEach(function(b){
-        b.disabled = true;
-        var i = parseInt(b.getAttribute('data-idx'));
+        b.disabled=true;
+        var i=parseInt(b.getAttribute('data-idx'));
         if(i===1) b.classList.add('right');
-        if(i===idx && idx!==1) b.classList.add('wrong');
-        if(i!==idx && i!==1) b.classList.add('dim');
+        if(i===idx&&idx!==1) b.classList.add('wrong');
+        if(i!==idx&&i!==1) b.classList.add('dim');
       });
       showReveal(idx);
     });
@@ -1954,37 +1452,140 @@ function showTrap(){
 }
 
 function showReveal(chosen){
-  /* Vider la zone interaction avant d'afficher l'overlay */
   clearInteraction();
-  $('rv-choice').textContent = 'Votre réponse : ' + TRAP[chosen];
-  var body = REVEALS[chosen];
-  if(chosen !== 1){
-    body += '<div class="rg-row ok" style="margin-top:12px;">'+REVEALS[1]+'</div>';
-  }
-  $('rv-body').innerHTML = body;
+  $('rv-choice').textContent='Votre réponse : '+TRAP[chosen];
+  var body=REVEALS[chosen];
+  if(chosen!==1){ body+='<div class="rg-row ok" style="margin-top:12px;">'+REVEALS[1]+'</div>'; }
+  $('rv-body').innerHTML=body;
   $('ov-reveal').classList.add('on');
   setStep(0);
 }
 
-/* ═══════════════════════════════════════════
+/* ══════════════════════════════════════════
+   BILAN PERSONNALISÉ PAR COMPÉTENCE
+══════════════════════════════════════════ */
+function showBilan(){
+  setStep(6);
+  statusLbl.textContent='BILAN';
+  $('bil-pts').textContent=state.score;
+
+  /* Profil selon score */
+  var profiles=[
+    {min:11,pTitle:'SDR Instinctif',pDesc:'Vous avez compris quelque chose que la plupart des commerciaux mettent des années à intégrer : convaincre ne passe pas par l\'argumentation. Vigilance : la méthode ne doit jamais devenir un script — c\'est l\'authenticité qui fait la différence.'},
+    {min:8, pTitle:'SDR en Développement',pDesc:'Les bases sont là. La transition entre clarification et question de réflexion est le moment le plus délicat — c\'est là que votre progression se fera.'},
+    {min:5, pTitle:'SDR en Apprentissage',pDesc:'Vous avez saisi certains principes, mais la méthode en 3 temps n\'est pas encore fluide. Relisez les slides de théorie et repassez la scène de rejeu.'},
+    {min:0, pTitle:'SDR en début de courbe',pDesc:'C\'est normal. L\'essentiel à retenir de cet épisode : quand un prospect objecte, ne répondez pas — questionnez.'}
+  ];
+  var prof=profiles[profiles.length-1];
+  for(var i=0;i<profiles.length;i++){ if(state.score>=profiles[i].min){prof=profiles[i];break;} }
+
+  /* Titre contextuel selon les compétences ratées */
+  var weakSkills=state.results.filter(function(r){return !r.ok;}).map(function(r){return r.skill;});
+  var strongSkills=state.results.filter(function(r){return r.ok&&r.okFirst;}).map(function(r){return r.skill;});
+  var bilTitle=state.score>=11?'Performance remarquable':state.score>=8?'Bonne maîtrise':state.score>=5?'Des acquis, des zones à travailler':'Les fondations sont à poser';
+  $('bil-title').textContent=bilTitle;
+  $('sdr-profile-title').textContent=prof.pTitle;
+  $('sdr-profile-desc').textContent=prof.pDesc;
+
+  /* Barres rep */
+  var repKeys=['posture','cadre','auth','conn'];
+  var repLabels={posture:'Posture',cadre:'Cadre',auth:'Authenticité',conn:'Connexion'};
+  var repHtml='';
+  repKeys.forEach(function(k){
+    var v=state.rep[k]||0;
+    repHtml+='<div class="rp-item"><span class="rp-label">'+repLabels[k]+'</span>'
+             +'<div class="rp-track"><div class="rp-fill '+k+'" style="width:'+v+'%"></div></div></div>';
+  });
+  $('rep-profile-bars').innerHTML=repHtml;
+
+  /* Lignes résultats avec verdict différencié */
+  var verdicts={
+    okFirst:  'Acquis du premier coup',
+    okSecond: 'Trouvé au 2e essai',
+    ko:       'À retravailler'
+  };
+  var rowsHtml='';
+  state.results.forEach(function(r){
+    var cls=r.okFirst?'ok':r.pts>0?'mid':'ko';
+    var verdict=r.okFirst?verdicts.okFirst:r.pts>0?verdicts.okSecond:verdicts.ko;
+    rowsHtml+='<div class="bilan-row '+cls+'">'
+              +'<div class="br-skill">'+r.skill+'</div>'
+              +'<div class="br-pts">'+r.pts+'/'+r.max+'</div>'
+              +'<div class="br-verdict">'+verdict+'</div>'
+              +'</div>';
+  });
+  $('bil-rows').innerHTML=rowsHtml;
+
+  /* Mémo Bruno — sarcastique-bienveillant, personnalisé */
+  var memoHtml='<div class="bruno-memo-head">MÉMO DE BRUNO</div>';
+  if(state.score>=11){
+    memoHtml+='<b>Bon. Je retire ce que j\'avais préparé.</b> Je m\'attendais à passer vingt minutes à expliquer pourquoi vous avez répondu comme tout le monde. Apparemment, vous n\'êtes pas tout le monde. Maintenant le vrai test : est-ce que ça tient en situation réelle, sous pression, avec un prospect qui n\'est pas dans un épisode de formation ? Ça, je ne peux pas vous le dire. C\'est à vous de jouer.';
+  } else if(state.score>=8){
+    memoHtml+='<b>Pas mal. Sérieusement.</b> ';
+    if(weakSkills.length>0){ memoHtml+='Vous avez trébuché sur <em>'+weakSkills.join(' et ')+'</em> — ce n\'est pas un hasard, c\'est exactement là que la plupart des commerciaux coincent. '; }
+    if(strongSkills.length>0){ memoHtml+='Par contre, sur <em>'+strongSkills.join(' et ')+'</em>, vous avez répondu du premier coup — gardez ça. '; }
+    memoHtml+='On y reviendra dans les prochains épisodes avec plus de pression.';
+  } else {
+    memoHtml+='<b>Honnêtement ? C\'est le début.</b> ';
+    if(weakSkills.length>0){ memoHtml+='<em>'+weakSkills.join(', ')+'</em> — voilà où vous en êtes. Ce ne sont pas des reproches, c\'est un diagnostic. '; }
+    memoHtml+='Relisez la théorie. Repassez le rejeu. Et revenez — ce n\'est pas en regardant une fois qu\'on intègre une méthode.';
+  }
+  memoHtml+='<br><br><b>Les trois temps. Par cœur :</b><br>'
+    +'1. <b>Clarifier</b> — « Qu\'est-ce qui vous fait dire ça ? »<br>'
+    +'2. <b>Faire réfléchir</b> — « Si [condition favorable], ce serait encore une dépense ou un choix ? »<br>'
+    +'3. <b>Déplacer</b> — « C\'est comme [image concrète]. »<br><br>'
+    +'<em>Règle d\'or : quand vous sentez que vous allez argumenter, arrêtez-vous. Et posez une question à la place.</em>';
+  $('bruno-memo-text').innerHTML=memoHtml;
+
+  if(state.score>=12) launchConfetti();
+  $('ov-bilan').classList.add('on');
+}
+
+/* ══════════════════════════════════════════
+   CONFETTI + SURPRISE & DELIGHT
+══════════════════════════════════════════ */
+function launchConfetti(){
+  var colors=['#9a7420','#0d7a6e','#2563a8','#c43030','#f0d060'];
+  for(var i=0;i<60;i++){
+    (function(delay){
+      setTimeout(function(){
+        var el=document.createElement('div'); el.className='confetti-piece';
+        el.style.left=Math.random()*100+'vw';
+        el.style.background=colors[Math.floor(Math.random()*colors.length)];
+        el.style.animationDuration=(2+Math.random()*1.5)+'s';
+        el.style.width=(6+Math.random()*8)+'px';
+        el.style.height=(6+Math.random()*8)+'px';
+        document.body.appendChild(el);
+        setTimeout(function(){ if(el.parentNode) el.parentNode.removeChild(el); },3500);
+      },delay);
+    })(i*40);
+  }
+  setTimeout(function(){
+    var pop=document.createElement('div');
+    pop.style.cssText='position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:#0d7a6e;color:#fff;padding:12px 24px;border-radius:8px;font-family:Oswald,sans-serif;font-size:.85rem;letter-spacing:2px;z-index:3000;animation:fadein .3s ease;box-shadow:0 4px 20px rgba(0,0,0,.2);';
+    pop.textContent='BRUNO : « Je retire ce que j\'avais préparé. »';
+    document.body.appendChild(pop);
+    setTimeout(function(){ if(pop.parentNode) pop.parentNode.removeChild(pop); },3500);
+  },800);
+}
+
+/* ══════════════════════════════════════════
    FLOW PRINCIPAL
-═══════════════════════════════════════════ */
+══════════════════════════════════════════ */
 $('btn-enter-scene').addEventListener('click', function(){
   $('ov-reveal').classList.remove('on');
   clearInteraction();
   hideAllBubbles();
   disableClick();
-  setLit('left');
   setStep(1);
-  statusLbl.textContent = 'SCÈNE 1';
+  statusLbl.textContent='SCÈNE 1 — LES ERREURS';
   runScene(SCENE1, function(){
-    setStep(1);
-    statusLbl.textContent = 'ANALYSE';
+    setStep(2);
+    statusLbl.textContent='ANALYSE · SCÈNE 1';
     showQuiz(D1, function(){
       showQuiz(D2, function(){
         clearInteraction();
         showTheory(function(){
-          setStep(2);
           $('ov-practice-mid').classList.add('on');
         });
       });
@@ -1997,15 +1598,13 @@ $('mode-keyboard-mid').addEventListener('click', function(){
   clearInteraction();
   hideAllBubbles();
   disableClick();
-  setLit('left');
+  cLucas.style.opacity='0'; cDurand.style.opacity='0';
   setExpr('LUCAS','neutral');
-  cLucas.style.opacity  = '0';
-  cDurand.style.opacity = '0';
-  statusLbl.textContent = 'REJEU';
-  setStep(3);
+  statusLbl.textContent='REJEU — LA MÉTHODE';
+  setStep(4);
   runScene(SCENE2, function(){
-    setStep(4);
-    statusLbl.textContent = 'QUESTIONS';
+    setStep(5);
+    statusLbl.textContent='QUESTIONS FINALES';
     showQuiz(D3, function(){
       showQuiz(D4, function(){
         showQuiz(D5, function(){
@@ -2017,140 +1616,33 @@ $('mode-keyboard-mid').addEventListener('click', function(){
   });
 });
 
-/* ═══════════════════════════════════════════
-   BILAN PERSONNALISÉ
-═══════════════════════════════════════════ */
-function showBilan(){
-  setStep(5);
-  statusLbl.textContent = 'BILAN';
-  $('bil-pts').textContent = state.score;
-
-  /* Titre selon score */
-  var titles = [
-    {min:11, t:'Session parfaite', pTitle:'Commercial instinctif', pDesc:'Vous avez compris quelque chose que la plupart des commerciaux mettent des années à intégrer : convaincre ne passe pas par l\'argumentation. Vigilance : la méthode ne doit jamais devenir un script mécanique.'},
-    {min:8,  t:'Bonne maîtrise', pTitle:'Commercial en développement', pDesc:'Les bases sont là. Travaillez surtout la transition entre la clarification et la question de réflexion — c\'est le moment le plus délicat de la séquence.'},
-    {min:5,  t:'Des acquis solides, des angles à travailler', pTitle:'Commercial en apprentissage', pDesc:'Vous avez saisi certains principes, mais la méthode en 3 temps n\'est pas encore fluide. Relisez les slides de théorie et réécoutez la scène de rejeu.'},
-    {min:0,  t:'Les fondations sont à poser', pTitle:'Commercial en début de courbe', pDesc:'C\'est normal de ne pas tout saisir dès le premier épisode. L\'essentiel à retenir : quand un prospect objecte, ne répondez pas — questionnez.'}
-  ];
-  var chosen = titles[titles.length-1];
-  for(var i=0;i<titles.length;i++){
-    if(state.score >= titles[i].min){ chosen = titles[i]; break; }
-  }
-  $('bil-title').textContent          = chosen.t;
-  $('sdr-profile-title').textContent  = chosen.pTitle;
-  $('sdr-profile-desc').textContent   = chosen.pDesc;
-
-  /* Barres rep */
-  var repKeys   = ['posture','cadre','auth','conn'];
-  var repLabels = {posture:'Posture',cadre:'Cadre',auth:'Authenticité',conn:'Connexion'};
-  var repHtml   = '';
-  repKeys.forEach(function(k){
-    var v = state.rep[k]||0;
-    repHtml += '<div class="rp-item"><span class="rp-label">'+repLabels[k]+'</span>'
-              + '<div class="rp-track"><div class="rp-fill '+k+'" style="width:'+v+'%"></div></div></div>';
-  });
-  $('rep-profile-bars').innerHTML = repHtml;
-
-  /* Lignes de résultats */
-  var rowsHtml = '';
-  state.results.forEach(function(r){
-    var cls     = r.pts===r.max ? 'ok' : r.pts>0 ? 'mid' : 'ko';
-    var verdict = r.pts===r.max ? 'Acquis' : r.pts>0 ? 'Partiellement acquis' : 'À retravailler';
-    rowsHtml += '<div class="bilan-row '+cls+'">'
-               + '<div class="br-skill">'+r.skill+'</div>'
-               + '<div class="br-pts">'+r.pts+'/'+r.max+'</div>'
-               + '<div class="br-verdict">'+verdict+'</div>'
-               + '</div>';
-  });
-  $('bil-rows').innerHTML = rowsHtml;
-
-  /* Mémo Bruno personnalisé */
-  var wrongSkills = state.results.filter(function(r){ return !r.ok; }).map(function(r){ return r.skill; });
-  var brunoTone   = state.score >= 10 ? 'encourageant' : state.score >= 6 ? 'nuancé' : 'direct';
-  var memoHtml    = '<div class="bruno-memo-head">MÉMO DE BRUNO</div>';
-
-  if(brunoTone === 'encourageant'){
-    memoHtml += '<b>Bien joué.</b> Franchement, ça ne m\'arrive pas souvent de dire ça à quelqu\'un qui vient de regarder son premier épisode. Vous avez le bon logiciel mental. Maintenant il faut l\'installer dans vos vraies conversations — et là, c\'est à vous de jouer.<br><br>';
-  } else if(brunoTone === 'nuancé'){
-    memoHtml += '<b>Pas mal.</b> Vous avez saisi l\'essentiel. Quelques points à retravailler — rien de dramatique, juste des réflexes à affiner. ';
-    if(wrongSkills.length > 0){
-      memoHtml += 'Particulièrement sur : <em>'+wrongSkills.join(', ')+'</em>. ';
-    }
-    memoHtml += 'On y reviendra dans les prochains épisodes.<br><br>';
-  } else {
-    memoHtml += '<b>Honnêtement ?</b> Ce n\'est pas un désastre, mais c\'est clairement le début de l\'apprentissage. ';
-    if(wrongSkills.length > 0){
-      memoHtml += 'Les points qui vous ont posé problème — <em>'+wrongSkills.join(', ')+'</em> — sont précisément ceux qu\'on va creuser. ';
-    }
-    memoHtml += 'Relisez la théorie, relancez la scène de rejeu, et revenez.<br><br>';
-  }
-
-  memoHtml += '<b>Les trois temps à retenir :</b><br>'
-    + '1. <b>Clarifier</b> — Qu\'est-ce qui vous fait dire ça ?<br>'
-    + '2. <b>Faire réfléchir</b> — Si [condition favorable], vous hésiteriez ?<br>'
-    + '3. <b>Comparer</b> — C\'est comme [image concrète].<br><br>'
-    + '<em>Règle d\'or : si vous sentez que vous allez argumenter, arrêtez-vous et posez une question à la place.</em>';
-
-  $('bruno-memo-text').innerHTML = memoHtml;
-
-  /* Confetti si score parfait */
-  if(state.score >= 12) launchConfetti();
-
-  $('ov-bilan').classList.add('on');
-}
-
-/* ═══════════════════════════════════════════
-   SURPRISE & DELIGHT — CONFETTI (score parfait)
-═══════════════════════════════════════════ */
-function launchConfetti(){
-  var colors = ['#9a7420','#0d7a6e','#2563a8','#c43030','#f0d060'];
-  for(var i=0;i<60;i++){
-    (function(delay){
-      setTimeout(function(){
-        var el = document.createElement('div');
-        el.className = 'confetti-piece';
-        el.style.left = Math.random()*100+'vw';
-        el.style.background = colors[Math.floor(Math.random()*colors.length)];
-        el.style.animationDuration = (2+Math.random()*1.5)+'s';
-        el.style.animationDelay = '0s';
-        el.style.width  = (6+Math.random()*8)+'px';
-        el.style.height = (6+Math.random()*8)+'px';
-        document.body.appendChild(el);
-        setTimeout(function(){ if(el.parentNode) el.parentNode.removeChild(el); }, 3500);
-      }, delay);
-    })(i*40);
-  }
-  /* Message Bruno inattendu */
-  setTimeout(function(){
-    var pop = document.createElement('div');
-    pop.style.cssText='position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:#0d7a6e;color:#fff;padding:12px 24px;border-radius:8px;font-family:Oswald,sans-serif;font-size:.85rem;letter-spacing:2px;z-index:3000;animation:fadein .3s ease;box-shadow:0 4px 20px rgba(0,0,0,.2);';
-    pop.textContent='BRUNO : « Je retire ce que j\'avais préparé. »';
-    document.body.appendChild(pop);
-    setTimeout(function(){ if(pop.parentNode) pop.parentNode.removeChild(pop); }, 3500);
-  }, 800);
-}
-
-/* ═══════════════════════════════════════════
-   FIN DE PARCOURS
-═══════════════════════════════════════════ */
 $('btn-to-practice-end').addEventListener('click', function(){
   $('ov-bilan').classList.remove('on');
   $('ov-practice-end').classList.add('on');
-  setStep(5);
+  setStep(6);
 });
 
 $('mode-keyboard-end').addEventListener('click', function(){
   $('ov-practice-end').classList.remove('on');
   $('ov-final').classList.add('on');
-  statusLbl.textContent = 'FIN';
-  setStep(6);
+  statusLbl.textContent='FIN';
+  setStep(7);
+  /* Micro-récompense de fin */
+  setTimeout(function(){
+    var toast=document.createElement('div');
+    toast.className='streak-toast';
+    toast.style.background='var(--teal)';
+    toast.textContent='✓ Épisode 1 complété — Score : '+state.score+'/12';
+    document.body.appendChild(toast);
+    setTimeout(function(){ if(toast.parentNode) toast.parentNode.removeChild(toast); },2800);
+  },600);
 });
 
-/* ═══════════════════════════════════════════
+/* ══════════════════════════════════════════
    INIT
-═══════════════════════════════════════════ */
+══════════════════════════════════════════ */
 initChars();
-setLit('none');
+setSpotlight('none');
 updateRep();
 setStep(0);
 showTrap();
