@@ -6,42 +6,20 @@
 <title>ALIZÉO — S1·E1 : La Réactance</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Oswald:wght@400;500;600;700&display=swap');
-
 *{margin:0;padding:0;box-sizing:border-box;}
-
 :root{
-  --bg-deep:#f0ece4;
-  --bg-mid:#f8f6f2;
-  --bg-panel:#f2efe8;
-  --bg-card:#ffffff;
-  --bg-card-hover:#faf8f4;
-  --border-subtle:#e0dbd0;
-  --border-soft:#d0c8b8;
-  --border-em:#b8b0a0;
-  --gold:#9a7420;
-  --gold-light:#b8902a;
-  --gold-dim:rgba(154,116,32,.1);
-  --teal:#0d7a6e;
-  --teal-dim:rgba(13,122,110,.07);
-  --red:#c43030;
-  --red-dim:rgba(196,48,48,.07);
-  --blue:#2563a8;
-  --blue-dim:rgba(37,99,168,.07);
-  --txt-hi:#1a1a2e;
-  --txt-med:#4a4a5e;
-  --txt-lo:#8a8a9e;
-  --txt-xlo:#b8b8c8;
-  --font-mono:'JetBrains Mono',monospace;
-  --font-display:'Oswald',sans-serif;
-  --r4:4px; --r8:8px; --r12:12px;
+  --bg-deep:#f0ece4;--bg-mid:#f8f6f2;--bg-panel:#f2efe8;--bg-card:#ffffff;
+  --bg-card-hover:#faf8f4;--border-subtle:#e0dbd0;--border-soft:#d0c8b8;
+  --border-em:#b8b0a0;--gold:#9a7420;--gold-light:#b8902a;
+  --gold-dim:rgba(154,116,32,.1);--teal:#0d7a6e;--teal-dim:rgba(13,122,110,.07);
+  --red:#c43030;--red-dim:rgba(196,48,48,.07);--blue:#2563a8;
+  --blue-dim:rgba(37,99,168,.07);--txt-hi:#1a1a2e;--txt-med:#4a4a5e;
+  --txt-lo:#8a8a9e;--txt-xlo:#b8b8c8;--font-mono:'JetBrains Mono',monospace;
+  --font-display:'Oswald',sans-serif;--r4:4px;--r8:8px;--r12:12px;
   --ease-spring:cubic-bezier(.34,1.56,.64,1);
 }
-
 body{background:var(--bg-deep);color:var(--txt-hi);font-family:var(--font-mono);min-height:100vh;display:flex;justify-content:center;align-items:center;padding:12px;}
-
 #shell{width:100%;max-width:1100px;background:var(--bg-mid);border:1px solid var(--border-subtle);display:flex;flex-direction:column;box-shadow:0 8px 40px rgba(0,0,0,.08);overflow:hidden;border-radius:var(--r8);}
-
-/* ── HUD ─────────────────────────────────────────── */
 #hud{height:44px;display:flex;align-items:center;justify-content:space-between;padding:0 18px;background:var(--bg-panel);border-bottom:1px solid var(--border-subtle);font-size:.6rem;letter-spacing:2px;text-transform:uppercase;position:relative;z-index:80;}
 .hud-ep{color:var(--txt-lo);font-weight:600;}
 .hud-score{font-family:var(--font-display);color:var(--txt-lo);letter-spacing:3px;}
@@ -53,8 +31,6 @@ body{background:var(--bg-deep);color:var(--txt-hi);font-family:var(--font-mono);
 .hud-status{display:flex;align-items:center;gap:6px;color:var(--teal);}
 .dot{width:7px;height:7px;border-radius:50%;background:var(--teal);animation:pulse 1.6s infinite;}
 @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(13,122,110,.4);}70%{box-shadow:0 0 0 8px transparent;}100%{box-shadow:0 0 0 0 transparent;}}
-
-/* ── REPUTATION BARS ─────────────────────────────── */
 #rep-bar{height:34px;display:flex;align-items:center;gap:0;padding:0 18px;background:var(--bg-deep);border-bottom:1px solid var(--border-subtle);}
 .rep-item{display:flex;align-items:center;gap:7px;flex:1;padding:0 10px;}
 .rep-item:not(:last-child){border-right:1px solid var(--border-subtle);}
@@ -66,8 +42,6 @@ body{background:var(--bg-deep);color:var(--txt-hi);font-family:var(--font-mono);
 .rep-fill.authenticite{background:var(--teal);}
 .rep-fill.connexion{background:#7a5ab8;}
 .rep-val{font-family:var(--font-display);font-size:.62rem;color:var(--txt-lo);min-width:20px;text-align:right;}
-
-/* ── SCÈNE ───────────────────────────────────────── */
 #stage{height:52%;min-height:290px;position:relative;overflow:hidden;background:var(--bg-deep);flex-shrink:0;}
 #stage::after{content:'';position:absolute;inset:0;box-shadow:inset 0 -30px 50px rgba(240,236,228,.7);pointer-events:none;z-index:12;}
 .panel{position:absolute;top:0;bottom:0;width:50%;overflow:hidden;transition:filter .35s;}
@@ -77,45 +51,30 @@ body{background:var(--bg-deep);color:var(--txt-hi);font-family:var(--font-mono);
 .panel.dim{filter:brightness(.82) saturate(.7);}
 .ts-label{position:absolute;top:10px;font-size:.52rem;letter-spacing:2px;color:var(--txt-xlo);background:rgba(248,246,242,.85);border:1px solid var(--border-subtle);padding:3px 8px;z-index:15;border-radius:var(--r4);}
 #ts-l{left:10px;}#ts-r{right:10px;}
-
-/* ── CHARS ───────────────────────────────────────── */
 .char{position:absolute;z-index:20;transition:opacity .5s,transform .5s;}
-.char svg{width:100%;height:100%;display:block;}
+.char svg{width:100%;height:100%;display:block;animation:breathe 3.8s ease-in-out infinite;}
+@keyframes breathe{0%,100%{transform:translateY(0) scaleY(1);}50%{transform:translateY(-1.2px) scaleY(1.002);}}
 #c-lucas{left:8%;bottom:12%;width:14%;aspect-ratio:200/260;}
 #c-durand{right:8%;bottom:12%;width:14%;aspect-ratio:200/260;}
 #c-bruno{left:50%;bottom:1%;width:14%;aspect-ratio:200/260;transform:translateX(-50%) translateY(70px);opacity:0;z-index:30;}
 #c-bruno.in{transform:translateX(-50%) translateY(0);opacity:1;}
-
-/* Respiration idle */
-.char svg{animation:breathe 3.8s ease-in-out infinite;}
-@keyframes breathe{0%,100%{transform:translateY(0) scaleY(1);}50%{transform:translateY(-1.2px) scaleY(1.002);}}
-
-/* ── MOUTH ANIMATION ────────────────────────────── */
 .mouth-open{display:none !important;}
 .char.speaking .mouth-closed{display:none !important;}
 .char.speaking .mouth-open{display:block !important;}
-.char.speaking .mouth-open ellipse,
-.char.speaking .mouth-open path{animation:mouthPulse .22s ease-in-out infinite alternate;}
-@keyframes mouthPulse{0%{transform:scaleY(.7);transform-origin:center;}100%{transform:scaleY(1.15);transform-origin:center;}}
-
-/* ── EXPRESSIONS LUCAS ──────────────────────────── */
-#c-lucas .brows-s,#c-lucas .brows-c,#c-lucas .mouth-sad,#c-lucas .mouth-ok,#c-lucas .sweat,
-#c-lucas .mouth-think,#c-lucas .brows-think,#c-lucas .arm-gesture,#c-lucas .arm-open{display:none;}
-
+.char.speaking .mouth-open *{animation:mouthPulse .22s ease-in-out infinite alternate;}
+@keyframes mouthPulse{0%{transform:scaleY(.7);transform-origin:center bottom;}100%{transform:scaleY(1.15);transform-origin:center bottom;}}
+#c-lucas .brows-s,#c-lucas .brows-c,#c-lucas .mouth-sad,#c-lucas .mouth-ok,#c-lucas .sweat,#c-lucas .mouth-think,#c-lucas .brows-think,#c-lucas .arm-gesture,#c-lucas .arm-open{display:none;}
 #c-lucas.stressed .brows-n{display:none;}#c-lucas.stressed .brows-s{display:block;}
 #c-lucas.stressed .mouth-n{display:none;}#c-lucas.stressed .mouth-sad{display:block;}
 #c-lucas.stressed .sweat{display:block;}
 #c-lucas.confident .brows-n{display:none;}#c-lucas.confident .brows-c{display:block;}
 #c-lucas.confident .mouth-n{display:none;}#c-lucas.confident .mouth-ok{display:block;}
 #c-lucas.eager .arm-gesture{display:block;}
+#c-lucas.calm .arm-gesture{display:none;}
 #c-lucas.calm .brows-n{display:none;}#c-lucas.calm .brows-think{display:block;}
 #c-lucas.calm .arm-open{display:block;}
 #c-lucas.calm .mouth-n{display:none;}#c-lucas.calm .mouth-think{display:block;}
-
-/* ── EXPRESSIONS DURAND ─────────────────────────── */
-#c-durand .mouth-smile,#c-durand .brows-raised,#c-durand .arms-crossed,
-#c-durand .mouth-think-d,#c-durand .brows-think-d,#c-durand .arms-open-d{display:none;}
-
+#c-durand .mouth-smile,#c-durand .brows-raised,#c-durand .arms-crossed,#c-durand .mouth-think-d,#c-durand .brows-think-d,#c-durand .arms-open-d{display:none;}
 #c-durand.skeptical .brows-n{display:none;}#c-durand.skeptical .brows-raised{display:block;}
 #c-durand.resistant .arms-crossed{display:block;}
 #c-durand.resistant .mouth-n{display:none;}#c-durand.resistant .mouth-think-d{display:block;}
@@ -123,12 +82,8 @@ body{background:var(--bg-deep);color:var(--txt-hi);font-family:var(--font-mono);
 #c-durand.thinking .mouth-n{display:none;}#c-durand.thinking .mouth-think-d{display:block;}
 #c-durand.open .arms-crossed{display:none;}#c-durand.open .arms-open-d{display:block;}
 #c-durand.open .mouth-n{display:none;}#c-durand.open .mouth-smile{display:block;}
-
-/* Bruno expressions */
 #c-bruno .mouth-smile-b{display:none;}
 #c-bruno.teaching .mouth-n-b{display:none;}#c-bruno.teaching .mouth-smile-b{display:block;}
-
-/* ── BULLES ─────────────────────────────────────── */
 .bubble{position:absolute;z-index:45;display:none;width:30%;max-width:310px;background:rgba(255,255,255,.96);border:1.5px solid var(--bc,#bbb);border-radius:var(--r8);padding:10px 13px;backdrop-filter:blur(4px);box-shadow:0 2px 12px rgba(0,0,0,.06);}
 .bubble.show{display:block;animation:bpop .18s var(--ease-spring);}
 @keyframes bpop{from{transform:scale(.92);opacity:.3;}to{transform:scale(1);opacity:1;}}
@@ -137,8 +92,6 @@ body{background:var(--bg-deep);color:var(--txt-hi);font-family:var(--font-mono);
 #bl{left:2%;top:4%;}#br{right:2%;top:4%;}#bc{left:36%;top:3%;}
 #bl::after,#br::after,#bc::after{content:'';position:absolute;bottom:-6px;width:10px;height:10px;background:rgba(255,255,255,.96);border-right:1.5px solid var(--bc,#bbb);border-bottom:1.5px solid var(--bc,#bbb);transform:rotate(45deg);}
 #bl::after{left:28px;}#br::after{right:28px;}#bc::after{left:calc(50% - 5px);}
-
-/* ── VOIX OFF (typewriter) ────────────────────────── */
 #voff{position:absolute;left:50%;transform:translateX(-50%);bottom:8px;width:86%;max-width:820px;background:rgba(248,246,242,.92);border:1px solid var(--border-soft);border-left:3px solid var(--txt-lo);padding:8px 14px;z-index:48;display:none;border-radius:0 var(--r4) var(--r4) 0;box-shadow:0 2px 10px rgba(0,0,0,.04);}
 #voff.show{display:block;}
 #voff::before{content:'NARRATEUR';display:block;font-family:var(--font-display);font-size:.5rem;letter-spacing:3px;color:var(--txt-xlo);margin-bottom:3px;}
@@ -148,8 +101,6 @@ body{background:var(--bg-deep);color:var(--txt-hi);font-family:var(--font-mono);
 @keyframes blink{0%,100%{opacity:.2;}50%{opacity:.9;}}
 #clicker{position:absolute;inset:0;z-index:50;display:none;cursor:pointer;}
 #clicker.on{display:block;}
-
-/* ── FREEZE OVERLAY ─────────────────────────────── */
 #freeze-overlay{position:absolute;inset:0;background:rgba(240,236,228,.88);z-index:60;display:none;align-items:center;justify-content:center;padding:16px;}
 #freeze-overlay.on{display:flex;animation:fadein .3s ease;}
 @keyframes fadein{from{opacity:0;}to{opacity:1;}}
@@ -160,7 +111,7 @@ body{background:var(--bg-deep);color:var(--txt-hi);font-family:var(--font-mono);
 .freeze-bubble::before{content:'';position:absolute;left:-8px;top:16px;width:12px;height:12px;background:rgba(255,255,255,.98);border-left:1.5px solid var(--teal);border-bottom:1.5px solid var(--teal);transform:rotate(45deg);}
 .theory-kicker{font-family:var(--font-display);font-size:.52rem;letter-spacing:3px;color:var(--teal);margin-bottom:4px;}
 .theory-title{font-family:var(--font-display);font-size:.92rem;color:var(--txt-hi);margin-bottom:8px;font-weight:600;}
-.theory-body{font-size:.7rem;line-height:1.55;color:var(--txt-med);}
+.theory-body{font-size:.7rem;line-height:1.55;color:var(--txt-med);max-height:55vh;overflow-y:auto;}
 .theory-body b{color:var(--txt-hi);}
 .theory-body blockquote{border-left:2px solid var(--gold);padding:6px 12px;margin:8px 0;color:var(--gold-light);font-size:.68rem;background:var(--gold-dim);border-radius:0 var(--r4) var(--r4) 0;}
 .dd{border:1px solid;border-radius:var(--r4);padding:7px 11px;margin:6px 0;font-size:.65rem;line-height:1.5;}
@@ -173,12 +124,9 @@ body{background:var(--bg-deep);color:var(--txt-hi);font-family:var(--font-mono);
 .th-btn{background:var(--bg-card);border:1px solid var(--border-soft);color:var(--txt-med);padding:6px 16px;font-family:var(--font-display);font-size:.65rem;letter-spacing:2px;cursor:pointer;border-radius:var(--r4);transition:all .15s;}
 .th-btn:hover{border-color:var(--teal);color:var(--teal);}
 .theory-count{font-size:.55rem;color:var(--txt-xlo);letter-spacing:2px;margin-bottom:6px;}
-
-/* ── ZONE INTERACTION ───────────────────────────── */
 #interaction{flex:1;background:var(--bg-mid);border-top:1px solid var(--border-subtle);display:flex;flex-direction:column;overflow:hidden;position:relative;}
 #izone{padding:16px 24px;height:100%;display:flex;flex-direction:column;overflow:hidden;}
 .idle-msg{color:var(--txt-xlo);font-size:.65rem;letter-spacing:2px;text-align:center;margin:auto;}
-
 .q-wrap{display:flex;flex-direction:column;height:100%;overflow:hidden;}
 .q-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;flex-shrink:0;}
 .q-badge{font-family:var(--font-display);font-size:.58rem;letter-spacing:3px;color:var(--gold);border:1px solid rgba(154,116,32,.3);padding:2px 9px;background:var(--gold-dim);border-radius:var(--r4);}
@@ -194,8 +142,7 @@ body{background:var(--bg-deep);color:var(--txt-hi);font-family:var(--font-mono);
 .q-btn.chosen{border-color:var(--gold);color:var(--gold-light);background:var(--gold-dim);}
 .q-btn.dim{opacity:.28;pointer-events:none;}
 .q-btn:disabled{pointer-events:none;}
-
-#feedback-panel{display:none;flex-direction:column;height:100%;}
+#feedback-panel{display:none;flex-direction:column;height:100%;overflow-y:auto;}
 #feedback-panel.show{display:flex;}
 .fb-inner{flex:1;overflow-y:auto;padding-right:4px;}
 .fb-card{padding:11px 14px;border-left:3px solid #ccc;font-size:.73rem;line-height:1.52;color:var(--txt-med);border-radius:0 var(--r4) var(--r4) 0;background:var(--bg-card);box-shadow:0 1px 4px rgba(0,0,0,.03);}
@@ -212,31 +159,23 @@ body{background:var(--bg-deep);color:var(--txt-hi);font-family:var(--font-mono);
 .retry-btn:hover:not(:disabled){border-color:var(--gold);color:var(--gold-light);}
 .retry-btn.right{border-color:var(--teal);background:var(--teal-dim);color:#1a5a50;pointer-events:none;}
 .retry-btn.wrong{border-color:var(--red);background:var(--red-dim);color:#8a3a3a;opacity:.6;pointer-events:none;}
-
 .btn-continue{background:var(--teal);color:#fff;border:none;padding:9px 22px;font-family:var(--font-display);font-size:.76rem;letter-spacing:2px;cursor:pointer;border-radius:var(--r4);text-transform:uppercase;transition:background .14s;}
 .btn-continue:hover{background:#0e8e80;}
 .btn-continue.ghost{background:transparent;color:var(--txt-med);border:1px solid var(--border-soft);}
-
 .pts-pop{position:fixed;top:50%;right:80px;font-family:var(--font-display);font-size:1.4rem;color:var(--teal);letter-spacing:2px;animation:ptspop 1.5s ease-out forwards;z-index:200;pointer-events:none;}
 @keyframes ptspop{from{opacity:0;transform:translateY(10px);}15%{opacity:1;}to{opacity:0;transform:translateY(-30px);}}
-
-/* ── OVERLAYS ───────────────────────────────────── */
 .overlay{position:absolute;inset:0;background:var(--bg-mid);z-index:200;display:none;overflow-y:auto;padding:22px 28px 36px;}
 .overlay.on{display:block;animation:fadein .35s ease;}
 .ov-kicker{font-family:var(--font-display);font-size:.58rem;letter-spacing:3px;color:var(--gold);margin-bottom:4px;}
 .ov-title{font-family:var(--font-display);font-size:1.4rem;color:var(--txt-hi);margin-bottom:14px;font-weight:600;}
-
 .reveal-wrap,.bilan-wrap,.final-wrap,.practice-wrap{max-width:740px;margin:0 auto;}
 .reveal-choice{border:1px dashed var(--border-soft);padding:10px 14px;color:var(--gold-light);font-size:.74rem;margin-bottom:12px;border-radius:var(--r4);background:var(--gold-dim);}
 .rg-row{padding:8px 12px;border-left:3px solid;margin:6px 0;font-size:.72rem;line-height:1.5;border-radius:0 var(--r4) var(--r4) 0;}
 .rg-row.ok{border-color:var(--teal);color:#1a5a50;background:var(--teal-dim);}
-.rg-row.ko{border-color:var(--red);color:#8a3a3a;background:var(--red-dim);}
 .reveal-body p{font-size:.76rem;line-height:1.58;color:var(--txt-med);margin-bottom:9px;}
 .reveal-body b{color:var(--txt-hi);}
 .reveal-common{margin-top:14px;border-top:1px solid var(--border-subtle);padding-top:12px;}
 .reveal-common p{font-size:.76rem;line-height:1.58;color:var(--txt-med);}
-
-/* Bilan */
 .bilan-score{font-family:var(--font-display);font-size:3rem;color:var(--teal);line-height:1;}
 .bs-max{font-family:var(--font-display);font-size:.7rem;color:var(--txt-lo);letter-spacing:3px;margin-bottom:16px;display:block;}
 .bilan-row{display:grid;grid-template-columns:1.3fr 60px 1.6fr;gap:12px;align-items:center;padding:10px 14px;border:1px solid var(--border-subtle);margin-bottom:7px;background:var(--bg-card);border-radius:var(--r4);box-shadow:0 1px 3px rgba(0,0,0,.03);}
@@ -263,8 +202,6 @@ body{background:var(--bg-deep);color:var(--txt-hi);font-family:var(--font-mono);
 .bruno-memo{margin:12px 0;padding:14px 18px;background:var(--bg-deep);border:1px solid var(--border-subtle);border-radius:var(--r8);font-size:.7rem;line-height:1.6;color:var(--txt-med);}
 .bruno-memo-head{font-family:var(--font-display);font-size:.58rem;letter-spacing:3px;color:var(--teal);margin-bottom:6px;}
 .bruno-memo b{color:var(--txt-hi);}
-
-/* Final */
 .final-wrap{text-align:center;padding-top:20px;}
 .next-ep{margin:20px auto;max-width:540px;border:1px solid var(--border-soft);padding:20px 24px;background:var(--bg-card);border-radius:var(--r8);box-shadow:0 2px 10px rgba(0,0,0,.04);}
 .ne-label{font-family:var(--font-display);font-size:.56rem;letter-spacing:4px;color:var(--red);margin-bottom:6px;}
@@ -277,8 +214,6 @@ body{background:var(--bg-deep);color:var(--txt-hi);font-family:var(--font-mono);
 .tr-blurred{filter:blur(4px);user-select:none;pointer-events:none;color:var(--txt-hi);}
 .tr-locked{display:flex;align-items:center;justify-content:center;gap:8px;padding:12px 14px;background:var(--red-dim);border-top:2px solid var(--red);}
 .tr-locked-text{font-family:var(--font-display);font-size:.7rem;letter-spacing:2px;color:var(--red);}
-
-/* ── PRACTICE MODE SELECTOR ─────────────────────── */
 .practice-wrap{text-align:left;}
 .practice-desc{font-size:.78rem;line-height:1.6;color:var(--txt-med);margin-bottom:16px;}
 .practice-scenario{background:var(--bg-card);border:1px solid var(--border-soft);border-left:3px solid var(--gold);padding:12px 16px;margin-bottom:20px;border-radius:0 var(--r4) var(--r4) 0;font-size:.74rem;color:var(--txt-med);line-height:1.5;}
@@ -293,7 +228,6 @@ body{background:var(--bg-deep);color:var(--txt-hi);font-family:var(--font-mono);
 .mode-soon{display:inline-block;font-size:.55rem;letter-spacing:1.5px;color:var(--red);background:var(--red-dim);padding:2px 8px;border-radius:10px;margin-top:6px;font-family:var(--font-display);text-transform:uppercase;}
 .mode-btn.active-mode{border-color:var(--teal);background:var(--teal-dim);}
 .practice-note{font-size:.65rem;color:var(--txt-xlo);line-height:1.5;font-style:italic;}
-
 ::-webkit-scrollbar{width:4px;}
 ::-webkit-scrollbar-track{background:var(--bg-mid);}
 ::-webkit-scrollbar-thumb{background:var(--border-soft);border-radius:2px;}
@@ -301,42 +235,20 @@ body{background:var(--bg-deep);color:var(--txt-hi);font-family:var(--font-mono);
 </head>
 <body>
 <div id="shell">
-
-  <!-- HUD -->
   <div id="hud">
-    <div class="hud-ep">ALIZÉO · S1·E1 — LA RÉACTANCE</div>
+    <div class="hud-ep">ALIZEO S1 E1 LA REACTANCE</div>
     <div class="hud-score">Score <b id="score-val">0</b>/12</div>
     <div class="hud-right">
-      <div class="profile-tag"><span class="profile-name" id="sdr-name-hud">Vous</span><span class="profile-title" id="sdr-title-hud">Commercial</span></div>
+      <div class="profile-tag"><span class="profile-name">Vous</span><span class="profile-title">Commercial</span></div>
       <div class="hud-status"><span class="dot"></span><span id="status-lbl">INTRODUCTION</span></div>
     </div>
   </div>
-
-  <!-- BARRES RÉPUTATION -->
   <div id="rep-bar">
-    <div class="rep-item">
-      <span class="rep-label">Posture</span>
-      <div class="rep-track"><div class="rep-fill posture" id="rp-posture"></div></div>
-      <span class="rep-val" id="rv-posture">—</span>
-    </div>
-    <div class="rep-item">
-      <span class="rep-label">Cadre</span>
-      <div class="rep-track"><div class="rep-fill cadre" id="rp-cadre"></div></div>
-      <span class="rep-val" id="rv-cadre">—</span>
-    </div>
-    <div class="rep-item">
-      <span class="rep-label">Authenticité</span>
-      <div class="rep-track"><div class="rep-fill authenticite" id="rp-authenticite"></div></div>
-      <span class="rep-val" id="rv-authenticite">—</span>
-    </div>
-    <div class="rep-item">
-      <span class="rep-label">Connexion</span>
-      <div class="rep-track"><div class="rep-fill connexion" id="rp-connexion"></div></div>
-      <span class="rep-val" id="rv-connexion">—</span>
-    </div>
+    <div class="rep-item"><span class="rep-label">Posture</span><div class="rep-track"><div class="rep-fill posture" id="rp-posture"></div></div><span class="rep-val" id="rv-posture">--</span></div>
+    <div class="rep-item"><span class="rep-label">Cadre</span><div class="rep-track"><div class="rep-fill cadre" id="rp-cadre"></div></div><span class="rep-val" id="rv-cadre">--</span></div>
+    <div class="rep-item"><span class="rep-label">Authenticite</span><div class="rep-track"><div class="rep-fill authenticite" id="rp-authenticite"></div></div><span class="rep-val" id="rv-authenticite">--</span></div>
+    <div class="rep-item"><span class="rep-label">Connexion</span><div class="rep-track"><div class="rep-fill connexion" id="rp-connexion"></div></div><span class="rep-val" id="rv-connexion">--</span></div>
   </div>
-
-  <!-- SCÈNE -->
   <div id="stage">
     <div class="panel" id="pl">
       <svg style="position:absolute;inset:0;width:100%;height:100%;" viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
@@ -357,7 +269,7 @@ body{background:var(--bg-deep);color:var(--txt-hi);font-family:var(--font-mono);
         <rect x="247" y="272" width="28" height="56" rx="10" fill="#5a80a0"/>
         <rect x="65" y="250" width="190" height="18" rx="8" fill="#7aa0b8"/>
         <rect x="80" y="270" width="42" height="36" rx="7" fill="#e0c090" transform="rotate(-4 101 288)"/>
-        <rect x="198" y="270" width="42" height="36" rx="7" fill="#e0c090" transform="rotate(4 219 288)"/>
+        <rect x="198" y="270" width="42" height="36" rx="7" fill="#e0c090" transform="rotate(5 219 288)"/>
         <rect x="100" y="345" width="120" height="10" rx="3" fill="#a08060"/>
         <rect x="112" y="355" width="8" height="22" rx="2" fill="#a08060"/>
         <rect x="200" y="355" width="8" height="22" rx="2" fill="#a08060"/>
@@ -370,28 +282,20 @@ body{background:var(--bg-deep);color:var(--txt-hi);font-family:var(--font-mono);
         <path d="M268 90 Q282 78 296 90 Q310 102 310 90" stroke="#7aaa7a" stroke-width="2" fill="none"/>
         <circle cx="280" cy="82" r="6" fill="#e8d060" opacity=".6"/>
       </svg>
-      <div class="ts-label" id="ts-l">SALON MME DURAND — 14H30</div>
+      <div class="ts-label" id="ts-l">SALON MME DURAND  14H30</div>
     </div>
     <div class="panel" id="pr">
       <svg style="position:absolute;inset:0;width:100%;height:100%;" viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
         <rect x="0" y="0" width="400" height="300" fill="#b0d4e8"/>
-        <rect x="0" y="280" width="400" height="20" fill="#b0d4e8"/>
         <ellipse cx="80" cy="55" rx="42" ry="18" fill="#e0eef4" opacity=".8"/>
         <ellipse cx="105" cy="50" rx="30" ry="14" fill="#e0eef4" opacity=".8"/>
         <ellipse cx="310" cy="85" rx="35" ry="14" fill="#e0eef4" opacity=".7"/>
-        <ellipse cx="290" cy="80" rx="25" ry="12" fill="#e0eef4" opacity=".7"/>
         <circle cx="340" cy="48" r="24" fill="#f0d860" opacity=".75"/>
         <circle cx="340" cy="48" r="30" fill="#f0d860" opacity=".15"/>
         <rect x="40" y="155" width="320" height="245" fill="#f0e8d8" stroke="#c8b898" stroke-width="3"/>
         <path d="M18 160 L200 42 L382 160 Z" fill="#a05030" stroke="#804020" stroke-width="3"/>
-        <rect x="125" y="82" width="48" height="32" rx="2" fill="#2a4a6a" stroke="#1a3a5a" stroke-width="1.5" transform="rotate(-22 149 98)"/>
-        <line x1="134" y1="80" x2="157" y2="96" stroke="#4a6a8a" stroke-width=".8" transform="rotate(-22 149 98)"/>
-        <line x1="144" y1="80" x2="167" y2="96" stroke="#4a6a8a" stroke-width=".8" transform="rotate(-22 149 98)"/>
-        <line x1="154" y1="80" x2="140" y2="96" stroke="#4a6a8a" stroke-width=".8" transform="rotate(-22 149 98)"/>
-        <rect x="180" y="74" width="48" height="32" rx="2" fill="#2a4a6a" stroke="#1a3a5a" stroke-width="1.5" transform="rotate(-22 204 90)"/>
-        <line x1="189" y1="72" x2="212" y2="88" stroke="#4a6a8a" stroke-width=".8" transform="rotate(-22 204 90)"/>
-        <line x1="199" y1="72" x2="222" y2="88" stroke="#4a6a8a" stroke-width=".8" transform="rotate(-22 204 90)"/>
-        <line x1="209" y1="72" x2="195" y2="88" stroke="#4a6a8a" stroke-width=".8" transform="rotate(-22 204 90)"/>
+        <g transform="rotate(-22 149 98)"><rect x="125" y="82" width="48" height="32" rx="2" fill="#2a4a6a" stroke="#1a3a5a" stroke-width="1.5"/><line x1="134" y1="82" x2="157" y2="98" stroke="#4a6a8a" stroke-width=".8"/><line x1="144" y1="82" x2="167" y2="98" stroke="#4a6a8a" stroke-width=".8"/><line x1="154" y1="82" x2="140" y2="98" stroke="#4a6a8a" stroke-width=".8"/></g>
+        <g transform="rotate(-22 204 90)"><rect x="180" y="74" width="48" height="32" rx="2" fill="#2a4a6a" stroke="#1a3a5a" stroke-width="1.5"/><line x1="189" y1="74" x2="212" y2="90" stroke="#4a6a8a" stroke-width=".8"/><line x1="199" y1="74" x2="222" y2="90" stroke="#4a6a8a" stroke-width=".8"/><line x1="209" y1="74" x2="195" y2="90" stroke="#4a6a8a" stroke-width=".8"/></g>
         <rect x="80" y="205" width="70" height="80" rx="4" fill="#c8dfe8" stroke="#b8a888" stroke-width="3"/>
         <line x1="115" y1="205" x2="115" y2="285" stroke="#b8a888" stroke-width="3"/>
         <line x1="80" y1="245" x2="150" y2="245" stroke="#b8a888" stroke-width="3"/>
@@ -407,24 +311,17 @@ body{background:var(--bg-deep);color:var(--txt-hi);font-family:var(--font-mono);
         <rect x="160" y="410" width="40" height="30" rx="3" fill="#c8b898" stroke="#a89878" stroke-width="1.5"/>
         <circle cx="180" cy="425" r="8" fill="#5a5a5a"/>
       </svg>
-      <div class="ts-label" id="ts-r">EXTÉRIEUR — TOIT SOLAIRE</div>
+      <div class="ts-label" id="ts-r">EXTERIEUR  TOIT SOLAIRE</div>
     </div>
-
-    <!-- Personnages -->
     <div class="char" id="c-lucas"></div>
     <div class="char" id="c-durand"></div>
     <div class="char" id="c-bruno"></div>
-
-    <!-- Bulles -->
     <div class="bubble" id="bl"><div class="b-speaker"></div><div class="b-text"></div></div>
     <div class="bubble" id="br"><div class="b-speaker"></div><div class="b-text"></div></div>
     <div class="bubble" id="bc"><div class="b-speaker"></div><div class="b-text"></div></div>
-    <!-- Voix off -->
     <div id="voff"><span id="voff-text"></span></div>
-    <div id="click-hint">CLIQUER POUR AVANCER ▸</div>
+    <div id="click-hint">CLIQUER POUR AVANCER</div>
     <div id="clicker"></div>
-
-    <!-- Freeze théorie -->
     <div id="freeze-overlay">
       <div class="freeze-inner">
         <div class="freeze-char" id="freeze-char"></div>
@@ -434,913 +331,833 @@ body{background:var(--bg-deep);color:var(--txt-hi);font-family:var(--font-mono);
           <div class="theory-count" id="th-count"></div>
           <div class="theory-body" id="th-body"></div>
           <div class="theory-nav">
-            <button class="th-btn" id="th-prev" onclick="thPrev()">◂ Précédent</button>
-            <button class="th-btn" id="th-next" onclick="thNext()">Suivant ▸</button>
+            <button class="th-btn" id="th-prev">Prec.</button>
+            <button class="th-btn" id="th-next">Suivant</button>
           </div>
         </div>
       </div>
     </div>
   </div>
-
-  <!-- INTERACTION -->
   <div id="interaction">
-    <div id="izone">
-      <div class="idle-msg">— SCÈNE EN COURS —</div>
-    </div>
+    <div id="izone"><div class="idle-msg">-- SCENE EN COURS --</div></div>
     <div id="feedback-panel"></div>
   </div>
-
-  <!-- OVERLAYS -->
   <div class="overlay" id="ov-reveal">
     <div class="reveal-wrap">
-      <div class="ov-kicker">Réponse à votre question d'introduction</div>
-      <h2 class="ov-title">Quand un prospect dit « c'est trop cher », que se passe-t-il ?</h2>
+      <div class="ov-kicker">Reponse a votre question</div>
+      <h2 class="ov-title">Quand un prospect dit c'est trop cher, que se passe-t-il ?</h2>
       <div id="rv-choice" class="reveal-choice"></div>
       <div id="rv-body" class="reveal-body"></div>
-      <div class="reveal-common"><p>Retenez l'essentiel : ce n'est pas le prix qui bloque. C'est la façon dont vous répondez au prix. Chaque argument que vous avancez renforce le mur au lieu de le franchir. Lucas va le découvrir — à ses dépens.</p></div>
-      <div style="margin-top:16px;"><button class="btn-continue" onclick="startScene1()">Entrer dans le salon ▸</button></div>
+      <div class="reveal-common"><p>Retenez l'essentiel : ce n'est pas le prix qui bloque. C'est la facon dont vous repondez au prix. Chaque argument que vous avancez renforce le mur au lieu de le franchir. Lucas va le decouvrir a ses depens.</p></div>
+      <div style="margin-top:16px;"><button class="btn-continue" id="btn-enter-scene">Entrer dans le salon</button></div>
     </div>
   </div>
-
   <div class="overlay" id="ov-practice-mid">
     <div class="practice-wrap">
-      <div class="ov-kicker">Mise en pratique — 1/2</div>
-      <h2 class="ov-title">À vous de jouer</h2>
-      <p class="practice-desc">Vous venez d'apprendre la méthode en trois temps. Avant de voir Lucas l'appliquer, mettez-vous en situation.</p>
-      <div class="practice-scenario"><b>Contexte :</b> Vous êtes chez un prospect. Il vient de dire : « 18 000 €, c'est vraiment cher pour des panneaux. »</div>
+      <div class="ov-kicker">Mise en pratique  1/2</div>
+      <h2 class="ov-title">A vous de jouer</h2>
+      <p class="practice-desc">Vous venez d'apprendre la methode en trois temps. Avant de voir Lucas l'appliquer, mettez-vous en situation.</p>
+      <div class="practice-scenario"><b>Contexte :</b> Vous etes chez un prospect. Il vient de dire : 18 000 euros, c'est vraiment cher pour des panneaux.</div>
       <div class="mode-selector">
         <button class="mode-btn" id="mode-vocal-mid" disabled>
-          <span class="mode-icon">🎤</span>
+          <span class="mode-icon">&#127908;</span>
           <span class="mode-label">Mode Vocal</span>
-          <span class="mode-desc">Parlez au micro pour répondre</span>
+          <span class="mode-desc">Parlez au micro pour repondre</span>
           <span class="mode-soon">Prochainement</span>
         </button>
-        <button class="mode-btn active-mode" onclick="proceedAfterPracticeMid()">
-          <span class="mode-icon">⌨️</span>
+        <button class="mode-btn active-mode" id="mode-keyboard-mid">
+          <span class="mode-icon">&#9000;</span>
           <span class="mode-label">Mode Clavier</span>
-          <span class="mode-desc">Tapez votre réponse au clavier</span>
+          <span class="mode-desc">Tapez votre reponse au clavier</span>
         </button>
       </div>
-      <p class="practice-note">Le mode vocal utilisera le microphone de votre appareil via la Web Speech API pour une simulation de dialogue oral en temps réel. Cette fonctionnalité sera disponible dans la prochaine mise à jour. Pour l'instant, le mode clavier vous permet de continuer l'épisode.</p>
+      <p class="practice-note">Le mode vocal utilisera le microphone de votre appareil via la Web Speech API pour une simulation de dialogue oral en temps reel. Cette fonctionnalite sera disponible dans la prochaine mise a jour (compatible Chrome et Edge).</p>
     </div>
   </div>
-
   <div class="overlay" id="ov-bilan">
     <div class="bilan-wrap">
-      <div class="ov-kicker">Bilan personnalisé</div>
+      <div class="ov-kicker">Bilan personnalise</div>
       <h2 class="ov-title" id="bil-title"></h2>
       <div class="bilan-score" id="bil-pts">0</div>
       <span class="bs-max">points sur 12</span>
       <div class="sdr-profile">
-        <div class="sp-label">PROFIL COMMERCIAL — ÉPISODE 1</div>
+        <div class="sp-label">PROFIL COMMERCIAL  EPISODE 1</div>
         <div class="sp-title" id="sdr-profile-title"></div>
         <div class="sp-desc" id="sdr-profile-desc"></div>
         <div class="rep-profile" id="rep-profile-bars"></div>
       </div>
       <div id="bil-rows"></div>
       <div class="bruno-memo" id="bruno-memo-text"></div>
-      <div style="margin-top:14px;"><button class="btn-continue" onclick="showPracticeEnd()">Pratique finale ▸</button></div>
+      <div style="margin-top:14px;"><button class="btn-continue" id="btn-to-practice-end">Pratique finale</button></div>
     </div>
   </div>
-
   <div class="overlay" id="ov-practice-end">
     <div class="practice-wrap">
-      <div class="ov-kicker">Mise en pratique — 2/2</div>
-      <h2 class="ov-title">Récapitulatif : utilisez les trois temps</h2>
-      <p class="practice-desc">Vous avez vu Lucas appliquer la méthode. Maintenant, imaginez un prospect qui vous dit : « Je ne suis pas sûr que ça marche vraiment chez moi, mon toit n'est pas bien orienté. »</p>
-      <div class="practice-scenario"><b>Votre mission :</b> Formulez mentalement vos trois étapes — clarification, réflexion, comparaison — avant de passer à l'épisode suivant.</div>
+      <div class="ov-kicker">Mise en pratique  2/2</div>
+      <h2 class="ov-title">Recapitulatif : utilisez les trois temps</h2>
+      <p class="practice-desc">Vous avez vu Lucas appliquer la methode. Maintenant, imaginez un prospect qui vous dit : Je ne suis pas sur que ca marche vraiment chez moi, mon toit n'est pas bien oriente.</p>
+      <div class="practice-scenario"><b>Votre mission :</b> Formulez mentalement vos trois etapes : clarification, reflexion, comparaison : avant de passer a l'episode suivant.</div>
       <div class="mode-selector">
         <button class="mode-btn" id="mode-vocal-end" disabled>
-          <span class="mode-icon">🎤</span>
+          <span class="mode-icon">&#127908;</span>
           <span class="mode-label">Mode Vocal</span>
-          <span class="mode-desc">Parlez au micro pour répondre</span>
+          <span class="mode-desc">Parlez au micro pour repondre</span>
           <span class="mode-soon">Prochainement</span>
         </button>
-        <button class="mode-btn active-mode" onclick="cliffhanger()">
-          <span class="mode-icon">⌨️</span>
+        <button class="mode-btn active-mode" id="mode-keyboard-end">
+          <span class="mode-icon">&#9000;</span>
           <span class="mode-label">Mode Clavier</span>
-          <span class="mode-desc">Valider et terminer l'épisode</span>
+          <span class="mode-desc">Valider et terminer l'episode</span>
         </button>
       </div>
-      <p class="practice-note">Le mode vocal sera disponible dans la prochaine mise à jour. Il vous permettra de prononcer vos réponses à voix haute et de recevoir un retour en temps réel via la Web Speech API (compatible Chrome et Edge).</p>
+      <p class="practice-note">Le mode vocal sera disponible dans la prochaine mise a jour. Il vous permettra de prononcer vos reponses a voix haute et de recevoir un retour en temps reel via la Web Speech API (compatible Chrome et Edge).</p>
     </div>
   </div>
-
   <div class="overlay" id="ov-final">
     <div class="final-wrap">
-      <div class="ov-kicker" style="color:var(--red);">Fin de l'épisode 1</div>
-      <h2 class="ov-title" style="font-size:2rem;">« La Réactance »</h2>
+      <div class="ov-kicker" style="color:var(--red);">Fin de l'episode 1</div>
+      <h2 class="ov-title" style="font-size:2rem;">La Reactance</h2>
       <div class="next-ep">
         <div class="ne-label">Prochainement</div>
-        <div class="ne-title">Épisode 2 — Les trois temps en situation</div>
-        <p class="ne-tease">Lucas rencontre un prospect qui n'a pas une objection classique — il a une croyance profonde. « Les panneaux solaires, c'est un scam. » Quand l'objection est un mur idéologique, les trois temps ne suffisent plus. Il faut d'abord déconstruire — sans jamais attaquer.</p>
+        <div class="ne-title">Episode 2  Les trois temps en situation</div>
+        <p class="ne-tease">Lucas rencontre un prospect qui n'a pas une objection classique : il a une croyance profonde. Les panneaux solaires, c'est un scam. Quand l'objection est un mur ideologique, les trois temps ne suffisent plus. Il faut d'abord deconstruire : sans jamais attaquer.</p>
       </div>
       <div class="transcript-locked">
-        <div class="tr-line"><div class="tr-speaker" style="color:var(--gold);">LUCAS</div><div>Je comprends votre point de vue. Dites-moi, qu'est-ce qui vous fait dire que…</div></div>
-        <div class="tr-line"><div class="tr-speaker" style="color:var(--blue);">M. LEROY</div><div class="tr-blurred">— Mon voisin en a installé il y a deux ans et il ne m'a jamais parlé d'économies. Au contraire, il m'a dit que…</div></div>
-        <div class="tr-line"><div class="tr-speaker" style="color:var(--gold);">LUCAS</div><div class="tr-blurred">— Ce qui est intéressant dans ce que vous dites, c'est que vous avez une source directe. Est-ce que vous lui avez demandé…</div></div>
-        <div class="tr-locked">
-          <span class="tr-locked-text">⊘ ACCÈS REFUSÉ — ÉPISODE 2 VERROUILLÉ</span>
-        </div>
+        <div class="tr-line"><div class="tr-speaker" style="color:var(--gold);">LUCAS</div><div>Je comprends votre point de vue. Dites-moi, qu'est-ce qui vous fait dire que...</div></div>
+        <div class="tr-line"><div class="tr-speaker" style="color:var(--blue);">M. LEROY</div><div class="tr-blurred">Mon voisin en a installe il y a deux ans et il ne m'a jamais parle d'economies. Au contraire, il m'a dit que...</div></div>
+        <div class="tr-line"><div class="tr-speaker" style="color:var(--gold);">LUCAS</div><div class="tr-blurred">Ce qui est interessant dans ce que vous dites, c'est que vous avez une source directe. Est-ce que vous lui avez demande...</div></div>
+        <div class="tr-locked"><span class="tr-locked-text">ACCES REFUSE  EPISODE 2 VERROUILLE</span></div>
       </div>
       <div style="margin-top:20px;display:flex;gap:12px;justify-content:center;">
-        <button class="btn-continue ghost" onclick="location.reload()">↺ Revoir l'épisode</button>
+        <button class="btn-continue ghost" onclick="location.reload()">Revoir l'episode</button>
       </div>
     </div>
   </div>
-
 </div>
 
 <script>
-/* ═══════════════════════════════════════════════════
-   SVG PERSONNAGES
-═══════════════════════════════════════════════════ */
-const SVG = {
-LUCAS:`<svg viewBox="0 0 200 260" xmlns="http://www.w3.org/2000/svg">
-  <g class="arm-gesture">
-    <path d="M36 196 Q18 170 28 148" stroke="#3a6878" stroke-width="14" fill="none" stroke-linecap="round"/>
-    <circle cx="28" cy="145" r="7" fill="#e0ac7d"/>
-  </g>
-  <g class="arm-open">
-    <path d="M36 196 Q10 190 8 168" stroke="#3a6878" stroke-width="14" fill="none" stroke-linecap="round"/>
-    <circle cx="8" cy="165" r="7" fill="#e0ac7d"/>
-    <path d="M164 196 Q190 190 192 168" stroke="#3a6878" stroke-width="14" fill="none" stroke-linecap="round"/>
-    <circle cx="192" cy="165" r="7" fill="#e0ac7d"/>
-  </g>
-  <path d="M38 260 L38 226 Q38 198 66 188 L134 188 Q162 198 162 226 L162 260 Z" fill="#3a6878"/>
-  <path d="M86 188 L100 206 L114 188 L108 184 L100 198 L92 184 Z" fill="#4a7888"/>
-  <rect x="89" y="160" width="22" height="32" rx="8" fill="#e0ac7d"/>
-  <ellipse cx="58" cy="132" rx="8" ry="11" fill="#e0ac7d"/>
-  <ellipse cx="142" cy="132" rx="8" ry="11" fill="#e0ac7d"/>
-  <ellipse cx="100" cy="126" rx="43" ry="50" fill="#eebd8f"/>
-  <path d="M57 128 Q52 72 100 70 Q148 72 143 128 Q141 100 124 94 Q130 104 114 100 Q108 86 86 92 Q72 96 66 110 Q60 116 57 128 Z" fill="#4a3a2a"/>
-  <path d="M56 124 Q100 62 144 124" stroke="#cdd2dd" stroke-width="7" fill="none" stroke-linecap="round"/>
-  <ellipse cx="58" cy="136" rx="10" ry="13" fill="#cdd2dd"/>
-  <path d="M62 148 Q76 176 98 172" stroke="#cdd2dd" stroke-width="4" fill="none" stroke-linecap="round"/>
-  <circle cx="100" cy="172" r="6" fill="#cdd2dd"/>
-  <g class="brows-n"><path d="M76 116 q10 -4 20 0" stroke="#4a3a2a" stroke-width="4" fill="none" stroke-linecap="round"/><path d="M104 116 q10 -4 20 0" stroke="#4a3a2a" stroke-width="4" fill="none" stroke-linecap="round"/></g>
-  <g class="brows-s"><path d="M78 110 q8 -4 16 4" stroke="#4a3a2a" stroke-width="4" fill="none" stroke-linecap="round"/><path d="M106 114 q8 -8 16 -4" stroke="#4a3a2a" stroke-width="4" fill="none" stroke-linecap="round"/></g>
-  <g class="brows-c"><path d="M76 114 h20" stroke="#4a3a2a" stroke-width="4" stroke-linecap="round"/><path d="M104 112 h20" stroke="#4a3a2a" stroke-width="4" stroke-linecap="round"/></g>
-  <g class="brows-think"><path d="M78 112 q10 -6 18 0" stroke="#4a3a2a" stroke-width="3.5" fill="none" stroke-linecap="round"/><path d="M104 118 q10 2 18 -2" stroke="#4a3a2a" stroke-width="3.5" fill="none" stroke-linecap="round"/></g>
-  <ellipse cx="86" cy="128" rx="5" ry="6" fill="#1c1c24"/>
-  <ellipse cx="114" cy="128" rx="5" ry="6" fill="#1c1c24"/>
-  <ellipse cx="88" cy="127" rx="1.8" ry="2" fill="#fff"/>
-  <ellipse cx="116" cy="127" rx="1.8" ry="2" fill="#fff"/>
-  <path d="M100 132 q4 8 -2 12" stroke="#c98d5f" stroke-width="3" fill="none" stroke-linecap="round"/>
-  <path class="mouth-closed mouth-n" d="M90 154 q10 4 20 0" stroke="#7a4a34" stroke-width="3.5" fill="none" stroke-linecap="round"/>
-  <ellipse class="mouth-open" cx="100" cy="156" rx="7" ry="5" fill="#7a4a34"/>
-  <path class="mouth-sad" d="M90 158 q10 -6 20 0" stroke="#7a4a34" stroke-width="3.5" fill="none" stroke-linecap="round"/>
-  <path class="mouth-ok" d="M88 150 q12 9 24 0" stroke="#7a4a34" stroke-width="3.5" fill="none" stroke-linecap="round"/>
-  <path class="mouth-think" d="M92 156 q8 0 16 0" stroke="#7a4a34" stroke-width="3" fill="none" stroke-linecap="round"/>
-  <path class="sweat" d="M146 102 q7 11 0 16 q-7 -5 0 -16" fill="#7fd4ff"/>
-</svg>`,
-DURAND:`<svg viewBox="0 0 200 260" xmlns="http://www.w3.org/2000/svg">
-  <g class="arms-crossed">
-    <path d="M36 200 Q54 218 86 210" stroke="#8a6a7a" stroke-width="16" fill="none" stroke-linecap="round"/>
-    <path d="M164 200 Q146 218 114 210" stroke="#8a6a7a" stroke-width="16" fill="none" stroke-linecap="round"/>
-  </g>
-  <g class="arms-open-d">
-    <path d="M36 200 Q16 194 14 174" stroke="#8a6a7a" stroke-width="14" fill="none" stroke-linecap="round"/>
-    <circle cx="14" cy="171" r="6" fill="#e6bd97"/>
-    <path d="M164 200 Q184 194 186 174" stroke="#8a6a7a" stroke-width="14" fill="none" stroke-linecap="round"/>
-    <circle cx="186" cy="171" r="6" fill="#e6bd97"/>
-  </g>
-  <path d="M34 260 L34 228 Q34 200 62 190 L138 190 Q166 200 166 228 L166 260 Z" fill="#8a6a7a"/>
-  <path d="M84 190 L100 210 L116 190 L110 186 L100 200 L90 186 Z" fill="#9a7a8a"/>
-  <rect x="88" y="162" width="24" height="30" rx="8" fill="#e6bd97"/>
-  <ellipse cx="100" cy="126" rx="42" ry="48" fill="#f0c8a4"/>
-  <path d="M58 126 Q56 78 100 76 Q144 78 142 126 Q140 88 100 86 Q60 88 58 126 Z" fill="#6a4a3a"/>
-  <path d="M58 126 Q56 80 100 76 Q80 82 72 100 Q64 114 58 126 Z" fill="#5a3a2a"/>
-  <circle cx="60" cy="108" r="3" fill="#e0e0ea"/>
-  <circle cx="140" cy="108" r="3" fill="#e0e0ea"/>
-  <path d="M74 112 q12 2 18 6" stroke="#6a4a3a" stroke-width="3.5" fill="none" stroke-linecap="round"/>
-  <path d="M126 112 q-12 2 -18 6" stroke="#6a4a3a" stroke-width="3.5" fill="none" stroke-linecap="round"/>
-  <g class="brows-n"><path d="M76 116 q10 -4 20 0" stroke="#6a4a3a" stroke-width="3.5" fill="none" stroke-linecap="round"/><path d="M104 116 q10 -4 20 0" stroke="#6a4a3a" stroke-width="3.5" fill="none" stroke-linecap="round"/></g>
-  <g class="brows-raised"><path d="M76 108 q10 -8 20 -2" stroke="#6a4a3a" stroke-width="3.5" fill="none" stroke-linecap="round"/><path d="M104 110 q10 -6 20 -2" stroke="#6a4a3a" stroke-width="3.5" fill="none" stroke-linecap="round"/></g>
-  <g class="brows-think-d"><path d="M78 118 q10 -2 18 2" stroke="#6a4a3a" stroke-width="3" fill="none" stroke-linecap="round"/><path d="M106 120 q8 0 16 -2" stroke="#6a4a3a" stroke-width="3" fill="none" stroke-linecap="round"/></g>
-  <circle cx="84" cy="126" r="14" fill="none" stroke="#cdd2dc" stroke-width="2.5"/>
-  <circle cx="116" cy="126" r="14" fill="none" stroke="#cdd2dc" stroke-width="2.5"/>
-  <path d="M98 126 L102 126" stroke="#cdd2dc" stroke-width="2.5"/>
-  <ellipse cx="84" cy="126" rx="4" ry="5" fill="#2a2a32"/>
-  <ellipse cx="116" cy="126" rx="4" ry="5" fill="#2a2a32"/>
-  <ellipse cx="85.5" cy="125" rx="1.5" ry="1.8" fill="#fff"/>
-  <ellipse cx="117.5" cy="125" rx="1.5" ry="1.8" fill="#fff"/>
-  <path d="M100 132 q3 8 -2 11" stroke="#cf9a72" stroke-width="3" fill="none" stroke-linecap="round"/>
-  <path class="mouth-closed mouth-n" d="M90 156 L110 156" stroke="#8a4a48" stroke-width="3.5" stroke-linecap="round"/>
-  <ellipse class="mouth-open" cx="100" cy="158" rx="6" ry="4.5" fill="#8a4a48"/>
-  <path class="mouth-smile" d="M88 152 q12 8 24 0" stroke="#8a4a48" stroke-width="3.5" fill="none" stroke-linecap="round"/>
-  <path class="mouth-think-d" d="M94 158 q6 -2 12 0" stroke="#8a4a48" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-  <path d="M56 220 Q48 240 56 252" stroke="#8a6a7a" stroke-width="12" fill="none" stroke-linecap="round"/>
-  <circle cx="56" cy="254" r="5" fill="#f0c8a4"/>
-</svg>`,
-BRUNO:`<svg viewBox="0 0 200 260" xmlns="http://www.w3.org/2000/svg">
-  <path d="M36 260 L36 226 Q36 198 64 188 L136 188 Q164 198 164 226 L164 260 Z" fill="#3a4a3a"/>
-  <path d="M86 188 L100 212 L114 188 L106 185 L100 200 L94 185 Z" fill="#4a5a4a"/>
-  <rect x="89" y="160" width="22" height="30" rx="8" fill="#cf9a6c"/>
-  <ellipse cx="100" cy="126" rx="43" ry="49" fill="#dfa977"/>
-  <path d="M57 122 Q56 72 100 70 Q144 72 143 122 Q140 90 100 88 Q60 90 57 122 Z" fill="#6a6a72"/>
-  <path d="M57 122 Q56 72 100 70 Q78 74 66 96 Q59 108 57 122 Z" fill="#4a4a52"/>
-  <path d="M57 124 Q58 168 100 172 Q142 168 143 124 Q143 152 122 162 Q110 170 100 169 Q90 170 78 162 Q57 152 57 124 Z" fill="#5a5a62"/>
-  <ellipse cx="57" cy="130" rx="8" ry="11" fill="#dfa977"/>
-  <ellipse cx="143" cy="130" rx="8" ry="11" fill="#dfa977"/>
-  <path d="M74 112 q10 -5 20 -1" stroke="#5a5a62" stroke-width="4.5" fill="none" stroke-linecap="round"/>
-  <path d="M106 107 q10 -4 20 3" stroke="#5a5a62" stroke-width="4.5" fill="none" stroke-linecap="round"/>
-  <ellipse cx="86" cy="125" rx="5" ry="5.5" fill="#20202a"/>
-  <ellipse cx="114" cy="125" rx="5" ry="5.5" fill="#20202a"/>
-  <ellipse cx="87.5" cy="124" rx="1.8" ry="2" fill="#fff"/>
-  <ellipse cx="115.5" cy="124" rx="1.8" ry="2" fill="#fff"/>
-  <path d="M100 128 q5 10 -3 14" stroke="#b57e50" stroke-width="3" fill="none" stroke-linecap="round"/>
-  <path class="mouth-closed mouth-n-b" d="M88 157 q14 9 26 -2" stroke="#4a3428" stroke-width="3.5" fill="none" stroke-linecap="round"/>
-  <ellipse class="mouth-open" cx="100" cy="158" rx="7" ry="5" fill="#4a3428"/>
-  <path class="mouth-smile-b" d="M86 152 q14 12 28 0" stroke="#4a3428" stroke-width="3.5" fill="none" stroke-linecap="round"/>
-  <path d="M36 236 Q60 258 86 246" stroke="#3a4a3a" stroke-width="18" fill="none" stroke-linecap="round"/>
-  <circle cx="90" cy="244" r="8" fill="#dfa977"/>
-  <rect x="80" y="226" width="26" height="20" rx="4" fill="#5a7a5a"/>
-  <path d="M86 220 q3 -6 0 -11 M96 220 q3 -6 0 -11" stroke="#8a9a88" stroke-width="2" fill="none" opacity=".5"/>
-</svg>`
-};
+(function(){
+  "use strict";
 
-/* ═══════════════════════════════════════════════════
-   ÉTAT
-═══════════════════════════════════════════════════ */
-const SP = {
-  LUCAS:{c:"#9a7420",label:"Lucas Moreau — Commercial solaire",short:"LUCAS",bubble:"bl"},
-  DURAND:{c:"#8a5a8a",label:"Mme Durand — Propriétaire",short:"MME DURAND",bubble:"br"},
-  BRUNO:{c:"#0d7a6e",label:"Bruno — Votre mentor",short:"BRUNO",bubble:"bc"}
-};
-const st = {score:0, trap:null, rep:{posture:0,cadre:0,authenticite:0,connexion:0}, results:[], pendingCb:null};
-let mouthTimer = null;
-let typeTimer = null;
-let theoryIdx = 0;
+  var SVG_LUCAS = '<svg viewBox="0 0 200 260" xmlns="http://www.w3.org/2000/svg">'
+    +'<g class="arm-gesture"><path d="M36 196 Q18 170 28 148" stroke="#3a6878" stroke-width="14" fill="none" stroke-linecap="round"/><circle cx="28" cy="145" r="7" fill="#e0ac7d"/></g>'
+    +'<g class="arm-open"><path d="M36 196 Q10 190 8 168" stroke="#3a6878" stroke-width="14" fill="none" stroke-linecap="round"/><circle cx="8" cy="165" r="7" fill="#e0ac7d"/><path d="M164 196 Q190 190 192 168" stroke="#3a6878" stroke-width="14" fill="none" stroke-linecap="round"/><circle cx="192" cy="165" r="7" fill="#e0ac7d"/></g>'
+    +'<path d="M38 260 L38 226 Q38 198 66 188 L134 188 Q162 198 162 226 L162 260 Z" fill="#3a6878"/>'
+    +'<path d="M86 188 L100 206 L114 188 L108 184 L100 198 L92 184 Z" fill="#4a7888"/>'
+    +'<rect x="89" y="160" width="22" height="32" rx="8" fill="#e0ac7d"/>'
+    +'<ellipse cx="58" cy="132" rx="8" ry="11" fill="#e0ac7d"/>'
+    +'<ellipse cx="142" cy="132" rx="8" ry="11" fill="#e0ac7d"/>'
+    +'<ellipse cx="100" cy="126" rx="43" ry="50" fill="#eebd8f"/>'
+    +'<path d="M57 128 Q52 72 100 70 Q148 72 143 128 Q141 100 124 94 Q130 104 114 100 Q108 86 86 92 Q72 96 66 110 Q60 116 57 128 Z" fill="#4a3a2a"/>'
+    +'<path d="M56 124 Q100 62 144 124" stroke="#cdd2dd" stroke-width="7" fill="none" stroke-linecap="round"/>'
+    +'<ellipse cx="58" cy="136" rx="10" ry="13" fill="#cdd2dd"/>'
+    +'<path d="M62 148 Q76 176 98 172" stroke="#cdd2dd" stroke-width="4" fill="none" stroke-linecap="round"/>'
+    +'<circle cx="100" cy="172" r="6" fill="#cdd2dd"/>'
+    +'<g class="brows-n"><path d="M76 116 q10 -4 20 0" stroke="#4a3a2a" stroke-width="4" fill="none" stroke-linecap="round"/><path d="M104 116 q10 -4 20 0" stroke="#4a3a2a" stroke-width="4" fill="none" stroke-linecap="round"/></g>'
+    +'<g class="brows-s"><path d="M78 110 q8 -4 16 4" stroke="#4a3a2a" stroke-width="4" fill="none" stroke-linecap="round"/><path d="M106 114 q8 -8 16 -4" stroke="#4a3a2a" stroke-width="4" fill="none" stroke-linecap="round"/></g>'
+    +'<g class="brows-c"><path d="M76 114 h20" stroke="#4a3a2a" stroke-width="4" stroke-linecap="round"/><path d="M104 112 h20" stroke="#4a3a2a" stroke-width="4" stroke-linecap="round"/></g>'
+    +'<g class="brows-think"><path d="M78 112 q10 -6 18 0" stroke="#4a3a2a" stroke-width="3.5" fill="none" stroke-linecap="round"/><path d="M104 118 q10 2 18 -2" stroke="#4a3a2a" stroke-width="3.5" fill="none" stroke-linecap="round"/></g>'
+    +'<ellipse cx="86" cy="128" rx="5" ry="6" fill="#1c1c24"/>'
+    +'<ellipse cx="114" cy="128" rx="5" ry="6" fill="#1c1c24"/>'
+    +'<ellipse cx="88" cy="127" rx="1.8" ry="2" fill="#fff"/>'
+    +'<ellipse cx="116" cy="127" rx="1.8" ry="2" fill="#fff"/>'
+    +'<path d="M100 132 q4 8 -2 12" stroke="#c98d5f" stroke-width="3" fill="none" stroke-linecap="round"/>'
+    +'<path class="mouth-closed mouth-n" d="M90 154 q10 4 20 0" stroke="#7a4a34" stroke-width="3.5" fill="none" stroke-linecap="round"/>'
+    +'<g class="mouth-open"><ellipse cx="100" cy="156" rx="7" ry="5" fill="#7a4a34"/></g>'
+    +'<path class="mouth-sad" d="M90 158 q10 -6 20 0" stroke="#7a4a34" stroke-width="3.5" fill="none" stroke-linecap="round"/>'
+    +'<path class="mouth-ok" d="M88 150 q12 9 24 0" stroke="#7a4a34" stroke-width="3.5" fill="none" stroke-linecap="round"/>'
+    +'<path class="mouth-think" d="M92 156 q8 0 16 0" stroke="#7a4a34" stroke-width="3" fill="none" stroke-linecap="round"/>'
+    +'<path class="sweat" d="M146 102 q7 11 0 16 q-7 -5 0 -16" fill="#7fd4ff"/>'
+    +'</svg>';
 
-/* ═══════════════════════════════════════════════════
-   DONNÉES PÉDAGO
-═══════════════════════════════════════════════════ */
-const TRAP = {
-  intro:"Avant d'entrer chez Mme Durand, une question. Pas de bonne réponse attendue — pour l'instant.",
-  q:"Quand un prospect vous dit « c'est trop cher », que se passe-t-il réellement dans son cerveau ?",
-  opts:[
-    "Il évalue rationnellement le rapport qualité/prix et votre offre ne passe pas le test.",
-    "Son cerveau active un mécanisme de défense psychologique : la réactance.",
-    "Il n'est pas vraiment intéressé et cherche une excuse polie pour vous congédier."
-  ]
-};
+  var SVG_DURAND = '<svg viewBox="0 0 200 260" xmlns="http://www.w3.org/2000/svg">'
+    +'<g class="arms-crossed"><path d="M36 200 Q54 218 86 210" stroke="#8a6a7a" stroke-width="16" fill="none" stroke-linecap="round"/><path d="M164 200 Q146 218 114 210" stroke="#8a6a7a" stroke-width="16" fill="none" stroke-linecap="round"/></g>'
+    +'<g class="arms-open-d"><path d="M36 200 Q16 194 14 174" stroke="#8a6a7a" stroke-width="14" fill="none" stroke-linecap="round"/><circle cx="14" cy="171" r="6" fill="#e6bd97"/><path d="M164 200 Q184 194 186 174" stroke="#8a6a7a" stroke-width="14" fill="none" stroke-linecap="round"/><circle cx="186" cy="171" r="6" fill="#e6bd97"/></g>'
+    +'<path d="M34 260 L34 228 Q34 200 62 190 L138 190 Q166 200 166 228 L166 260 Z" fill="#8a6a7a"/>'
+    +'<path d="M84 190 L100 210 L116 190 L110 186 L100 200 L90 186 Z" fill="#9a7a8a"/>'
+    +'<rect x="88" y="162" width="24" height="30" rx="8" fill="#e6bd97"/>'
+    +'<ellipse cx="100" cy="126" rx="42" ry="48" fill="#f0c8a4"/>'
+    +'<path d="M58 126 Q56 78 100 76 Q144 78 142 126 Q140 88 100 86 Q60 88 58 126 Z" fill="#6a4a3a"/>'
+    +'<path d="M58 126 Q56 80 100 76 Q80 82 72 100 Q64 114 58 126 Z" fill="#5a3a2a"/>'
+    +'<circle cx="60" cy="108" r="3" fill="#e0e0ea"/>'
+    +'<circle cx="140" cy="108" r="3" fill="#e0e0ea"/>'
+    +'<path d="M74 112 q12 2 18 6" stroke="#6a4a3a" stroke-width="3.5" fill="none" stroke-linecap="round"/>'
+    +'<path d="M126 112 q-12 2 -18 6" stroke="#6a4a3a" stroke-width="3.5" fill="none" stroke-linecap="round"/>'
+    +'<g class="brows-n"><path d="M76 116 q10 -4 20 0" stroke="#6a4a3a" stroke-width="3.5" fill="none" stroke-linecap="round"/><path d="M104 116 q10 -4 20 0" stroke="#6a4a3a" stroke-width="3.5" fill="none" stroke-linecap="round"/></g>'
+    +'<g class="brows-raised"><path d="M76 108 q10 -8 20 -2" stroke="#6a4a3a" stroke-width="3.5" fill="none" stroke-linecap="round"/><path d="M104 110 q10 -6 20 -2" stroke="#6a4a3a" stroke-width="3.5" fill="none" stroke-linecap="round"/></g>'
+    +'<g class="brows-think-d"><path d="M78 118 q10 -2 18 2" stroke="#6a4a3a" stroke-width="3" fill="none" stroke-linecap="round"/><path d="M106 120 q8 0 16 -2" stroke="#6a4a3a" stroke-width="3" fill="none" stroke-linecap="round"/></g>'
+    +'<circle cx="84" cy="126" r="14" fill="none" stroke="#cdd2dc" stroke-width="2.5"/>'
+    +'<circle cx="116" cy="126" r="14" fill="none" stroke="#cdd2dc" stroke-width="2.5"/>'
+    +'<path d="M98 126 L102 126" stroke="#cdd2dc" stroke-width="2.5"/>'
+    +'<ellipse cx="84" cy="126" rx="4" ry="5" fill="#2a2a32"/>'
+    +'<ellipse cx="116" cy="126" rx="4" ry="5" fill="#2a2a32"/>'
+    +'<ellipse cx="85.5" cy="125" rx="1.5" ry="1.8" fill="#fff"/>'
+    +'<ellipse cx="117.5" cy="125" rx="1.5" ry="1.8" fill="#fff"/>'
+    +'<path d="M100 132 q3 8 -2 11" stroke="#cf9a72" stroke-width="3" fill="none" stroke-linecap="round"/>'
+    +'<path class="mouth-closed mouth-n" d="M90 156 L110 156" stroke="#8a4a48" stroke-width="3.5" stroke-linecap="round"/>'
+    +'<g class="mouth-open"><ellipse cx="100" cy="158" rx="6" ry="4.5" fill="#8a4a48"/></g>'
+    +'<path class="mouth-smile" d="M88 152 q12 8 24 0" stroke="#8a4a48" stroke-width="3.5" fill="none" stroke-linecap="round"/>'
+    +'<path class="mouth-think-d" d="M94 158 q6 -2 12 0" stroke="#8a4a48" stroke-width="2.5" fill="none" stroke-linecap="round"/>'
+    +'<path d="M56 220 Q48 240 56 252" stroke="#8a6a7a" stroke-width="12" fill="none" stroke-linecap="round"/>'
+    +'<circle cx="56" cy="254" r="5" fill="#f0c8a4"/>'
+    +'</svg>';
 
-const REVEAL_TEXTS = [
-  `<p><b>Faux — et c'est la réponse la plus choisie.</b> Si c'était une question de calcul, un tableau Excel suffirait à vendre. Mais les prospects qui reçoivent un chiffre parfait et restent bloqués existent par milliers. Le rationnel n'est pas le problème.</p>`,
-  `<p><b>Exactement.</b> La réactance, décrite par Brehm en 1966, est un mécanisme profond : quand quelqu'un sent qu'on essaie de le convaincre, son cerveau active une résistance proportionnelle à la pression ressentie. Plus vous argumentez, plus il se braque.</p>`,
-  `<p><b>Pas toujours.</b> Parfois oui. Mais la majorité des « c'est trop cher » sont sincères — le prospect ressent un blocage réel, pas une excuse. Le problème n'est pas dans ce qu'il dit, mais dans la façon dont vous réagissez. Et la réaction standard des commerciaux aggrave ce blocage.</p>`
-];
+  var SVG_BRUNO = '<svg viewBox="0 0 200 260" xmlns="http://www.w3.org/2000/svg">'
+    +'<path d="M36 260 L36 226 Q36 198 64 188 L136 188 Q164 198 164 226 L164 260 Z" fill="#3a4a3a"/>'
+    +'<path d="M86 188 L100 212 L114 188 L106 185 L100 200 L94 185 Z" fill="#4a5a4a"/>'
+    +'<rect x="89" y="160" width="22" height="30" rx="8" fill="#cf9a6c"/>'
+    +'<ellipse cx="100" cy="126" rx="43" ry="49" fill="#dfa977"/>'
+    +'<path d="M57 122 Q56 72 100 70 Q144 72 143 122 Q140 90 100 88 Q60 90 57 122 Z" fill="#6a6a72"/>'
+    +'<path d="M57 122 Q56 72 100 70 Q78 74 66 96 Q59 108 57 122 Z" fill="#4a4a52"/>'
+    +'<path d="M57 124 Q58 168 100 172 Q142 168 143 124 Q143 152 122 162 Q110 170 100 169 Q90 170 78 162 Q57 152 57 124 Z" fill="#5a5a62"/>'
+    +'<ellipse cx="57" cy="130" rx="8" ry="11" fill="#dfa977"/>'
+    +'<ellipse cx="143" cy="130" rx="8" ry="11" fill="#dfa977"/>'
+    +'<path d="M74 112 q10 -5 20 -1" stroke="#5a5a62" stroke-width="4.5" fill="none" stroke-linecap="round"/>'
+    +'<path d="M106 107 q10 -4 20 3" stroke="#5a5a62" stroke-width="4.5" fill="none" stroke-linecap="round"/>'
+    +'<ellipse cx="86" cy="125" rx="5" ry="5.5" fill="#20202a"/>'
+    +'<ellipse cx="114" cy="125" rx="5" ry="5.5" fill="#20202a"/>'
+    +'<ellipse cx="87.5" cy="124" rx="1.8" ry="2" fill="#fff"/>'
+    +'<ellipse cx="115.5" cy="124" rx="1.8" ry="2" fill="#fff"/>'
+    +'<path d="M100 128 q5 10 -3 14" stroke="#b57e50" stroke-width="3" fill="none" stroke-linecap="round"/>'
+    +'<path class="mouth-closed mouth-n-b" d="M88 157 q14 9 26 -2" stroke="#4a3428" stroke-width="3.5" fill="none" stroke-linecap="round"/>'
+    +'<g class="mouth-open"><ellipse cx="100" cy="158" rx="7" ry="5" fill="#4a3428"/></g>'
+    +'<path class="mouth-smile-b" d="M86 152 q14 12 28 0" stroke="#4a3428" stroke-width="3.5" fill="none" stroke-linecap="round"/>'
+    +'<path d="M36 236 Q60 258 86 246" stroke="#3a4a3a" stroke-width="18" fill="none" stroke-linecap="round"/>'
+    +'<circle cx="90" cy="244" r="8" fill="#dfa977"/>'
+    +'<rect x="80" y="226" width="26" height="20" rx="4" fill="#5a7a5a"/>'
+    +'<path d="M86 220 q3 -6 0 -11 M96 220 q3 -6 0 -11" stroke="#8a9a88" stroke-width="2" fill="none" opacity=".5"/>'
+    +'</svg>';
 
-const D1 = {
-  q:"Qu'est-ce qui a déclenché la fermeture de Mme Durand ?",
-  correct:1, pts:3, skill:"Posture", rep:"posture",
-  hint:"Regardez la séquence : Lucas reçoit l'objection, et que fait-il dans la seconde qui suit ?",
-  reveal:"La bonne réponse : B. Lucas a immédiatement contre-argumenté. Chaque argument a renforcé la réactance de Mme Durand au lieu de la diminuer.",
-  opts:[
-    {t:"Le prix de 18 000 € était objectivement trop élevé pour le budget de Mme Durand.",
-     fb:"Le prix n'a jamais été le problème réel. Relisez la scène : quand Lucas a arrêté de parler, Mme Durand ne parlait plus de chiffres. Elle parlait de confiance et d'incertitude. Le prix était un symptôme, pas la cause."},
-    {t:"Lucas a répondu à l'objection par des arguments, déclenchant la réactance de Mme Durand.",
-     fb:"Exactement. « Je comprends, mais si on calcule… » — chaque « mais » est une micro-attaque contre la position du prospect. Son cerveau a répondu en renforçant sa résistance. Lucas a perdu parce qu'il a gagné le débat — et perdu la vente."},
-    {t:"Lucas n'a pas suffisamment personnalisé son argumentaire au profil de Mme Durand.",
-     fb:"La personnalisation aide, mais ce n'est pas ça qui a causé l'échec. Même un argumentaire ultra-personnalisé, délivré en mode argumentation, déclenche la même réactance. La question est : <em>comment</em> vous répondez, pas <em>ce que</em> vous dites."}
-  ]
-};
+  var SP = {
+    LUCAS:  {c:"#9a7420", label:"LUCAS",           bubble:"bl"},
+    DURAND: {c:"#8a5a8a", label:"MME DURAND",      bubble:"br"},
+    BRUNO:  {c:"#0d7a6e", label:"BRUNO",           bubble:"bc"}
+  };
 
-const D2 = {
-  q:"Face à « c'est trop cher », quel doit être le premier réflexe ?",
-  correct:0, pts:2, skill:"Cadre", rep:"cadre",
-  hint:"Un médecin ne prescrit pas avant d'avoir examiné. Un commercial ne devrait pas répondre avant d'avoir compris.",
-  reveal:"La bonne réponse : A. Poser une question de clarification pour comprendre ce que « trop cher » veut dire pour ce prospect précis.",
-  opts:[
-    {t:"Poser une question de clarification : « Qu'est-ce qui vous fait dire que c'est beaucoup ? »",
-     fb:"Parfait. Vous ne niez pas, ne justifiez pas, n'argumentez pas. Vous cherchez à comprendre. Et dans le même temps, vous envoyez un signal au cerveau du prospect : « cette personne ne m'attaque pas » — la réactance baisse d'un cran."},
-    {t:"Rassurer sur le retour sur investissement avec des chiffres concrets.",
-     fb:"C'est exactement ce que Lucas a fait — et c'est ce qui a déclenché la réactance. Les chiffres rassurent ceux qui sont déjà convaincus. Pour les autres, ils ressentent qu'on essaie de les convaincre, et ils se braquent."},
-    {t:"Acknowledge l'objection puis pivoter vers un autre bénéfice non lié au prix.",
-     fb:"Le pivot est une technique de contournement — et le prospect le sent. « Je comprends, mais parlons plutôt de… » = « je ne veux pas traiter votre vraie objection ». La confiance chute au lieu de monter."}
-  ]
-};
+  var st = {
+    score: 0,
+    trap: null,
+    rep: {posture:0, cadre:0, authenticite:0, connexion:0},
+    results: [],
+    pendingCb: null,
+    theoryDone: null
+  };
 
-const THEORY = [
-  {kicker:"COMPRENDRE LA RÉACTANCE — POINT 1/4",
-   key:"Quand on pousse, l'autre résiste.",
-   h:`<p>En 1966, le psychologue Jack Brehm démontre un phénomène contre-intuitif : <b>plus vous essayez de convaincre quelqu'un, plus il résiste</b>. C'est la réactance psychologique.</p>
-   <p>Le mécanisme est inconscient et immédiat. Quand le cerveau du prospect détecte une tentative d'influence, il active un reflexe de défense — exactement comme un bras qui se lève pour se protéger.</p>
-   <blockquote>« La réactance n'est pas un choix. C'est un reflexe. Vous ne pouvez pas la combattre — vous pouvez seulement ne pas la déclencher. »</blockquote>
-   <p>En 2026, les prospects sont exposés à des milliers de tentatives de persuasion par jour. Leur réactance est <b>chroniquement activée</b>. Les anciennes techniques d'argumentation ne fonctionnent plus — elles font exactement l'inverse de ce qu'on attend.</p>`},
-  {kicker:"COMPRENDRE LA RÉACTANCE — POINT 2/4",
-   key:"L'erreur universelle : répondre aux objections par des arguments.",
-   h:`<p>La formation commerciale classique enseigne : « objection → réfutation → conclusion ». Ce modèle était pertinent quand les prospects faisaient confiance par défaut. En 2026, c'est un piège.</p>
-   <div class="dd dont"><span>Erreur classique</span>Prospect : « C'est trop cher. »<br>Commercial : « Je comprends, <b>mais</b> si on calcule sur 25 ans… »</div>
-   <p>Le mot « mais » est un signal d'attaque. Le cerveau du prospect l'entend comme : « ce que vous venez de dire est faux, voici la vraie réponse. » Résultat : il se braque davantage.</p>
-   <div class="dd dont"><span>Erreur classique</span>Prospect : « Je ne suis pas sûr. »<br>Commercial : « Nos études montrent que… »</div>
-   <p>Apporter une preuve quand on vous dit « je ne suis pas sûr », c'est répondre à un doute émotionnel par une démonstration rationnelle. <b>Deux registres différents — deux échecs garantis.</b></p>`},
-  {kicker:"LA MÉTHODE EN 3 TEMPS — POINT 3/4",
-   key:"Clarifier → Faire réfléchir → Comparer.",
-   h:`<p>Au lieu de répondre, on va <b>faire répondre le prospect</b>. Trois étapes, dans cet ordre précis :</p>
-   <div class="dd do"><span>Temps 1 — Clarifier</span>« Qu'est-ce qui vous fait dire que c'est beaucoup ? »<br><em>But : comprendre la vraie nature de l'objection sans jamais la contredire.</em></div>
-   <div class="dd do"><span>Temps 2 — Faire réfléchir</span>« Si vous investissiez 18 000 € dans quelque chose qui vous rapportait plus du double, vous hésiteriez ? »<br><em>But : amener le prospect à se convaincre lui-même en reformulant le cadre.</em></div>
-   <div class="dd do"><span>Temps 3 — Comparer</span>« C'est un peu comme planter un verger : les premières années vous arrosez sans récolter, puis pendant 20 ans vous récoltez sans arroser. »<br><em>But : contourner la résistance en activant l'imagination plutôt que la logique.</em></div>
-   <p>Aucun des trois temps ne contredit le prospect. Aucun ne déclenche la réactance. Et pourtant, le résultat est dix fois plus puissant qu'un argumentaire parfait.</p>`},
-  {kicker:"LE POUVOIR DES COMPARAISONS — POINT 4/4",
-   key:"Penser X, c'est comme… — le pont qui contourne le mur.",
-   h:`<p>La comparaison (ou analogie) est l'outil le plus sous-estimé de la vente moderne. Pourquoi ça marche ?</p>
-   <p>Quand vous argumentez, vous activez le cortex préfrontal du prospect — la zone analytique, critique, méfiante. Quand vous utilisez une comparaison, vous activez le cortex visuel et le système limbique — l'imagination, l'émotion, l'association.</p>
-   <blockquote>« L'argument parle au juge. La comparaison parle à l'enfant. Et c'est l'enfant qui décide. »</blockquote>
-   <div class="dd do"><span>Structure d'une bonne comparaison</span>« Penser/vouloir/faire [X], c'est comme [Y] — [explication courte]. »<br>Exemple : « Hésiter à installer des panneaux parce qu'il faut attendre 5 ans pour le ROI, c'est comme refuser de planter un arbre parce qu'il ne donne pas de fruits le lendemain. »</div>
-   <p>La comparaison ne <b>contredit pas</b> le prospect — elle <b>déplace</b> son cadre de pensée. Et ce déplacement se fait sans résistance, parce qu'il passe par l'imagination, pas par la raison.</p>`}
-];
+  var sceneSteps = [];
+  var sceneIdx = 0;
+  var sceneCb = null;
+  var theoryIdx = 0;
+  var typeTimer = null;
 
-const D3 = {
-  q:"Pourquoi la question de clarification est-elle si puissante ?",
-  correct:2, pts:2, skill:"Authenticité", rep:"authenticite",
-  hint:"Quand vous posez une vraie question, que signalez-vous à votre interlocuteur ?",
-  reveal:"La bonne réponse : C. Vous signalez que son opinion mérite d'être comprise — ce qui est l'exact inverse du signal envoyé par un argument.",
-  opts:[
-    {t:"Elle permet de gagner du temps en repoussant le moment de répondre.",
-     fb:"Ce n'est pas une tactique de temporisation — c'est un acte d'écoute sincère. Si vous posez la question juste pour gagner du temps, le prospect le sentira. L'authenticité est indispensable."},
-    {t:"Elle force le prospect à justifier son objection, ce qui l'affaiblit.",
-     fb:"C'est une lecture cynique — et dangereuse. Si le prospect sent que votre question est un piège pour le mettre en difficulté, la réactance explose. La clarification doit être sincère, pas stratégique."},
-    {t:"Elle envoie le signal : « votre avis mérite d'être compris » — ce qui désarme la réactance.",
-     fb:"Exactement. Le cerveau du prospect est programmé pour se défendre contre la persuasion. Mais il n'est pas programmé pour se défendre contre l'écoute. En posant une vraie question de clarification, vous changez de camp : vous n'êtes plus dans l'attaque, vous êtes dans la compréhension."}
-  ]
-};
+  /* ── DOM refs ─────────────────────────────────── */
+  var $id = function(id){ return document.getElementById(id); };
+  var elScoreVal  = $id("score-val");
+  var elStatusLbl = $id("status-lbl");
+  var elIzone     = $id("izone");
+  var elFbPanel   = $id("feedback-panel");
+  var elClicker   = $id("clicker");
+  var elClickHint = $id("click-hint");
+  var elVoff      = $id("voff");
+  var elVoffText  = $id("voff-text");
+  var elPanelL    = $id("pl");
+  var elPanelR    = $id("pr");
+  var elCLucas    = $id("c-lucas");
+  var elCDurand   = $id("c-durand");
+  var elCBruno    = $id("c-bruno");
 
-const D4 = {
-  q:"Mme Durand dit : « Je ne suis pas sûre que ça marche vraiment chez moi, mon toit n'est pas bien orienté. » Quelle est la meilleure réponse ?",
-  correct:1, pts:3, skill:"Connexion", rep:"connexion",
-  hint:"Clarifiez d'abord, puis utilisez une comparaison qui déplace le cadre.",
-  reveal:"La bonne réponse : B. D'abord clarifier ce qu'elle sait de son orientation, puis comparer avec une image concrète qui contourne l'objection technique.",
-  opts:[
-    {t:"« Nos installateurs font une étude technique gratuite. Dans 90 % des cas, on trouve une solution même avec une orientation imparfaite. »",
-     fb:"Argument pur. Vous rassurez avec des chiffres — mais elle n'est pas dans le rationnel, elle est dans le doute. Et le mot « 90 % des cas » sous-entend « vous êtes peut-être dans les 10 % où ça ne marche pas ». Mauvais signal."},
-    {t:"« Qu'est-ce qui vous fait penser que votre toit est mal orienté ? [...] C'est un peu comme un jardin : même avec une exposition partielle au soleil, on peut cultiver beaucoup de choses si on sait quoi planter et où. »",
-     fb:"Parfait. Clarification d'abord (sans contredire), puis comparaison qui déplace le cadre : du problème technique vers l'image d'un jardin qui s'adapte. Le prospect imagine au lieu d'analyser — et la résistance baisse."},
-    {t:"« Vous savez, l'orientation parfaite c'est le sud, mais même au sud-est ou au sud-ouest on obtient 85 à 92 % du rendement. C'est négligeable. »",
-     fb:"« C'est négligeable » = « votre inquiétude n'a pas de valeur ». Même si c'est techniquement vrai, vous venez de dévalider son ressenti. La réactance se réactive immédiatement. Les faits ont raison — mais le commercial a perdu."}
-  ]
-};
+  /* ── Init chars ───────────────────────────────── */
+  function initChars(){
+    elCLucas.innerHTML  = SVG_LUCAS;
+    elCDurand.innerHTML = SVG_DURAND;
+    elCBruno.innerHTML  = SVG_BRUNO;
+  }
 
-const D5 = {
-  q:"Quel est le danger de la méthode en 3 temps si elle est mal exécutée ?",
-  correct:0, pts:2, skill:"Posture", rep:"posture",
-  hint:"La méthode est un outil, pas un masque. Que se passe-t-il si le prospect sent que vous jouez un rôle ?",
-  reveal:"La bonne réponse : A. Si les questions sonnent mécaniques ou manipulatrices, le prospect détecte le truc — et la réactance est pire qu'avec un argument direct.",
-  opts:[
-    {t:"Si les questions sonnent mécaniques, le prospect détecte la manipulation — et la réactance explose.",
-     fb:"Exactement. La méthode en 3 temps n'est efficace que si elle est animée par une curiosité sincère. Le prospect ressent la différence entre « je pose cette question parce que je veux comprendre » et « je pose cette question parce qu'on m'a dit de la poser ». L'authenticité n'est pas un bonus — c'est le carburant."},
-    {t:"Les trois temps prennent trop de temps et le prospect perd patience.",
-     fb:"Au contraire : les trois temps prennent souvent moins de temps qu'un long argumentaire. Et le prospect ne perd jamais patience quand on s'intéresse sincèrement à lui — il perd patience quand on lui parle de soi."},
-    {t:"La méthode ne fonctionne que sur les objections de prix, pas sur les objections techniques.",
-     fb:"La méthode fonctionne sur toutes les objections — y compris les plus techniques. La clarification sert à comprendre, la réflexion sert à recadrer, la comparaison sert à imaginer. Ces trois mouvements sont universels."}
-  ]
-};
+  /* ── Typewriter ───────────────────────────────── */
+  function typeText(el, text, speed, cb){
+    if(typeTimer){ clearTimeout(typeTimer); typeTimer = null; }
+    el.textContent = "";
+    var i = 0;
+    function tick(){
+      if(i < text.length){
+        el.textContent += text.charAt(i);
+        i++;
+        typeTimer = setTimeout(tick, speed);
+      } else {
+        typeTimer = null;
+        if(cb) cb();
+      }
+    }
+    tick();
+  }
 
-/* ═══════════════════════════════════════════════════
-   SCÈNES
-═══════════════════════════════════════════════════ */
-const SCENE1 = [
-  {type:'voff',text:"Mardi 14h30. Lucas sonne à la porte de Mme Durand, propriétaire d'une maison individuelle à Saint-Étienne. Elle a rempli un formulaire en ligne il y a trois semaines."},
-  {type:'show',who:'LUCAS',expr:'neutral'},
-  {type:'show',who:'DURAND',expr:'neutral'},
-  {type:'lit',panel:'left'},
-  {type:'bubble',who:'DURAND',text:"Bonjour, c'est bien pour les panneaux solaires ? Entrez, je vous en prie.",expr:'neutral'},
-  {type:'bubble',who:'LUCAS',text:"Bonjour Madame Durand, merci de me recevoir. Je vais vous présenter notre solution, je suis sûr que vous allez apprécier.",expr:'eager'},
-  {type:'voff',text:"Lucas installe son dossier, montre des photos, déroule ses chiffres. Pendant dix minutes, il présente. Mme Durand écoute poliment."},
-  {type:'bubble',who:'DURAND',text:"C'est intéressant, mais… 18 000 €, c'est beaucoup d'argent quand même.",expr:'skeptical'},
-  {type:'bubble',who:'LUCAS',text:"Je comprends votre réserve, mais si on calcule sur 25 ans avec les économies d'énergie et les aides de l'État, votre retour sur investissement est d'environ 38 000 €. C'est plus du double.",expr:'eager'},
-  {type:'bubble',who:'DURAND',text:"Oui mais… on ne sait jamais ce qui peut se passer dans 25 ans. Et si les panneaux s'usent avant ?",expr:'resistant'},
-  {type:'bubble',who:'LUCAS',text:"Justement, nos panneaux sont garantis 25 ans, et les études montrent qu'ils fonctionnent encore à 85 % de leur capacité après 30 ans. C'est un investissement extrêmement sûr.",expr:'eager'},
-  {type:'setExpr',who:'LUCAS',expr:'stressed'},
-  {type:'setExpr',who:'DURAND',expr:'resistant'},
-  {type:'bubble',who:'DURAND',text:"Je vois… Écoutez, c'est très complet mais je vais en discuter avec mon mari. On vous rappellera.",expr:'resistant'},
-  {type:'voff',text:"Lucas sort de la maison. Il a tout bien expliqué. Les chiffres étaient bons. Les arguments étaient solides. Et il a perdu."},
-  {type:'hide',who:'DURAND'},
-  {type:'setExpr',who:'LUCAS',expr:'stressed'},
-  {type:'voff',text:"Ce que Lucas ne sait pas encore : ce n'est pas son produit qui a été rejeté. C'est sa méthode. Chaque argument qu'il a avancé a renforcé le mur au lieu de le franchir."}
-];
+  /* ── Mouth ────────────────────────────────────── */
+  function startMouth(charEl){
+    stopMouth();
+    charEl.classList.add("speaking");
+  }
+  function stopMouth(){
+    var all = document.querySelectorAll(".char.speaking");
+    for(var i=0;i<all.length;i++) all[i].classList.remove("speaking");
+  }
 
-const SCENE2 = [
-  {type:'voff',text:"Même scène. Même salon. Même objection. Mais cette fois, Bruno a montré à Lucas une autre voie."},
-  {type:'show',who:'LUCAS',expr:'calm'},
-  {type:'show',who:'DURAND',expr:'neutral'},
-  {type:'lit',panel:'left'},
-  {type:'bubble',who:'DURAND',text:"18 000 €, c'est beaucoup d'argent quand même.",expr:'skeptical'},
-  {type:'setExpr',who:'LUCAS',expr:'calm'},
-  {type:'bubble',who:'LUCAS',text:"Qu'est-ce qui vous fait dire que c'est beaucoup ?",expr:'calm'},
-  {type:'setExpr',who:'DURAND',expr:'thinking'},
-  {type:'bubble',who:'DURAND',text:"Bah… c'est un gros investissement pour nous. On a une retraite modeste.",expr:'thinking'},
-  {type:'bubble',who:'LUCAS',text:"Si vous investissiez 18 000 € dans quelque chose qui vous rapportait plus du double sur 25 ans, est-ce que vous hésiteriez ?",expr:'calm'},
-  {type:'setExpr',who:'DURAND',expr:'thinking'},
-  {type:'bubble',who:'DURAND',text:"Non… quand vous le dites comme ça, non.",expr:'thinking'},
-  {type:'setExpr',who:'LUCAS',expr:'confident'},
-  {type:'bubble',who:'LUCAS',text:"C'est un peu comme planter un verger. Les premières années vous arrosez sans récolter. Et puis pendant 20 ans, vous récoltez sans arroser.",expr:'confident'},
-  {type:'setExpr',who:'DURAND',expr:'open'},
-  {type:'bubble',who:'DURAND',text:"C'est vrai que vu comme ça, ça change la perspective… Comment on fait pour concrètement ?",expr:'open'},
-  {type:'setExpr',who:'LUCAS',expr:'confident'},
-  {type:'voff',text:"Lucas n'a rien argumenté. Il a posé deux questions et utilisé une image. Et Mme Durand s'est convaincue toute seule. La réactance n'a jamais été activée — parce qu'elle n'a jamais eu de raison de se défendre."},
-  {type:'voff',text:"Retenez : en 2026, celui qui argumente perd. Celui qui questionne — et qui fait imaginer — gagne."}
-];
+  /* ── Expressions ──────────────────────────────── */
+  var charMap = {LUCAS:"c-lucas", DURAND:"c-durand", BRUNO:"c-bruno"};
 
-/* ═══════════════════════════════════════════════════
-   INITIALISATION SVG
-═══════════════════════════════════════════════════ */
-function initChars(){
-  document.getElementById('c-lucas').innerHTML = SVG.LUCAS;
-  document.getElementById('c-durand').innerHTML = SVG.DURAND;
-  document.getElementById('c-bruno').innerHTML = SVG.BRUNO;
-}
+  function setExpression(who, expr){
+    var el = $id(charMap[who]);
+    if(!el) return;
+    el.className = "char";
+    if(who === "BRUNO") el.classList.add("in");
+    if(expr && expr !== "neutral") el.classList.add(expr);
+  }
 
-/* ═══════════════════════════════════════════════════
-   TYPEWRITER
-═══════════════════════════════════════════════════ */
-function typeText(el, text, speed, cb){
-  if(typeTimer) clearTimeout(typeTimer);
-  el.textContent = '';
-  let i = 0;
-  function tick(){
-    if(i < text.length){
-      el.textContent += text.charAt(i);
-      i++;
-      typeTimer = setTimeout(tick, speed);
+  function showChar(who){
+    var el = $id(charMap[who]);
+    if(!el) return;
+    el.style.opacity = "1";
+    if(who === "BRUNO") el.classList.add("in");
+  }
+
+  function hideChar(who){
+    var el = $id(charMap[who]);
+    if(!el) return;
+    el.style.opacity = "0";
+    if(who === "BRUNO") el.classList.remove("in");
+  }
+
+  function setLitPanel(side){
+    elPanelL.className = "panel" + (side==="left"?" lit":" dim");
+    elPanelR.className = "panel" + (side==="right"?" lit":" dim");
+  }
+
+  /* ── Bubbles / Voff ───────────────────────────── */
+  function hideAllBubbles(){
+    var ids = ["bl","br","bc"];
+    for(var i=0;i<ids.length;i++) $id(ids[i]).classList.remove("show");
+    elVoff.classList.remove("show");
+  }
+
+  function disableClick(){
+    elClicker.classList.remove("on");
+    elClickHint.classList.remove("show");
+  }
+  function enableClick(){
+    elClicker.classList.add("on");
+    elClickHint.classList.add("show");
+  }
+
+  function showVoff(text, cb){
+    hideAllBubbles();
+    stopMouth();
+    elVoff.classList.add("show");
+    disableClick();
+    typeText(elVoffText, text, 22, function(){
+      enableClick();
+      st.pendingCb = cb;
+    });
+  }
+
+  function showBubble(who, text, cb){
+    hideAllBubbles();
+    var info = SP[who];
+    var bubble = $id(info.bubble);
+    var charEl = $id(charMap[who]);
+
+    bubble.querySelector(".b-speaker").textContent = info.label;
+    bubble.querySelector(".b-speaker").style.color = info.c;
+    bubble.style.setProperty("--bc", info.c);
+    bubble.classList.add("show");
+
+    startMouth(charEl);
+    disableClick();
+
+    typeText(bubble.querySelector(".b-text"), text, 22, function(){
+      stopMouth();
+      enableClick();
+      st.pendingCb = cb;
+    });
+  }
+
+  /* ── Clicker ──────────────────────────────────── */
+  elClicker.addEventListener("click", function(){
+    if(st.pendingCb){
+      var cb = st.pendingCb;
+      st.pendingCb = null;
+      disableClick();
+      cb();
+    }
+  });
+
+  /* ── Scene runner ─────────────────────────────── */
+  function runScene(steps, cb){
+    sceneSteps = steps;
+    sceneIdx = 0;
+    sceneCb = cb;
+    execStep();
+  }
+
+  function execStep(){
+    if(sceneIdx >= sceneSteps.length){
+      if(sceneCb) sceneCb();
+      return;
+    }
+    var s = sceneSteps[sceneIdx];
+    if(s.type === "voff"){
+      showVoff(s.text, function(){ sceneIdx++; execStep(); });
+    } else if(s.type === "bubble"){
+      if(s.expr) setExpression(s.who, s.expr);
+      showBubble(s.who, s.text, function(){ sceneIdx++; execStep(); });
+    } else if(s.type === "show"){
+      showChar(s.who);
+      if(s.expr) setExpression(s.who, s.expr);
+      sceneIdx++; execStep();
+    } else if(s.type === "hide"){
+      hideChar(s.who);
+      sceneIdx++; execStep();
+    } else if(s.type === "setExpr"){
+      setExpression(s.who, s.expr);
+      sceneIdx++; execStep();
+    } else if(s.type === "lit"){
+      setLitPanel(s.panel);
+      sceneIdx++; execStep();
     } else {
-      if(cb) cb();
+      sceneIdx++; execStep();
     }
   }
-  tick();
-}
 
-/* ═══════════════════════════════════════════════════
-   MOUTH ANIMATION
-═══════════════════════════════════════════════════ */
-function startMouth(charEl){
-  stopMouth();
-  charEl.classList.add('speaking');
-}
-function stopMouth(){
-  if(mouthTimer){clearInterval(mouthTimer);mouthTimer=null;}
-  document.querySelectorAll('.char.speaking').forEach(c=>c.classList.remove('speaking'));
-}
+  /* ── Quiz ─────────────────────────────────────── */
+  var LETTERS = ["A","B","C","D"];
 
-/* ═══════════════════════════════════════════════════
-   EXPRESSIONS
-═══════════════════════════════════════════════════ */
-function setExpression(who, expr){
-  const map = {LUCAS:'c-lucas',DURAND:'c-durand',BRUNO:'c-bruno'};
-  const el = document.getElementById(map[who]);
-  if(!el) return;
-  el.className = 'char';
-  if(expr && expr !== 'neutral') el.classList.add(expr);
-}
+  function showQuiz(qData, onDone){
+    elFbPanel.classList.remove("show");
+    elFbPanel.innerHTML = "";
 
-function showChar(who){
-  const map = {LUCAS:'c-lucas',DURAND:'c-durand',BRUNO:'c-bruno'};
-  const el = document.getElementById(map[who]);
-  if(who === 'BRUNO') el.classList.add('in');
-  el.style.opacity = '1';
-}
-function hideChar(who){
-  const map = {LUCAS:'c-lucas',DURAND:'c-durand',BRUNO:'c-bruno'};
-  const el = document.getElementById(map[who]);
-  if(who === 'BRUNO') el.classList.remove('in');
-  else el.style.opacity = '0';
-}
+    var html = '<div class="q-wrap">';
+    html += '<div class="q-head">';
+    if(qData.skill) html += '<span class="q-badge">'+qData.skill+'</span>';
+    html += '<span class="q-pts">'+qData.pts+' pts</span></div>';
+    html += '<div class="q-question">'+qData.q+'</div>';
+    html += '<div class="q-options">';
+    for(var i=0;i<qData.opts.length;i++){
+      html += '<button class="q-btn" data-idx="'+i+'"><span class="q-letter">'+LETTERS[i]+'</span><span>'+qData.opts[i].t+'</span></button>';
+    }
+    html += '</div></div>';
+    elIzone.innerHTML = html;
+    elStatusLbl.textContent = qData.skill || "QUESTION";
 
-function setLitPanel(panel){
-  document.getElementById('pl').className = 'panel' + (panel==='left'?' lit':' dim');
-  document.getElementById('pr').className = 'panel' + (panel==='right'?' lit':' dim');
-}
-
-/* ═══════════════════════════════════════════════════
-   BULLES & VOIX OFF
-═══════════════════════════════════════════════════ */
-function hideAllBubbles(){
-  ['bl','br','bc'].forEach(id=>{
-    document.getElementById(id).classList.remove('show');
-  });
-  document.getElementById('voff').classList.remove('show');
-}
-
-function showVoff(text, cb){
-  hideAllBubbles();
-  stopMouth();
-  const voff = document.getElementById('voff');
-  const voffText = document.getElementById('voff-text');
-  voff.classList.add('show');
-  disableClick();
-  typeText(voffText, text, 22, ()=>{
-    enableClick();
-    st.pendingCb = cb;
-  });
-}
-
-function showBubble(who, text, cb){
-  hideAllBubbles();
-  const bubbleId = SP[who].bubble;
-  const bubble = document.getElementById(bubbleId);
-  const charMap = {LUCAS:'c-lucas',DURAND:'c-durand',BRUNO:'c-bruno'};
-  const charEl = document.getElementById(charMap[who]);
-
-  bubble.querySelector('.b-speaker').textContent = SP[who].short;
-  bubble.querySelector('.b-speaker').style.color = SP[who].c;
-  bubble.style.setProperty('--bc', SP[who].c);
-  bubble.classList.add('show');
-
-  startMouth(charEl);
-  disableClick();
-
-  typeText(bubble.querySelector('.b-text'), text, 22, ()=>{
-    stopMouth();
-    enableClick();
-    st.pendingCb = cb;
-  });
-}
-
-function disableClick(){
-  document.getElementById('clicker').classList.remove('on');
-  document.getElementById('click-hint').classList.remove('show');
-}
-function enableClick(){
-  document.getElementById('clicker').classList.add('on');
-  document.getElementById('click-hint').classList.add('show');
-}
-
-document.getElementById('clicker').addEventListener('click', ()=>{
-  if(st.pendingCb){
-    const cb = st.pendingCb;
-    st.pendingCb = null;
-    disableClick();
-    cb();
+    var btns = elIzone.querySelectorAll(".q-btn");
+    for(var j=0;j<btns.length;j++){
+      (function(btn){
+        btn.addEventListener("click", function(){
+          var idx = parseInt(btn.getAttribute("data-idx"));
+          handleAnswer(qData, idx, btns, onDone);
+        });
+      })(btns[j]);
+    }
   }
-});
 
-/* ═══════════════════════════════════════════════════
-   SCENE RUNNER
-═══════════════════════════════════════════════════ */
-let sceneSteps = [];
-let sceneIdx = 0;
-let sceneCb = null;
+  function handleAnswer(qData, chosen, btns, onDone){
+    var correct = qData.correct;
+    var isRight = (chosen === correct);
 
-function runScene(steps, cb){
-  sceneSteps = steps;
-  sceneIdx = 0;
-  sceneCb = cb;
-  execStep();
-}
+    for(var i=0;i<btns.length;i++){
+      btns[i].disabled = true;
+      var idx = parseInt(btns[i].getAttribute("data-idx"));
+      if(idx === correct) btns[i].classList.add("right");
+      if(idx === chosen && !isRight) btns[i].classList.add("wrong");
+      if(idx !== chosen && idx !== correct) btns[i].classList.add("dim");
+    }
 
-function execStep(){
-  if(sceneIdx >= sceneSteps.length){
-    if(sceneCb) sceneCb();
-    return;
-  }
-  const s = sceneSteps[sceneIdx];
-  if(s.type === 'voff'){
-    showVoff(s.text, ()=>{ sceneIdx++; execStep(); });
-  } else if(s.type === 'bubble'){
-    if(s.expr) setExpression(s.who, s.expr);
-    showBubble(s.who, s.text, ()=>{ sceneIdx++; execStep(); });
-  } else if(s.type === 'show'){
-    showChar(s.who);
-    if(s.expr) setExpression(s.who, s.expr);
-    sceneIdx++; execStep();
-  } else if(s.type === 'hide'){
-    hideChar(s.who);
-    sceneIdx++; execStep();
-  } else if(s.type === 'setExpr'){
-    setExpression(s.who, s.expr);
-    sceneIdx++; execStep();
-  } else if(s.type === 'lit'){
-    setLitPanel(s.panel);
-    sceneIdx++; execStep();
-  } else {
-    sceneIdx++; execStep();
-  }
-}
-
-/* ═══════════════════════════════════════════════════
-   QUIZ
-═══════════════════════════════════════════════════ */
-const LETTERS = ['A','B','C','D'];
-function showQuiz(qData, onDone){
-  const izone = document.getElementById('izone');
-  const fbPanel = document.getElementById('feedback-panel');
-  fbPanel.classList.remove('show');
-  fbPanel.innerHTML = '';
-
-  let html = '<div class="q-wrap">';
-  html += '<div class="q-head">';
-  if(qData.skill) html += `<span class="q-badge">${qData.skill}</span>`;
-  html += `<span class="q-pts">${qData.pts} pts</span></div>`;
-  html += `<div class="q-question">${qData.q}</div>`;
-  html += '<div class="q-options">';
-  qData.opts.forEach((o,i)=>{
-    html += `<button class="q-btn" data-idx="${i}"><span class="q-letter">${LETTERS[i]}</span><span>${o.t}</span></button>`;
-  });
-  html += '</div></div>';
-  izone.innerHTML = html;
-
-  document.getElementById('status-lbl').textContent = qData.skill || 'QUESTION';
-
-  izone.querySelectorAll('.q-btn').forEach(btn=>{
-    btn.addEventListener('click', ()=>{
-      const idx = parseInt(btn.dataset.idx);
-      handleAnswer(qData, idx, izone, fbPanel, onDone);
-    });
-  });
-}
-
-function handleAnswer(qData, chosen, izone, fbPanel, onDone){
-  const btns = izone.querySelectorAll('.q-btn');
-  const correct = qData.correct;
-  const isRight = chosen === correct;
-
-  btns.forEach((b,i)=>{
-    b.disabled = true;
-    if(i === correct) b.classList.add('right');
-    if(i === chosen && !isRight) b.classList.add('wrong');
-    if(i !== chosen && i !== correct) b.classList.add('dim');
-  });
-
-  if(isRight){
-    st.score += qData.pts;
-    document.getElementById('score-val').textContent = st.score;
-    showPtsPop(qData.pts);
-    if(qData.rep) st.rep[qData.rep] = Math.min(100, (st.rep[qData.rep]||0) + Math.round(qData.pts / qData.pts * 33));
+    if(isRight){
+      st.score += qData.pts;
+      elScoreVal.textContent = st.score;
+      showPtsPop(qData.pts);
+      if(qData.rep) st.rep[qData.rep] = Math.min(100, (st.rep[qData.rep]||0) + 33);
+      st.results.push({skill:qData.skill, pts:qData.pts, max:qData.pts, ok:true});
+    } else {
+      if(qData.rep) st.rep[qData.rep] = Math.min(100, (st.rep[qData.rep]||0) + 8);
+      st.results.push({skill:qData.skill, pts:0, max:qData.pts, ok:false});
+    }
     updateRepBars();
-    st.results.push({skill:qData.skill, pts:qData.pts, max:qData.pts, ok:true});
-  } else {
-    if(qData.rep) st.rep[qData.rep] = Math.min(100, (st.rep[qData.rep]||0) + 8);
-    updateRepBars();
-    st.results.push({skill:qData.skill, pts:0, max:qData.pts, ok:false});
-  }
 
-  let fbHtml = '<div class="fb-inner">';
-  fbHtml += `<div class="pts-line">${isRight ? '+'+qData.pts+' points' : '+0 point'}</div>`;
-  fbHtml += `<div class="fb-card ${isRight?'good':'bad'}"><span class="fb-name">${isRight ? 'CORRECT' : 'INCORRECT'}</span>${qData.opts[chosen].fb}</div>`;
-  if(!isRight && qData.hint){
-    fbHtml += `<div class="hint-label">INDICE</div><div class="fb-card hint">${qData.hint}</div>`;
-    fbHtml += '<div class="retry-opts">';
-    qData.opts.forEach((o,i)=>{
-      if(i === chosen || i === correct) return;
-      fbHtml += `<button class="retry-btn" data-ridx="${i}"><span class="q-letter">${LETTERS[i]}</span><span>${o.t}</span></button>`;
-    });
+    var fbHtml = '<div class="fb-inner">';
+    fbHtml += '<div class="pts-line">'+(isRight ? '+'+qData.pts+' points' : '+0 point')+'</div>';
+    fbHtml += '<div class="fb-card '+(isRight?'good':'bad')+'"><span class="fb-name">'+(isRight?'CORRECT':'INCORRECT')+'</span>'+qData.opts[chosen].fb+'</div>';
+    if(!isRight && qData.hint){
+      fbHtml += '<div class="hint-label">INDICE</div><div class="fb-card hint">'+qData.hint+'</div>';
+      fbHtml += '<div class="retry-opts">';
+      for(var r=0;r<qData.opts.length;r++){
+        if(r === chosen || r === correct) continue;
+        fbHtml += '<button class="retry-btn" data-ridx="'+r+'"><span class="q-letter">'+LETTERS[r]+'</span><span>'+qData.opts[r].t+'</span></button>';
+      }
+      fbHtml += '</div>';
+    }
     fbHtml += '</div>';
+    fbHtml += '<div class="fb-actions"><button class="btn-continue" id="btn-fb-cont">Continuer</button></div>';
+
+    elFbPanel.innerHTML = fbHtml;
+    elFbPanel.classList.add("show");
+
+    $id("btn-fb-cont").addEventListener("click", function(){
+      if(onDone) onDone();
+    });
+
+    if(!isRight){
+      var retryBtns = elFbPanel.querySelectorAll(".retry-btn");
+      for(var rb=0;rb<retryBtns.length;rb++){
+        (function(rbtn){
+          rbtn.addEventListener("click", function(){
+            var allR = elFbPanel.querySelectorAll(".retry-btn");
+            for(var a=0;a<allR.length;a++){ allR[a].disabled=true; allR[a].classList.add("wrong"); }
+            rbtn.classList.remove("wrong");
+            rbtn.classList.add("right");
+            var hl = elFbPanel.querySelector(".hint-label");
+            if(hl) hl.parentNode.removeChild(hl);
+            var hc = elFbPanel.querySelector(".fb-card.hint");
+            if(hc) hc.parentNode.removeChild(hc);
+            var wc = elFbPanel.querySelector(".fb-card.bad");
+            if(wc){ wc.classList.remove("bad"); wc.classList.add("note"); wc.querySelector(".fb-name").textContent="VOTRE REPONSE"; }
+          });
+        })(retryBtns[rb]);
+      }
+    }
   }
-  fbHtml += '</div>';
-  fbHtml += `<div class="fb-actions"><button class="btn-continue" id="btn-fb-cont">Continuer ▸</button></div>`;
 
-  fbPanel.innerHTML = fbHtml;
-  fbPanel.classList.add('show');
+  function showPtsPop(pts){
+    var el = document.createElement("div");
+    el.className = "pts-pop";
+    el.textContent = "+" + pts;
+    document.body.appendChild(el);
+    setTimeout(function(){ if(el.parentNode) el.parentNode.removeChild(el); }, 1600);
+  }
 
-  fbPanel.querySelector('#btn-fb-cont').addEventListener('click', ()=>{
-    if(onDone) onDone();
+  function updateRepBars(){
+    var keys = ["posture","cadre","authenticite","connexion"];
+    for(var i=0;i<keys.length;i++){
+      var k = keys[i];
+      var fill = $id("rp-"+k);
+      var val = $id("rv-"+k);
+      var v = st.rep[k] || 0;
+      fill.style.width = v + "%";
+      val.textContent = v > 0 ? v + "%" : "--";
+    }
+  }
+
+  /* ── Theory ───────────────────────────────────── */
+  function showTheory(onDone){
+    theoryIdx = 0;
+    st.theoryDone = onDone;
+    $id("freeze-char").innerHTML = SVG_BRUNO;
+    renderTheorySlide();
+    $id("freeze-overlay").classList.add("on");
+    elStatusLbl.textContent = "THEORIE";
+  }
+
+  function renderTheorySlide(){
+    var t = THEORY[theoryIdx];
+    $id("th-kicker").textContent = t.kicker;
+    $id("th-title").textContent = t.key;
+    $id("th-count").textContent = (theoryIdx+1)+" / "+THEORY.length;
+    $id("th-body").innerHTML = t.h;
+    $id("th-prev").style.visibility = theoryIdx > 0 ? "visible" : "hidden";
+    $id("th-next").textContent = theoryIdx < THEORY.length - 1 ? "Suivant" : "Compris";
+  }
+
+  $id("th-prev").addEventListener("click", function(){
+    if(theoryIdx > 0){ theoryIdx--; renderTheorySlide(); }
+  });
+  $id("th-next").addEventListener("click", function(){
+    if(theoryIdx < THEORY.length - 1){ theoryIdx++; renderTheorySlide(); }
+    else { $id("freeze-overlay").classList.remove("on"); if(st.theoryDone) st.theoryDone(); }
   });
 
-  if(!isRight){
-    fbPanel.querySelectorAll('.retry-btn').forEach(rb=>{
-      rb.addEventListener('click', ()=>{
-        const ri = parseInt(rb.dataset.ridx);
-        fbPanel.querySelectorAll('.retry-btn').forEach(r=>{r.disabled=true;r.classList.add('wrong');});
-        rb.classList.remove('wrong');
-        rb.classList.add('right');
-        const hintEl = fbPanel.querySelector('.hint-label');
-        if(hintEl) hintEl.remove();
-        const hintCard = fbPanel.querySelector('.fb-card.hint');
-        if(hintCard) hintCard.remove();
-        const wrongCard = fbPanel.querySelector('.fb-card.bad');
-        if(wrongCard){wrongCard.classList.remove('bad');wrongCard.classList.add('note');wrongCard.querySelector('.fb-name').textContent='VOTRE RÉPONSE';}
+  /* ── Theory data ──────────────────────────────── */
+  var THEORY = [
+    {kicker:"COMPRENDRE LA REACTANCE  POINT 1/4",
+     key:"Quand on pousse, l'autre resiste.",
+     h:"<p>En 1966, le psychologue Jack Brehm demontre un phenomene contre-intuitif : <b>plus vous essayez de convaincre quelqu'un, plus il resiste</b>. C'est la reactance psychologique.</p><p>Le mecanisme est inconscient et immediat. Quand le cerveau du prospect detecte une tentative d'influence, il active un reflexe de defense : exactement comme un bras qui se leve pour se proteger.</p><blockquote>La reactance n'est pas un choix. C'est un reflexe. Vous ne pouvez pas la combattre : vous pouvez seulement ne pas la declencher.</blockquote><p>En 2026, les prospects sont exposes a des milliers de tentatives de persuasion par jour. Leur reactance est <b>chroniquement activee</b>. Les anciennes techniques d'argumentation ne fonctionnent plus : elles font exactement l'inverse de ce qu'on attend.</p>"},
+    {kicker:"COMPRENDRE LA REACTANCE  POINT 2/4",
+     key:"L'erreur universelle : repondre aux objections par des arguments.",
+     h:"<p>La formation commerciale classique enseigne : objection : refuteation : conclusion. Ce modele etait pertinent quand les prospects faisaient confiance par defaut. En 2026, c'est un piege.</p><div class='dd dont'><span>Erreur classique</span>Prospect : C'est trop cher.<br>Commercial : Je comprends, <b>mais</b> si on calcule sur 25 ans...</div><p>Le mot mais est un signal d'attaque. Le cerveau du prospect l'entend comme : ce que vous venez de dire est faux, voici la vraie reponse. Resultat : il se braque davantage.</p><div class='dd dont'><span>Erreur classique</span>Prospect : Je ne suis pas sur.<br>Commercial : Nos etudes montrent que...</div><p>Apporter une preuve quand on vous dit je ne suis pas sur, c'est repondre a un doute emotionnel par une demonstration rationnelle. <b>Deux registres differents : deux echecs garantis.</b></p>"},
+    {kicker:"LA METHODE EN 3 TEMPS  POINT 3/4",
+     key:"Clarifier : Faire reflechir : Comparer.",
+     h:"<p>Au lieu de repondre, on va <b>faire repondre le prospect</b>. Trois etapes, dans cet ordre precis :</p><div class='dd do'><span>Temps 1  Clarifier</span>Qu'est-ce qui vous fait dire que c'est beaucoup ?<br><em>But : comprendre la vraie nature de l'objection sans jamais la contredire.</em></div><div class='dd do'><span>Temps 2  Faire reflechir</span>Si vous investissiez 18 000 euros dans quelque chose qui vous rapportait plus du double sur 25 ans, vous hesiteriez ?<br><em>But : amener le prospect a se convaincre lui-meme en reformulant le cadre.</em></div><div class='dd do'><span>Temps 3  Comparer</span>C'est un peu comme planter un verger : les premieres annees vous arrosez sans recolter, puis pendant 20 ans vous recoltez sans arroser.<br><em>But : contourner la resistance en activant l'imagination plutot que la logique.</em></div><p>Aucun des trois temps ne contredit le prospect. Aucun ne declenche la reactance. Et pourtant, le resultat est dix fois plus puissant qu'un argumentaire parfait.</p>"},
+    {kicker:"LE POUVOIR DES COMPARAISONS  POINT 4/4",
+     key:"Penser X, c'est comme... : le pont qui contourne le mur.",
+     h:"<p>La comparaison (ou analogie) est l'outil le plus sous-estime de la vente moderne. Pourquoi ca marche ?</p><p>Quand vous argumentez, vous activez le cortex prefrontal du prospect : la zone analytique, critique, mefiante. Quand vous utilisez une comparaison, vous activez le cortex visuel et le systeme limbique : l'imagination, l'emotion, l'association.</p><blockquote>L'argument parle au juge. La comparaison parle a l'enfant. Et c'est l'enfant qui decide.</blockquote><div class='dd do'><span>Structure d'une bonne comparaison</span>Penser/vouloir/faire [X], c'est comme [Y] : [explication courte].<br>Exemple : Hesiter a installer des panneaux parce qu'il faut attendre 5 ans pour le ROI, c'est comme refuser de planter un arbre parce qu'il ne donne pas de fruits le lendemain.</div><p>La comparaison ne <b>contredit pas</b> le prospect : elle <b>deplace</b> son cadre de pensee. Et ce deplacement se fait sans resistance, parce qu'il passe par l'imagination, pas par la raison.</p>"}
+  ];
+
+  /* ── Questions data ───────────────────────────── */
+  var D1 = {
+    q:"Qu'est-ce qui a declenche la fermeture de Mme Durand ?",
+    correct:1, pts:3, skill:"Posture", rep:"posture",
+    hint:"Regardez la sequence : Lucas recoit l'objection, et que fait-il dans la seconde qui suit ?",
+    opts:[
+      {t:"Le prix de 18 000 euros etait objectivement trop eleve pour le budget de Mme Durand.", fb:"Le prix n'a jamais ete le probleme reel. Relisez la scene : quand Lucas a arrete de parler, Mme Durand ne parlait plus de chiffres. Elle parlait de confiance et d'incertitude. Le prix etait un symptome, pas la cause."},
+      {t:"Lucas a repondu a l'objection par des arguments, declenchant la reactance de Mme Durand.", fb:"Exactement. Je comprends, mais si on calcule : chaque mais est une micro-attaque contre la position du prospect. Son cerveau a repondu en renforcant sa resistance. Lucas a perdu parce qu'il a gagne le debat : et perdu la vente."},
+      {t:"Lucas n'a pas suffisamment personnalise son argumentaire au profil de Mme Durand.", fb:"La personnalisation aide, mais ce n'est pas ca qui a cause l'echec. Meme un argumentaire ultra-personnalise, delivre en mode argumentation, declenche la meme reactance. La question est : comment vous repondez, pas ce que vous dites."}
+    ]
+  };
+
+  var D2 = {
+    q:"Face a ce n'est trop cher, quel doit etre le premier reflexe ?",
+    correct:0, pts:2, skill:"Cadre", rep:"cadre",
+    hint:"Un medecin ne prescrit pas avant d'avoir examine. Un commercial ne devrait pas repondre avant d'avoir compris.",
+    opts:[
+      {t:"Poser une question de clarification : Qu'est-ce qui vous fait dire que c'est beaucoup ?", fb:"Parfait. Vous ne niez pas, ne justifiez pas, n'argumentez pas. Vous cherchez a comprendre. Et dans le meme temps, vous envoyez un signal au cerveau du prospect : cette personne ne m'attaque pas : la reactance baisse d'un cran."},
+      {t:"Rassurer sur le retour sur investissement avec des chiffres concrets.", fb:"C'est exactement ce que Lucas a fait : et c'est ce qui a declenche la reactance. Les chiffres rassurent ceux qui sont deja convaincus. Pour les autres, ils ressentent qu'on essaie de les convaincre, et ils se braquent."},
+      {t:"Acknowledge l'objection puis pivoter vers un autre benefice non lie au prix.", fb:"Le pivot est une technique de contournement : et le prospect le sent. Je comprends, mais parlons plutot de... = je ne veux pas traiter votre vraie objection. La confiance chute au lieu de monter."}
+    ]
+  };
+
+  var D3 = {
+    q:"Pourquoi la question de clarification est-elle si puissante ?",
+    correct:2, pts:2, skill:"Authenticite", rep:"authenticite",
+    hint:"Quand vous posez une vraie question, que signalez-vous a votre interlocuteur ?",
+    opts:[
+      {t:"Elle permet de gagner du temps en repoussant le moment de repondre.", fb:"Ce n'est pas une tactique de temporisation : c'est un acte d'ecoute sincere. Si vous posez la question juste pour gagner du temps, le prospect le sentira. L'authenticite est indispensable."},
+      {t:"Elle force le prospect a justifier son objection, ce qui l'affaiblit.", fb:"C'est une lecture cynique : et dangereuse. Si le prospect sent que votre question est un piege pour le mettre en difficulte, la reactance explose. La clarification doit etre sincere, pas strategique."},
+      {t:"Elle envoie le signal : votre avis merite d'etre compris : ce qui desarme la reactance.", fb:"Exactement. Le cerveau du prospect est programme pour se defendre contre la persuasion. Mais il n'est pas programme pour se defendre contre l'ecoute. En posant une vraie question de clarification, vous changez de camp : vous n'etes plus dans l'attaque, vous etes dans la comprehension."}
+    ]
+  };
+
+  var D4 = {
+    q:"Mme Durand dit : Je ne suis pas sure que ca marche vraiment chez moi, mon toit n'est pas bien oriente. Quelle est la meilleure reponse ?",
+    correct:1, pts:3, skill:"Connexion", rep:"connexion",
+    hint:"Clarifiez d'abord, puis utilisez une comparaison qui deplace le cadre.",
+    opts:[
+      {t:"Nos installateurs font une etude technique gratuite. Dans 90 % des cas, on trouve une solution meme avec une orientation imparfaite.", fb:"Argument pur. Vous rassurez avec des chiffres : mais elle n'est pas dans le rationnel, elle est dans le doute. Et le mot 90 % des cas sous-entend vous etes peut-etre dans les 10 % ou ca ne marche pas. Mauvais signal."},
+      {t:"Qu'est-ce qui vous fait penser que votre toit est mal oriente ? [...] C'est un peu comme un jardin : meme avec une exposition partielle au soleil, on peut cultiver beaucoup de choses si on sait quoi planter et ou.", fb:"Parfait. Clarification d'abord (sans contredire), puis comparaison qui deplace le cadre : du probleme technique vers l'image d'un jardin qui s'adapte. Le prospect imagine au lieu d'analyser : et la resistance baisse."},
+      {t:"Vous savez, l'orientation parfaite c'est le sud, mais meme au sud-est ou au sud-ouest on obtient 85 a 92 % du rendement. C'est negligeable.", fb:"C'est negligeable = votre inquietude n'a pas de valeur. Meme si c'est techniquement vrai, vous venez de devalider son ressenti. La reactance se reactive immediatement. Les faits ont raison : mais le commercial a perdu."}
+    ]
+  };
+
+  var D5 = {
+    q:"Quel est le danger de la methode en 3 temps si elle est mal executee ?",
+    correct:0, pts:2, skill:"Posture", rep:"posture",
+    hint:"La methode est un outil, pas un masque. Que se passe-t-il si le prospect sent que vous jouez un role ?",
+    opts:[
+      {t:"Si les questions sonnent mecaniques, le prospect detecte la manipulation : et la reactance explose.", fb:"Exactement. La methode en 3 temps n'est efficace que si elle est animee par une curiosite sincere. Le prospect ressent la difference entre je pose cette question parce que je veux comprendre et je pose cette question parce qu'on m'a dit de la poser. L'authenticite n'est pas un bonus : c'est le carburant."},
+      {t:"Les trois temps prennent trop de temps et le prospect perd patience.", fb:"Au contraire : les trois temps prennent souvent moins de temps qu'un long argumentaire. Et le prospect ne perd jamais patience quand on s'interesse sincerement a lui : il perd patience quand on lui parle de soi."},
+      {t:"La methode ne fonctionne que sur les objections de prix, pas sur les objections techniques.", fb:"La methode fonctionne sur toutes les objections : y compris les plus techniques. La clarification sert a comprendre, la reflexion sert a recadrer, la comparaison sert a imaginer. Ces trois mouvements sont universels."}
+    ]
+  };
+
+  /* ── Scene data ───────────────────────────────── */
+  var SCENE1 = [
+    {type:"voff", text:"Mardi 14h30. Lucas sonne a la porte de Mme Durand, proprietaire d'une maison individuelle a Saint-Etienne. Elle a rempli un formulaire en ligne il y a trois semaines."},
+    {type:"show", who:"LUCAS", expr:"neutral"},
+    {type:"show", who:"DURAND", expr:"neutral"},
+    {type:"lit", panel:"left"},
+    {type:"bubble", who:"DURAND", text:"Bonjour, c'est bien pour les panneaux solaires ? Entrez, je vous en prie.", expr:"neutral"},
+    {type:"bubble", who:"LUCAS", text:"Bonjour Madame Durand, merci de me recevoir. Je vais vous presenter notre solution, je suis sur que vous allez apprecier.", expr:"eager"},
+    {type:"voff", text:"Lucas installe son dossier, montre des photos, deroule ses chiffres. Pendant dix minutes, il presente. Mme Durand ecoute poliment."},
+    {type:"bubble", who:"DURAND", text:"C'est interessant, mais... 18 000 euros, c'est beaucoup d'argent quand meme.", expr:"skeptical"},
+    {type:"bubble", who:"LUCAS", text:"Je comprends votre reserve, mais si on calcule sur 25 ans avec les economies d'energie et les aides de l'Etat, votre retour sur investissement est d'environ 38 000 euros. C'est plus du double.", expr:"eager"},
+    {type:"bubble", who:"DURAND", text:"Oui mais... on ne sait jamais ce qui peut se passer dans 25 ans. Et si les panneaux s'usent avant ?", expr:"resistant"},
+    {type:"bubble", who:"LUCAS", text:"Justement, nos panneaux sont garantis 25 ans, et les etudes montrent qu'ils fonctionnent encore a 85 % de leur capacite apres 30 ans. C'est un investissement extremement sur.", expr:"eager"},
+    {type:"setExpr", who:"LUCAS", expr:"stressed"},
+    {type:"setExpr", who:"DURAND", expr:"resistant"},
+    {type:"bubble", who:"DURAND", text:"Je vois... Ecoutez, c'est tres complet mais je vais en discuter avec mon mari. On vous rappellera.", expr:"resistant"},
+    {type:"voff", text:"Lucas sort de la maison. Il a tout bien explique. Les chiffres etaient bons. Les arguments etaient solides. Et il a perdu."},
+    {type:"hide", who:"DURAND"},
+    {type:"setExpr", who:"LUCAS", expr:"stressed"},
+    {type:"voff", text:"Ce que Lucas ne sait pas encore : ce n'est pas son produit qui a ete rejete. C'est sa methode. Chaque argument qu'il a avance a renforce le mur au lieu de le franchir."}
+  ];
+
+  var SCENE2 = [
+    {type:"voff", text:"Meme scene. Meme salon. Meme objection. Mais cette fois, Bruno a montre a Lucas une autre voie."},
+    {type:"show", who:"LUCAS", expr:"calm"},
+    {type:"show", who:"DURAND", expr:"neutral"},
+    {type:"lit", panel:"left"},
+    {type:"bubble", who:"DURAND", text:"18 000 euros, c'est beaucoup d'argent quand meme.", expr:"skeptical"},
+    {type:"setExpr", who:"LUCAS", expr:"calm"},
+    {type:"bubble", who:"LUCAS", text:"Qu'est-ce qui vous fait dire que c'est beaucoup ?", expr:"calm"},
+    {type:"setExpr", who:"DURAND", expr:"thinking"},
+    {type:"bubble", who:"DURAND", text:"Bah... c'est un gros investissement pour nous. On a une retraite modeste.", expr:"thinking"},
+    {type:"bubble", who:"LUCAS", text:"Si vous investissiez 18 000 euros dans quelque chose qui vous rapportait plus du double sur 25 ans, est-ce que vous hesiteriez ?", expr:"calm"},
+    {type:"setExpr", who:"DURAND", expr:"thinking"},
+    {type:"bubble", who:"DURAND", text:"Non... quand vous le dites comme ca, non.", expr:"thinking"},
+    {type:"setExpr", who:"LUCAS", expr:"confident"},
+    {type:"bubble", who:"LUCAS", text:"C'est un peu comme planter un verger. Les premieres annees vous arrosez sans recolter. Et puis pendant 20 ans, vous recoltez sans arroser.", expr:"confident"},
+    {type:"setExpr", who:"DURAND", expr:"open"},
+    {type:"bubble", who:"DURAND", text:"C'est vrai que vu comme ca, ca change la perspective... Comment on fait pour concretement ?", expr:"open"},
+    {type:"setExpr", who:"LUCAS", expr:"confident"},
+    {type:"voff", text:"Lucas n'a rien argumente. Il a pose deux questions et utilise une image. Et Mme Durand s'est convaincue toute seule. La reactance n'a jamais ete activee : parce qu'elle n'a jamais eu de raison de se defendre."},
+    {type:"voff", text:"Retenez : en 2026, celui qui argumente perd. Celui qui questionne : et qui fait imaginer : gagne."}
+  ];
+
+  /* ── Trap ─────────────────────────────────────── */
+  var TRAP_OPTS = [
+    "Il evalue rationnellement le rapport qualite/prix et votre offre ne passe pas le test.",
+    "Son cerveau active un mecanisme de defense psychologique : la reactance.",
+    "Il n'est pas vraiment interesse et cherche une excuse polie pour vous congedier."
+  ];
+
+  var REVEAL_TEXTS = [
+    "<p><b>Faux : et c'est la reponse la plus choisie.</b> Si c'etait une question de calcul, un tableau Excel suffirait a vendre. Mais les prospects qui recoivent un chiffre parfait et restent bloques existent par milliers. Le rationnel n'est pas le probleme.</p>",
+    "<p><b>Exactement.</b> La reactance, decrite par Brehm en 1966, est un mecanisme profond : quand quelqu'un sent qu'on essaie de le convaincre, son cerveau active une resistance proportionnelle a la pression ressentie. Plus vous argumentez, plus il se braque.</p>",
+    "<p><b>Pas toujours.</b> Parfois oui. Mais la majorite des c'est trop cher sont sinceres : le prospect ressent un blocage reel, pas une excuse. Le probleme n'est pas dans ce qu'il dit, mais dans la facon dont vous reagissez. Et la reaction standard des commerciaux aggrave ce blocage.</p>"
+  ];
+
+  function showTrap(){
+    elStatusLbl.textContent = "INTRODUCTION";
+    var html = '<div class="q-wrap">';
+    html += '<div class="q-head"><span class="q-badge">QUESTION INTRO</span><span class="q-pts">0 pt</span></div>';
+    html += '<div class="q-question" style="font-size:.85rem;">Avant d\'entrer chez Mme Durand, une question. Pas de bonne reponse attendue : pour l\'instant.</div>';
+    html += '<div class="q-question">Quand un prospect vous dit c\'est trop cher, que se passe-t-il reellement dans son cerveau ?</div>';
+    html += '<div class="q-options">';
+    for(var i=0;i<TRAP_OPTS.length;i++){
+      html += '<button class="q-btn" data-idx="'+i+'"><span class="q-letter">'+LETTERS[i]+'</span><span>'+TRAP_OPTS[i]+'</span></button>';
+    }
+    html += '</div></div>';
+    elIzone.innerHTML = html;
+
+    var btns = elIzone.querySelectorAll(".q-btn");
+    for(var j=0;j<btns.length;j++){
+      (function(btn){
+        btn.addEventListener("click", function(){
+          var idx = parseInt(btn.getAttribute("data-idx"));
+          st.trap = idx;
+          for(var k=0;k<btns.length;k++){
+            btns[k].disabled = true;
+            var ki = parseInt(btns[k].getAttribute("data-idx"));
+            if(ki === 1) btns[k].classList.add("right");
+            if(ki === idx && idx !== 1) btns[k].classList.add("wrong");
+            if(ki !== idx && ki !== 1) btns[k].classList.add("dim");
+          }
+          showReveal(idx);
+        });
+      })(btns[j]);
+    }
+  }
+
+  function showReveal(chosen){
+    $id("rv-choice").textContent = "Votre reponse : " + TRAP_OPTS[chosen];
+    var bodyHtml = REVEAL_TEXTS[chosen];
+    if(chosen !== 1){
+      bodyHtml += '<div class="rg-row ok" style="margin-top:12px;">'+REVEAL_TEXTS[1]+'</div>';
+    }
+    $id("rv-body").innerHTML = bodyHtml;
+    $id("ov-reveal").classList.add("on");
+  }
+
+  /* ── Flow ─────────────────────────────────────── */
+  function startScene1(){
+    $id("ov-reveal").classList.remove("on");
+    hideAllBubbles();
+    disableClick();
+    setLitPanel("left");
+    runScene(SCENE1, function(){
+      showQuiz(D1, function(){
+        showQuiz(D2, function(){
+          showTheory(function(){
+            $id("ov-practice-mid").classList.add("on");
+          });
+        });
       });
     });
   }
-}
 
-function showPtsPop(pts){
-  const el = document.createElement('div');
-  el.className = 'pts-pop';
-  el.textContent = '+' + pts;
-  document.body.appendChild(el);
-  setTimeout(()=>el.remove(), 1600);
-}
+  $id("btn-enter-scene").addEventListener("click", startScene1);
 
-function updateRepBars(){
-  ['posture','cadre','authenticite','connexion'].forEach(k=>{
-    const fill = document.getElementById('rp-'+k);
-    const val = document.getElementById('rv-'+k);
-    const v = st.rep[k] || 0;
-    fill.style.width = v + '%';
-    val.textContent = v > 0 ? v + '%' : '—';
-  });
-}
-
-/* ═══════════════════════════════════════════════════
-   THEORY
-═══════════════════════════════════════════════════ */
-function showTheory(onDone){
-  theoryIdx = 0;
-  st.theoryDone = onDone;
-  renderTheorySlide();
-  document.getElementById('freeze-char').innerHTML = SVG.BRUNO;
-  document.getElementById('freeze-overlay').classList.add('on');
-  document.getElementById('status-lbl').textContent = 'THÉORIE';
-}
-
-function renderTheorySlide(){
-  const t = THEORY[theoryIdx];
-  document.getElementById('th-kicker').textContent = t.kicker;
-  document.getElementById('th-title').textContent = t.key;
-  document.getElementById('th-count').textContent = `${theoryIdx+1} / ${THEORY.length}`;
-  document.getElementById('th-body').innerHTML = t.h;
-  document.getElementById('th-prev').style.visibility = theoryIdx > 0 ? 'visible' : 'hidden';
-  document.getElementById('th-next').textContent = theoryIdx < THEORY.length - 1 ? 'Suivant ▸' : 'Compris ✓';
-}
-
-function thNext(){
-  if(theoryIdx < THEORY.length - 1){
-    theoryIdx++;
-    renderTheorySlide();
-  } else {
-    document.getElementById('freeze-overlay').classList.remove('on');
-    if(st.theoryDone) st.theoryDone();
-  }
-}
-function thPrev(){
-  if(theoryIdx > 0){
-    theoryIdx--;
-    renderTheorySlide();
-  }
-}
-
-/* ═══════════════════════════════════════════════════
-   TRAP QUESTION
-═══════════════════════════════════════════════════ */
-function showTrap(){
-  document.getElementById('status-lbl').textContent = 'INTRODUCTION';
-  const izone = document.getElementById('izone');
-  let html = '<div class="q-wrap">';
-  html += '<div class="q-head"><span class="q-badge">QUESTION D'INTRODUCTION</span><span class="q-pts">0 pt</span></div>';
-  html += `<div class="q-question" style="font-size:.85rem;">${TRAP.intro}</div>`;
-  html += `<div class="q-question">${TRAP.q}</div>`;
-  html += '<div class="q-options">';
-  TRAP.opts.forEach((o,i)=>{
-    html += `<button class="q-btn" data-idx="${i}"><span class="q-letter">${LETTERS[i]}</span><span>${o}</span></button>`;
-  });
-  html += '</div></div>';
-  izone.innerHTML = html;
-
-  izone.querySelectorAll('.q-btn').forEach(btn=>{
-    btn.addEventListener('click', ()=>{
-      const idx = parseInt(btn.dataset.idx);
-      st.trap = idx;
-      const btns = izone.querySelectorAll('.q-btn');
-      btns.forEach((b,i)=>{
-        b.disabled = true;
-        if(i === 1) b.classList.add('right');
-        if(i === idx && idx !== 1) b.classList.add('wrong');
-        if(i !== idx && i !== 1) b.classList.add('dim');
-      });
-      showReveal(idx);
-    });
-  });
-}
-
-function showReveal(chosen){
-  const ov = document.getElementById('ov-reveal');
-  document.getElementById('rv-choice').textContent = 'Votre réponse : « ' + TRAP.opts[chosen] + ' »';
-  let bodyHtml = REVEAL_TEXTS[chosen];
-  if(chosen !== 1){
-    bodyHtml += `<div class="rg-row ok" style="margin-top:12px;">${REVEAL_TEXTS[1]}</div>`;
-  }
-  document.getElementById('rv-body').innerHTML = bodyHtml;
-  ov.classList.add('on');
-}
-
-/* ═══════════════════════════════════════════════════
-   SCENE 1 + QUESTIONS
-═══════════════════════════════════════════════════ */
-function startScene1(){
-  document.getElementById('ov-reveal').classList.remove('on');
-  hideAllBubbles();
-  disableClick();
-  setLitPanel('left');
-  runScene(SCENE1, ()=>{
-    showQuiz(D1, ()=>{
-      showQuiz(D2, ()=>{
-        showTheory(()=>{
-          showPracticeMid();
+  $id("mode-keyboard-mid").addEventListener("click", function(){
+    $id("ov-practice-mid").classList.remove("on");
+    hideAllBubbles();
+    disableClick();
+    setLitPanel("left");
+    setExpression("LUCAS","neutral");
+    elStatusLbl.textContent = "REJEU";
+    runScene(SCENE2, function(){
+      showQuiz(D3, function(){
+        showQuiz(D4, function(){
+          showQuiz(D5, function(){
+            showBilan();
+          });
         });
       });
     });
   });
-}
 
-function showPracticeMid(){
-  document.getElementById('ov-practice-mid').classList.add('on');
-}
-function proceedAfterPracticeMid(){
-  document.getElementById('ov-practice-mid').classList.remove('on');
-  hideAllBubbles();
-  disableClick();
-  setLitPanel('left');
-  setExpression('LUCAS','neutral');
-  document.getElementById('status-lbl').textContent = 'REJEU';
-  runScene(SCENE2, ()=>{
-    showQuiz(D3, ()=>{
-      showQuiz(D4, ()=>{
-        showQuiz(D5, ()=>{
-          showBilan();
-        });
-      });
-    });
-  });
-}
+  /* ── Bilan ────────────────────────────────────── */
+  function showBilan(){
+    elStatusLbl.textContent = "BILAN";
+    $id("bil-pts").textContent = st.score;
 
-/* ═══════════════════════════════════════════════════
-   BILAN
-═══════════════════════════════════════════════════ */
-function showBilan(){
-  document.getElementById('status-lbl').textContent = 'BILAN';
-  const ov = document.getElementById('ov-bilan');
-  document.getElementById('bil-pts').textContent = st.score;
+    var title = "Analyse de votre session";
+    var pTitle = "Commercial en formation";
+    var pDesc = "Vous commencez a integrer les reflexes de base. La pratique vous aidera a les rendre naturels.";
 
-  let title = 'Analyse de votre session';
-  let profileTitle = 'Commercial en formation';
-  let profileDesc = 'Vous commencez à intégrer les réflexes de base. La pratique vous aidera à les rendre naturels.';
+    if(st.score >= 10){
+      title = "Excellente session";
+      pTitle = "Commercial intuitif";
+      pDesc = "Vous comprenez naturellement que convaincre ne passe pas par l'argumentation. Restez vigilant : la methode ne doit jamais devenir un script mecanique.";
+    } else if(st.score >= 7){
+      title = "Bonne progression";
+      pTitle = "Commercial en developpement";
+      pDesc = "Les bases sont la. Travaillez surtout la transition entre la clarification et la question de reflexion : c'est le moment le plus delicat.";
+    } else if(st.score >= 4){
+      title = "Des acquis, des progres a faire";
+      pTitle = "Commercial en apprentissage";
+      pDesc = "Vous avez saisi certains principes mais la methode en 3 temps n'est pas encore fluide. Relisez les points de theorie et reecoutez la scene de rejeu.";
+    } else {
+      title = "Les fondations sont a poser";
+      pTitle = "Commercial debutant";
+      pDesc = "C'est normal de ne pas tout saisir des le premier episode. L'essentiel est de retenir ceci : quand un prospect objecte, ne repondez pas : questionnez.";
+    }
 
-  if(st.score >= 10){
-    title = 'Excellente session';
-    profileTitle = 'Commercial intuitif';
-    profileDesc = 'Vous comprenez naturellement que convaincre ne passe pas par l\'argumentation. Restez vigilant : la méthode ne doit jamais devenir un script mécanique.';
-  } else if(st.score >= 7){
-    title = 'Bonne progression';
-    profileTitle = 'Commercial en développement';
-    profileDesc = 'Les bases sont là. Travaillez surtout la transition entre la clarification et la question de réflexion — c\'est le moment le plus délicat.';
-  } else if(st.score >= 4){
-    title = 'Des acquis, des progrès à faire';
-    profileTitle = 'Commercial en apprentissage';
-    profileDesc = 'Vous avez saisi certains principes mais la méthode en 3 temps n\'est pas encore fluide. Relisez les points de théorie et réécoutez la scène de rejeu.';
-  } else {
-    title = 'Les fondations sont à poser';
-    profileTitle = 'Commercial débutant';
-    profileDesc = 'C\'est normal de ne pas tout saisir dès le premier épisode. L\'essentiel est de retenir ceci : quand un prospect objecte, ne répondez pas — questionnez.';
+    $id("bil-title").textContent = title;
+    $id("sdr-profile-title").textContent = pTitle;
+    $id("sdr-profile-desc").textContent = pDesc;
+
+    var repHtml = "";
+    var rLabels = {posture:"Posture",cadre:"Cadre",authenticite:"Authenticite",connexion:"Connexion"};
+    var rKeys = ["posture","cadre","authenticite","connexion"];
+    for(var i=0;i<rKeys.length;i++){
+      var k = rKeys[i];
+      var v = st.rep[k] || 0;
+      repHtml += '<div class="rp-item"><span class="rp-label">'+rLabels[k]+'</span><div class="rp-track"><div class="rp-fill '+k+'" style="width:'+v+'%"></div></div></div>';
+    }
+    $id("rep-profile-bars").innerHTML = repHtml;
+
+    var rowsHtml = "";
+    for(var j=0;j<st.results.length;j++){
+      var r = st.results[j];
+      var cls = r.ok ? "ok" : "ko";
+      var verdict = r.ok ? "Acquis" : "A retravailler";
+      rowsHtml += '<div class="bilan-row '+cls+'"><div class="br-skill">'+r.skill+'</div><div class="br-pts">'+r.pts+'/'+r.max+'</div><div class="br-verdict">'+verdict+'</div></div>';
+    }
+    $id("bil-rows").innerHTML = rowsHtml;
+
+    var memoHtml = '<div class="bruno-memo-head">MEMO DE BRUNO</div>';
+    memoHtml += "<b>Trois temps a retenir :</b><br>";
+    memoHtml += "1. <b>Clarifier</b> : Qu'est-ce qui vous fait dire ca ?<br>";
+    memoHtml += "2. <b>Faire reflechir</b> : Si [condition favorable], vous hesiteriez ?<br>";
+    memoHtml += "3. <b>Comparer</b> : C'est comme [image concrete].<br><br>";
+    memoHtml += "<b>Regle d'or :</b> aucune de ces trois etapes ne doit contredire le prospect. Si vous sentez que vous allez argumenter, arretez-vous et posez une question a la place.";
+    $id("bruno-memo-text").innerHTML = memoHtml;
+
+    $id("ov-bilan").classList.add("on");
   }
 
-  document.getElementById('bil-title').textContent = title;
-  document.getElementById('sdr-profile-title').textContent = profileTitle;
-  document.getElementById('sdr-profile-desc').textContent = profileDesc;
-
-  let repBarsHtml = '';
-  ['posture','cadre','authenticite','connexion'].forEach(k=>{
-    const labels = {posture:'Posture',cadre:'Cadre',authenticite:'Authenticité',connexion:'Connexion'};
-    const v = st.rep[k] || 0;
-    repBarsHtml += `<div class="rp-item"><span class="rp-label">${labels[k]}</span><div class="rp-track"><div class="rp-fill ${k}" style="width:${v}%"></div></div></div>`;
+  $id("btn-to-practice-end").addEventListener("click", function(){
+    $id("ov-bilan").classList.remove("on");
+    $id("ov-practice-end").classList.add("on");
   });
-  document.getElementById('rep-profile-bars').innerHTML = repBarsHtml;
 
-  let rowsHtml = '';
-  st.results.forEach(r=>{
-    const cls = r.ok ? (r.pts === r.max ? 'ok' : 'mid') : 'ko';
-    const verdict = r.ok ? 'Acquis' : 'À retravailler';
-    rowsHtml += `<div class="bilan-row ${cls}"><div class="br-skill">${r.skill}</div><div class="br-pts">${r.pts}/${r.max}</div><div class="br-verdict">${verdict}</div></div>`;
+  $id("mode-keyboard-end").addEventListener("click", function(){
+    $id("ov-practice-end").classList.remove("on");
+    $id("ov-final").classList.add("on");
+    elStatusLbl.textContent = "FIN";
   });
-  document.getElementById('bil-rows').innerHTML = rowsHtml;
 
-  let memoHtml = '<div class="bruno-memo-head">MÉMO DE BRUNO</div>';
-  memoHtml += '<b>Trois temps à retenir :</b><br>';
-  memoHtml += '1. <b>Clarifier</b> — « Qu\'est-ce qui vous fait dire ça ? »<br>';
-  memoHtml += '2. <b>Faire réfléchir</b> — « Si [condition favorable], vous hésiteriez ? »<br>';
-  memoHtml += '3. <b>Comparer</b> — « C\'est comme [image concrète]. »<br><br>';
-  memoHtml += '<b>Règle d\'or :</b> aucune de ces trois étapes ne doit contredire le prospect. Si vous sentez que vous allez argumenter, arrêtez-vous et posez une question à la place.';
-  document.getElementById('bruno-memo-text').innerHTML = memoHtml;
-
-  ov.classList.add('on');
-}
-
-function showPracticeEnd(){
-  document.getElementById('ov-bilan').classList.remove('on');
-  document.getElementById('ov-practice-end').classList.add('on');
-}
-
-/* ═══════════════════════════════════════════════════
-   FINAL
-═══════════════════════════════════════════════════ */
-function cliffhanger(){
-  document.getElementById('ov-practice-end').classList.remove('on');
-  document.getElementById('ov-final').classList.add('on');
-  document.getElementById('status-lbl').textContent = 'FIN';
-}
-
-/* ═══════════════════════════════════════════════════
-   INIT
-═══════════════════════════════════════════════════ */
-function init(){
+  /* ── Init ─────────────────────────────────────── */
   initChars();
-  setLitPanel('none');
+  setLitPanel("none");
   updateRepBars();
   showTrap();
-}
 
-init();
+})();
 </script>
 </body>
 </html>
