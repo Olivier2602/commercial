@@ -109,7 +109,6 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(
 .cin-skip{position:absolute;bottom:20px;right:24px;z-index:20;font-family:var(--disp);font-size:.58rem;letter-spacing:3px;color:#444;cursor:pointer;padding:6px 16px;border:1px solid #333;border-radius:20px;transition:color .2s,border-color .2s;}
 .cin-skip:hover{color:#888;border-color:#555;}
 .cin-vignette{position:absolute;inset:0;background:radial-gradient(ellipse at center,transparent 40%,rgba(0,0,0,.85) 100%);z-index:4;}
-/* Ligne dorée animée */
 .cin-line{position:absolute;bottom:50%;left:0;right:0;height:1px;background:linear-gradient(to right,transparent,var(--gold),transparent);z-index:6;transform:scaleX(0);animation:lineexpand 1.2s ease 1s forwards;}
 @keyframes lineexpand{from{transform:scaleX(0);}to{transform:scaleX(1);}}
 @keyframes cfadein{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
@@ -255,63 +254,211 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(
 .mode-btn.active-mode{border-color:var(--teal);background:var(--teal-dim);}
 .practice-note{font-size:.63rem;color:var(--txt-xl);line-height:1.5;font-style:italic;}
 
+/* ══ VOICE UI ══
+   Principe : le micro est le mode principal, visible et central.
+   Le clavier est toujours structurellement présent mais visuellement secondaire.
+   Aucun choix explicite n'est demandé à l'utilisateur.
+*/
+.voice-arena{display:flex;flex-direction:column;align-items:center;gap:0;width:100%;max-width:680px;margin:0 auto;}
+
+/* Contexte de la situation */
+.va-context{width:100%;background:var(--bg-card);border:1px solid var(--border-em);border-left:3px solid var(--gold);border-radius:0 var(--r4) var(--r4) 0;padding:12px 16px;margin-bottom:14px;font-size:.74rem;color:var(--txt-m);line-height:1.5;}
+.va-context-label{font-family:var(--disp);font-size:.5rem;letter-spacing:2.5px;color:var(--gold);margin-bottom:5px;}
+
+/* Zone prospect — bulle d'objection */
+.va-prospect{width:100%;display:flex;align-items:flex-start;gap:12px;margin-bottom:12px;}
+.va-prospect-avatar{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,#8a6a8a,#6a4a6a);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-family:var(--disp);font-size:.62rem;color:#fff;letter-spacing:1px;}
+.va-prospect-bubble{flex:1;background:rgba(138,106,138,.08);border:1.5px solid rgba(138,106,138,.25);border-radius:var(--r8);border-bottom-left-radius:2px;padding:10px 13px;font-size:.73rem;color:var(--txt);line-height:1.5;position:relative;}
+.va-prospect-label{font-family:var(--disp);font-size:.48rem;letter-spacing:2px;color:#8a6a8a;margin-bottom:4px;}
+/* Texte flou avant la révélation (mécanique surprise) */
+.va-blurred{filter:blur(5px);user-select:none;transition:filter .5s var(--ease);}
+.va-blurred.revealed{filter:none;}
+
+/* Indicateur "Le prospect parle..." */
+.va-thinking{display:none;align-items:center;gap:6px;font-size:.58rem;letter-spacing:1.5px;color:#8a6a8a;margin-bottom:12px;}
+.va-thinking.show{display:flex;}
+.va-thinking-dot{width:5px;height:5px;border-radius:50%;background:#8a6a8a;animation:vthink .8s infinite;}
+.va-thinking-dot:nth-child(2){animation-delay:.16s;}
+.va-thinking-dot:nth-child(3){animation-delay:.32s;}
+@keyframes vthink{0%,80%,100%{transform:scale(.6);opacity:.4;}40%{transform:scale(1);opacity:1;}}
+
+/* Séparateur de rôle */
+.va-your-turn{width:100%;display:flex;align-items:center;gap:10px;margin:4px 0 10px;}
+.va-your-turn-label{font-family:var(--disp);font-size:.52rem;letter-spacing:2.5px;color:var(--txt-xl);white-space:nowrap;}
+.va-your-turn-line{flex:1;height:1px;background:var(--border);}
+
+/* Orbe micro — le cœur visuel de l'interaction vocale */
+.va-mic-orb{
+  position:relative;width:72px;height:72px;margin:4px auto 8px;
+  cursor:pointer;flex-shrink:0;
+}
+.va-mic-orb-ring{
+  position:absolute;inset:0;border-radius:50%;border:2px solid var(--teal);
+  transition:transform .3s var(--spring),opacity .3s;
+  opacity:.3;
+}
+.va-mic-orb-body{
+  position:absolute;inset:6px;border-radius:50%;
+  background:var(--bg-card);border:1.5px solid var(--border-em);
+  display:flex;align-items:center;justify-content:center;
+  transition:background .25s,border-color .25s,box-shadow .25s;
+}
+.va-mic-icon{font-size:1.5rem;line-height:1;transition:transform .2s var(--spring);}
+/* Ondes sonores animées (visibles uniquement en écoute) */
+.va-wave{
+  position:absolute;inset:-4px;border-radius:50%;
+  border:2px solid var(--teal);opacity:0;
+  animation:none;pointer-events:none;
+}
+/* État IDLE */
+.va-mic-orb.idle .va-mic-orb-ring{opacity:.25;transform:scale(1);}
+.va-mic-orb.idle .va-mic-orb-body{background:var(--bg-card);}
+/* État LISTENING */
+.va-mic-orb.listening .va-mic-orb-ring{opacity:1;transform:scale(1.08);border-color:var(--teal);}
+.va-mic-orb.listening .va-mic-orb-body{background:var(--teal-dim);border-color:var(--teal);box-shadow:0 0 0 3px rgba(13,122,110,.15);}
+.va-mic-orb.listening .va-mic-icon{transform:scale(1.1);}
+.va-mic-orb.listening .va-wave{animation:wave-pulse 1.4s var(--ease) infinite;}
+.va-wave:nth-child(3){animation-delay:.35s;}
+.va-wave:nth-child(4){animation-delay:.7s;}
+@keyframes wave-pulse{0%{opacity:.5;transform:scale(1);}100%{opacity:0;transform:scale(1.55);}}
+/* État DONE */
+.va-mic-orb.done .va-mic-orb-body{background:rgba(13,122,110,.12);border-color:var(--teal);}
+
+/* Label sous l'orbe */
+.va-mic-label{font-family:var(--disp);font-size:.56rem;letter-spacing:2px;color:var(--txt-l);text-align:center;margin-bottom:8px;transition:color .2s;min-height:1em;}
+.va-mic-orb.listening+.va-mic-label{color:var(--teal);}
+
+/* Waveform live — bandes audio animées */
+.va-waveform{
+  display:flex;align-items:center;justify-content:center;
+  gap:3px;height:28px;margin:0 auto 10px;
+  opacity:0;transition:opacity .3s;
+}
+.va-waveform.active{opacity:1;}
+.va-bar{
+  width:3px;border-radius:2px;background:var(--teal);
+  animation:none;transform-origin:center;
+}
+.va-waveform.active .va-bar{animation:barwave .6s ease-in-out infinite alternate;}
+.va-bar:nth-child(1){height:8px;animation-delay:0s;}
+.va-bar:nth-child(2){height:16px;animation-delay:.08s;}
+.va-bar:nth-child(3){height:22px;animation-delay:.16s;}
+.va-bar:nth-child(4){height:26px;animation-delay:.04s;}
+.va-bar:nth-child(5){height:22px;animation-delay:.12s;}
+.va-bar:nth-child(6){height:14px;animation-delay:.20s;}
+.va-bar:nth-child(7){height:8px;animation-delay:.06s;}
+@keyframes barwave{from{transform:scaleY(.4);opacity:.5;}to{transform:scaleY(1);opacity:1;}}
+
+/* Transcription en temps réel */
+.va-transcript{
+  width:100%;min-height:48px;padding:10px 14px;
+  background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r8);
+  font-size:.76rem;line-height:1.5;color:var(--txt);
+  margin-bottom:8px;transition:border-color .2s;
+  font-style:italic;
+}
+.va-transcript.listening{border-color:var(--teal);}
+.va-transcript-placeholder{color:var(--txt-xl);font-style:normal;}
+
+/* Repli clavier — toujours visible, visuellement secondaire */
+.va-keyboard-fallback{
+  width:100%;background:var(--bg-panel);border:1px solid var(--border);
+  border-radius:var(--r8);padding:10px 14px;
+  display:flex;flex-direction:column;gap:6px;
+  opacity:.7;transition:opacity .2s;
+}
+.va-keyboard-fallback:focus-within{opacity:1;border-color:var(--border-em);}
+.va-keyboard-label{font-family:var(--disp);font-size:.46rem;letter-spacing:2px;color:var(--txt-xl);margin-bottom:2px;}
+.va-keyboard-input{
+  width:100%;background:transparent;border:none;outline:none;
+  font-family:var(--mono);font-size:.73rem;color:var(--txt);
+  resize:none;line-height:1.4;min-height:36px;
+  caret-color:var(--teal);
+}
+.va-keyboard-input::placeholder{color:var(--txt-xl);}
+.va-keyboard-send{
+  align-self:flex-end;background:transparent;border:1px solid var(--border-em);
+  color:var(--txt-l);padding:5px 14px;font-family:var(--disp);
+  font-size:.58rem;letter-spacing:1.5px;cursor:pointer;border-radius:var(--r4);
+  transition:all .15s;
+}
+.va-keyboard-send:hover{border-color:var(--teal);color:var(--teal);}
+
+/* Feedback vocal */
+.va-feedback{
+  width:100%;padding:12px 16px;border-radius:var(--r8);
+  font-size:.73rem;line-height:1.52;
+  display:none;
+  border-left:3px solid var(--teal);
+  background:var(--teal-dim);color:#1a5a50;
+}
+.va-feedback.show{display:block;}
+.va-feedback.partial{border-color:var(--gold);background:var(--gold-dim);color:var(--gold-l);}
+.va-feedback-label{font-family:var(--disp);font-size:.52rem;letter-spacing:2.5px;margin-bottom:5px;display:block;}
+.va-actions{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap;}
+
+/* Erreur micro non supporté */
+.va-nosupport{
+  width:100%;padding:10px 14px;background:var(--red-dim);
+  border:1px solid rgba(196,48,48,.3);border-radius:var(--r4);
+  font-size:.7rem;color:#8a3a3a;text-align:center;
+  display:none;
+}
+.va-nosupport.show{display:block;}
+
+/* Toast d'avertissement (surprise objection) */
+.surprise-toast{
+  position:fixed;top:54px;left:50%;transform:translateX(-50%);
+  background:#1a1a2e;color:#fff;
+  padding:8px 24px 8px 16px;border-radius:var(--r4);
+  font-family:var(--disp);font-size:.62rem;letter-spacing:2px;
+  z-index:3000;pointer-events:none;
+  border-left:3px solid var(--red);
+  opacity:0;transition:opacity .3s var(--ease);
+  white-space:nowrap;
+}
+.surprise-toast.show{opacity:1;}
+
 /* ══ CLIFFHANGER FINAL ══ */
 #ov-final{overflow:hidden;padding:0;}
 .cliff-wrap{position:relative;width:100%;height:100vh;background:#0a0a0f;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden;}
-/* Fond ambiance : pluie lumineuse */
 .cliff-bg-lines{position:absolute;inset:0;overflow:hidden;pointer-events:none;}
 .cliff-bg-lines::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent,transparent 80px,rgba(255,255,255,.018) 80px,rgba(255,255,255,.018) 81px);}
-/* Vignette */
 .cliff-vignette{position:absolute;inset:0;background:radial-gradient(ellipse at center,transparent 30%,rgba(0,0,0,.85) 100%);pointer-events:none;z-index:2;}
-
-/* Score reveal animé */
 .cliff-score-reveal{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;z-index:10;opacity:0;animation:cliff-score-in 1s ease 0.3s forwards;}
 @keyframes cliff-score-in{from{opacity:0;transform:translate(-50%,-60%);}to{opacity:1;transform:translate(-50%,-50%);}}
 .cliff-score-number{font-family:var(--disp);font-size:6rem;line-height:1;color:#fff;letter-spacing:-3px;}
 .cliff-score-sub{font-family:var(--disp);font-size:.7rem;letter-spacing:6px;color:var(--gold);margin-top:4px;}
-
-/* Transition vers épilogue */
 .cliff-episode-end{text-align:center;z-index:10;max-width:640px;padding:0 32px;}
 .cliff-fin-label{font-family:var(--disp);font-size:.55rem;letter-spacing:8px;color:var(--gold);margin-bottom:16px;opacity:0;animation:cfadein 1s ease 0.2s forwards;}
 .cliff-fin-title{font-family:var(--disp);font-size:3rem;font-weight:700;color:#fff;line-height:1.1;letter-spacing:-1px;margin-bottom:20px;opacity:0;animation:cfadein 1s ease 0.6s forwards;}
 .cliff-fin-body{font-size:.76rem;line-height:1.8;color:rgba(255,255,255,.6);margin-bottom:36px;opacity:0;animation:cfadein 1s ease 1s forwards;}
-
-/* Next ep — le vrai cliffhanger */
 .cliff-next{border:1px solid rgba(255,255,255,.12);border-top:2px solid var(--red);background:rgba(255,255,255,.04);padding:24px 28px;margin-bottom:28px;border-radius:var(--r8);text-align:left;opacity:0;animation:cfadein 1s ease 1.4s forwards;backdrop-filter:blur(4px);}
 .cliff-next-kicker{font-family:var(--disp);font-size:.5rem;letter-spacing:5px;color:var(--red);margin-bottom:10px;}
 .cliff-next-title{font-family:var(--disp);font-size:1.4rem;color:#fff;margin-bottom:14px;letter-spacing:.5px;}
-/* Extrait du dialogue — tension pure */
 .cliff-transcript{display:flex;flex-direction:column;gap:0;margin-bottom:14px;}
 .cliff-line{padding:10px 14px;border-bottom:1px solid rgba(255,255,255,.07);}
 .cliff-line:first-child{border-top:1px solid rgba(255,255,255,.07);}
 .cliff-speaker{font-family:var(--disp);font-size:.48rem;letter-spacing:3px;color:var(--gold);margin-bottom:3px;}
 .cliff-text{font-size:.74rem;color:rgba(255,255,255,.82);line-height:1.5;}
 .cliff-text.blurred{filter:blur(5px);user-select:none;color:rgba(255,255,255,.5);}
-/* Ligne de choc — la révélation bloquée */
 .cliff-reveal-locked{display:flex;align-items:center;gap:12px;padding:12px 14px;background:rgba(196,48,48,.12);border-top:1px solid rgba(196,48,48,.3);}
 .cliff-lock-icon{font-size:1.1rem;flex-shrink:0;}
 .cliff-lock-text{font-family:var(--disp);font-size:.62rem;letter-spacing:2px;color:var(--red);line-height:1.4;}
-/* Teaser texte ultra-tendu */
 .cliff-tease{font-size:.7rem;line-height:1.7;color:rgba(255,255,255,.5);font-style:italic;}
 .cliff-tease b{color:rgba(255,255,255,.82);font-style:normal;}
-
-/* Actions fin */
 .cliff-actions{display:flex;gap:12px;justify-content:center;opacity:0;animation:cfadein .8s ease 1.8s forwards;}
 .cliff-btn{padding:10px 28px;font-family:var(--disp);font-size:.72rem;letter-spacing:2px;cursor:pointer;border-radius:var(--r4);transition:all .2s;text-transform:uppercase;}
 .cliff-btn.primary{background:var(--teal);color:#fff;border:none;}
 .cliff-btn.primary:hover{background:#0e8e80;transform:translateY(-2px);box-shadow:0 6px 20px rgba(13,122,110,.4);}
 .cliff-btn.ghost{background:transparent;color:rgba(255,255,255,.5);border:1px solid rgba(255,255,255,.18);}
 .cliff-btn.ghost:hover{border-color:rgba(255,255,255,.4);color:rgba(255,255,255,.8);}
-
-/* Confetti */
 .confetti-piece{position:fixed;width:8px;height:8px;border-radius:2px;z-index:3000;pointer-events:none;animation:fall 2.5s ease-in forwards;}
 @keyframes fall{from{transform:translateY(-20px) rotate(0);opacity:1;}to{transform:translateY(110vh) rotate(720deg);opacity:0;}}
-
-/* Scrollbar */
 ::-webkit-scrollbar{width:4px;}
 ::-webkit-scrollbar-track{background:var(--bg-mid);}
 ::-webkit-scrollbar-thumb{background:var(--border-em);border-radius:2px;}
-
+#btn-tts.muted{color:var(--red);border-color:rgba(196,48,48,.4);background:var(--red-dim);}
 @media(max-width:600px){
   #stage{flex:0 0 48%;}
   #c-lucas{left:5%;width:20%;}
@@ -326,8 +473,10 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(
   .step-label{font-size:.38rem;}
   .cliff-score-number{font-size:4rem;}
   .cliff-fin-title{font-size:2rem;}
+  .va-mic-orb{width:60px;height:60px;}
 }
 </style>
+<base target="_blank">
 </head>
 <body>
 <div id="shell">
@@ -340,6 +489,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(
       <span class="profile-name">Vous</span>
       <span class="profile-title" id="profile-title-hud">SDR</span>
     </div>
+    <button id="btn-tts" title="Activer/désactiver la voix" style="background:transparent;border:1px solid var(--border);color:var(--txt-l);padding:3px 10px;border-radius:12px;font-size:.55rem;cursor:pointer;margin-right:10px;font-family:var(--disp);letter-spacing:1px;">🔊 SON ON</button>
     <div class="hud-status"><span class="dot"></span><span id="status-lbl">INTRODUCTION</span></div>
   </div>
 
@@ -506,29 +656,73 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(
   </div>
 </div>
 
-<!-- ══ PRACTICE MID ══ -->
+<!-- ══ PRACTICE MID — avec voix ══ -->
 <div class="ov" id="ov-practice-mid">
   <div class="ov-inner">
-    <div class="ov-breadcrumb">THÉORIE <span>›</span> Mise en pratique <div class="ov-progress-mini"><div class="ov-progress-fill" style="width:57%"></div></div></div>
-    <div class="ov-kicker">À vous de jouer</div>
+    <div class="ov-breadcrumb">THÉORIE <span>›</span> Mise en pratique vocale <div class="ov-progress-mini"><div class="ov-progress-fill" style="width:57%"></div></div></div>
+    <div class="ov-kicker">À vous de jouer — à l'oral</div>
     <h2 class="ov-title">Avant de voir Lucas l'appliquer</h2>
-    <p class="practice-desc">Vous venez de voir la méthode en trois temps. Avant le rejeu, mettez-vous mentalement en situation.</p>
-    <div class="practice-scenario">
-      <b>Vous êtes en face d'un prospect.</b> Il vient de dire : <em>« 18 000 euros, c'est trop cher pour nous. »</em><br><br>
-      Formulez votre première phrase — celle que vous diriez dans les trois secondes qui suivent. Pas dans votre tête. À voix haute. Maintenant.
+    <p class="practice-desc">Vous venez de voir la méthode en trois temps. Vous avez 20 secondes. Le prospect vient de parler.</p>
+
+    <!-- Zone vocale principale -->
+    <div id="voice-arena-mid" class="voice-arena">
+      <div class="va-context">
+        <div class="va-context-label">SITUATION</div>
+        Vous êtes en face-à-face. Le prospect vient de dire la phrase ci-dessous. Répondez à l'oral — le micro est prêt.
+      </div>
+
+      <div class="va-prospect">
+        <div class="va-prospect-avatar">MD</div>
+        <div class="va-prospect-bubble">
+          <div class="va-prospect-label">MME DURAND</div>
+          18 000 euros, c'est trop cher pour nous.
+        </div>
+      </div>
+
+      <div class="va-your-turn">
+        <div class="va-your-turn-line"></div>
+        <div class="va-your-turn-label">VOTRE RÉPONSE</div>
+        <div class="va-your-turn-line"></div>
+      </div>
+
+      <div class="va-nosupport" id="va-nosupport-mid"></div>
+
+      <div class="va-mic-orb idle" id="va-orb-mid" tabindex="0" role="button" aria-label="Appuyez pour parler">
+        <div class="va-mic-orb-ring"></div>
+        <div class="va-wave"></div>
+        <div class="va-wave"></div>
+        <div class="va-mic-orb-body">
+          <span class="va-mic-icon">🎙</span>
+        </div>
+      </div>
+      <div class="va-mic-label" id="va-label-mid">Appuyez pour parler</div>
+
+      <div class="va-waveform" id="va-wave-mid">
+        <div class="va-bar"></div><div class="va-bar"></div><div class="va-bar"></div>
+        <div class="va-bar"></div><div class="va-bar"></div><div class="va-bar"></div>
+        <div class="va-bar"></div>
+      </div>
+
+      <div class="va-transcript" id="va-transcript-mid">
+        <span class="va-transcript-placeholder">Votre réponse apparaîtra ici en temps réel…</span>
+      </div>
+
+      <!-- Repli clavier — toujours visible, secondaire -->
+      <div class="va-keyboard-fallback" id="va-kb-mid">
+        <div class="va-keyboard-label">OU TAPEZ VOTRE RÉPONSE</div>
+        <textarea class="va-keyboard-input" id="va-kb-input-mid" rows="2" placeholder="Formulez votre première phrase…"></textarea>
+        <button class="va-keyboard-send" id="va-kb-send-mid">Envoyer →</button>
+      </div>
+
+      <div class="va-feedback" id="va-fb-mid">
+        <span class="va-feedback-label" id="va-fb-label-mid">ANALYSE</span>
+        <span id="va-fb-text-mid"></span>
+        <div class="va-actions" id="va-fb-actions-mid"></div>
+      </div>
     </div>
-    <div class="mode-selector">
-      <button class="mode-btn" disabled>
-        <span class="mode-icon">🎙️</span>
-        <span class="mode-label">Mode Vocal</span>
-        <span class="mode-desc">Parlez — analyse en temps réel</span>
-        <span class="mode-soon">Prochainement</span>
-      </button>
-      <button class="mode-btn active-mode" id="mode-keyboard-mid">
-        <span class="mode-icon">▶</span>
-        <span class="mode-label">Voir le rejeu</span>
-        <span class="mode-desc">Observer Lucas appliquer la méthode</span>
-      </button>
+
+    <div style="margin-top:14px;">
+      <button class="btn-go ghost" id="mode-keyboard-mid" style="display:none;">Voir le rejeu →</button>
     </div>
   </div>
 </div>
@@ -555,32 +749,76 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(
   </div>
 </div>
 
-<!-- ══ PRACTICE END ══ -->
+<!-- ══ PRACTICE END — mécanique surprise ══ -->
 <div class="ov" id="ov-practice-end">
   <div class="ov-inner">
     <div class="ov-breadcrumb">BILAN <span>›</span> Pratique finale <div class="ov-progress-mini"><div class="ov-progress-fill" style="width:93%"></div></div></div>
-    <div class="ov-kicker">Mise en pratique · 2/2</div>
-    <h2 class="ov-title">Une dernière situation</h2>
-    <p class="practice-desc">Même prospect. Nouvelle objection.</p>
-    <div class="practice-scenario">
-      <em>« Je ne suis pas sûre que ça marche chez moi — mon toit est orienté nord-est. »</em><br><br>
-      <b>Votre mission :</b> Formulez votre réponse en trois temps. À voix haute.<br><br>
-      Temps 1 — une question de clarification.<br>
-      Temps 2 — une question qui la fait réfléchir.<br>
-      Temps 3 — une image concrète. Pas un chiffre. Une image.
-    </div>
-    <div class="mode-selector">
-      <button class="mode-btn" disabled>
-        <span class="mode-icon">🎙️</span>
-        <span class="mode-label">Mode Vocal</span>
-        <span class="mode-desc">Entraînement oral avec feedback</span>
-        <span class="mode-soon">Prochainement</span>
-      </button>
-      <button class="mode-btn active-mode" id="mode-keyboard-end">
-        <span class="mode-icon">✓</span>
-        <span class="mode-label">Terminer l'épisode</span>
-        <span class="mode-desc">Voir la suite — si vous l'avez méritée</span>
-      </button>
+    <div class="ov-kicker">Mise en pratique · 2/2 — Réponse réflexe</div>
+    <h2 class="ov-title">Dernier test — sans préparation</h2>
+    <p class="practice-desc">Même prospect. Nouvelle objection. Cette fois, elle arrive sans signal d'annonce — comme en vrai rendez-vous.</p>
+
+    <div id="voice-arena-end" class="voice-arena">
+      <!-- État initial : contexte visible, objection masquée -->
+      <div class="va-context">
+        <div class="va-context-label">SITUATION</div>
+        Vous êtes toujours en face de Mme Durand. Elle réfléchit depuis quelques secondes. Puis elle parle.
+      </div>
+
+      <!-- Indicateur "Le prospect parle..." — affiché avant la révélation -->
+      <div class="va-thinking" id="va-thinking-end">
+        <div class="va-thinking-dot"></div>
+        <div class="va-thinking-dot"></div>
+        <div class="va-thinking-dot"></div>
+        <span style="font-family:var(--disp);font-size:.52rem;letter-spacing:2px;color:#8a6a8a;margin-left:4px;">MME DURAND RÉFLÉCHIT…</span>
+      </div>
+
+      <div class="va-prospect" id="va-prospect-end" style="display:none;">
+        <div class="va-prospect-avatar">MD</div>
+        <div class="va-prospect-bubble">
+          <div class="va-prospect-label">MME DURAND</div>
+          <span id="va-objection-end" class="va-blurred">Je ne suis pas sûre que ça marche chez moi — mon toit est orienté nord-est.</span>
+        </div>
+      </div>
+
+      <div class="va-your-turn" id="va-yourturn-end" style="display:none;">
+        <div class="va-your-turn-line"></div>
+        <div class="va-your-turn-label">VOTRE RÉPONSE — EN 3 TEMPS</div>
+        <div class="va-your-turn-line"></div>
+      </div>
+
+      <div class="va-nosupport" id="va-nosupport-end"></div>
+
+      <div class="va-mic-orb idle" id="va-orb-end" tabindex="0" role="button" aria-label="Appuyez pour parler" style="display:none;">
+        <div class="va-mic-orb-ring"></div>
+        <div class="va-wave"></div>
+        <div class="va-wave"></div>
+        <div class="va-mic-orb-body">
+          <span class="va-mic-icon">🎙</span>
+        </div>
+      </div>
+      <div class="va-mic-label" id="va-label-end" style="display:none;">Appuyez pour parler</div>
+
+      <div class="va-waveform" id="va-wave-end" style="display:none;">
+        <div class="va-bar"></div><div class="va-bar"></div><div class="va-bar"></div>
+        <div class="va-bar"></div><div class="va-bar"></div><div class="va-bar"></div>
+        <div class="va-bar"></div>
+      </div>
+
+      <div class="va-transcript" id="va-transcript-end" style="display:none;">
+        <span class="va-transcript-placeholder">Votre réponse en 3 temps…</span>
+      </div>
+
+      <div class="va-keyboard-fallback" id="va-kb-end" style="display:none;">
+        <div class="va-keyboard-label">OU TAPEZ VOTRE RÉPONSE EN 3 TEMPS</div>
+        <textarea class="va-keyboard-input" id="va-kb-input-end" rows="3" placeholder="Temps 1 — clarifier. Temps 2 — faire réfléchir. Temps 3 — une image."></textarea>
+        <button class="va-keyboard-send" id="va-kb-send-end">Envoyer →</button>
+      </div>
+
+      <div class="va-feedback" id="va-fb-end">
+        <span class="va-feedback-label" id="va-fb-label-end">ANALYSE EN 3 TEMPS</span>
+        <span id="va-fb-text-end"></span>
+        <div class="va-actions" id="va-fb-actions-end"></div>
+      </div>
     </div>
   </div>
 </div>
@@ -612,7 +850,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(
           </div>
           <div class="cliff-line">
             <div class="cliff-speaker" style="color:var(--gold);">LUCAS</div>
-            <div class="cliff-text class" style="font-style:italic;color:rgba(255,255,255,.4);">[Il marque une pause. Il sait ce qui va sortir de sa bouche. Il sait qu'il ne devrait pas.]</div>
+            <div class="cliff-text" style="font-style:italic;color:rgba(255,255,255,.4);">[Il marque une pause. Il sait ce qui va sortir de sa bouche. Il sait qu'il ne devrait pas.]</div>
           </div>
           <div class="cliff-line">
             <div class="cliff-speaker" style="color:var(--gold);">LUCAS</div>
@@ -639,6 +877,9 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(
     </div>
   </div>
 </div>
+
+<!-- Toast surprise -->
+<div class="surprise-toast" id="surprise-toast">⚡ OBJECTION — RÉPONDEZ</div>
 
 <script>
 (function(){
@@ -754,6 +995,49 @@ var state = {
   correctStreak: 0,
   pendingCb: null
 };
+
+/* ══ TTS ENGINE ══ */
+var ttsEnabled = true;
+var currentUtterance = null;
+var frenchVoices = {male:null, female:null, narrator:null};
+
+function pickFrenchVoices(){
+  var voices = window.speechSynthesis.getVoices();
+  var fr = voices.filter(function(v){ return v.lang==='fr-FR' || v.lang.startsWith('fr'); });
+  var ms = function(name){ return fr.find(function(v){ return v.name.indexOf(name)>-1; }); };
+  frenchVoices.female = ms('Hortense') || ms('Julie') || ms('Female') || fr.find(function(v){return v.name.toLowerCase().indexOf('femme')>-1 || v.name.toLowerCase().indexOf('female')>-1;}) || fr[0];
+  frenchVoices.male   = ms('Paul') || ms('Male') || fr.find(function(v){return v.name.toLowerCase().indexOf('homme')>-1 || v.name.toLowerCase().indexOf('male')>-1;}) || fr[0];
+  frenchVoices.narrator = frenchVoices.male;
+}
+if(window.speechSynthesis){
+  if(window.speechSynthesis.getVoices().length>0) pickFrenchVoices();
+  window.speechSynthesis.onvoiceschanged = pickFrenchVoices;
+}
+
+function speak(text, gender, onEnd){
+  if(!ttsEnabled || !window.speechSynthesis){ if(onEnd) onEnd(); return; }
+  window.speechSynthesis.cancel();
+  var u = new SpeechSynthesisUtterance(text);
+  u.lang = 'fr-FR';
+  u.rate = 1.15;
+  u.pitch = gender==='female' ? 1.05 : 0.95;
+  var v = gender==='female' ? frenchVoices.female : (gender==='narrator'?frenchVoices.narrator:frenchVoices.male);
+  if(v) u.voice = v;
+  u.onend = function(){ currentUtterance=null; if(onEnd) onEnd(); };
+  u.onerror = function(e){ currentUtterance=null; if(onEnd) onEnd(); };
+  currentUtterance = u;
+  window.speechSynthesis.speak(u);
+}
+
+function stopSpeak(){ if(window.speechSynthesis){ window.speechSynthesis.cancel(); currentUtterance=null; } }
+
+function updateTtsBtn(){
+  var btn = $('btn-tts');
+  if(!btn) return;
+  btn.textContent = ttsEnabled ? '🔊 SON ON' : '🔇 MUET';
+  btn.classList.toggle('muted', !ttsEnabled);
+}
+
 var LETTERS = ['A','B','C'];
 var $ = function(id){ return document.getElementById(id); };
 var scoreVal  = $('score-val');
@@ -885,7 +1169,10 @@ function enableClick(){clicker.classList.add('on');clickHint.classList.add('show
 
 function showVoff(text,cb){
   hideAllBubbles();setSpotlight('none');voff.classList.add('show');disableClick();
-  typeText(voffText,text,18,function(){enableClick();state.pendingCb=cb;});
+  var done = {type:false, speak:false};
+  function check(){ if(done.type && done.speak){ enableClick(); state.pendingCb=cb; } }
+  typeText(voffText,text,18,function(){ done.type=true; check(); });
+  speak(text, 'narrator', function(){ done.speak=true; check(); });
 }
 function showBubble(who,text,cb){
   hideAllBubbles();
@@ -894,15 +1181,19 @@ function showBubble(who,text,cb){
   bub.querySelector('.b-speaker').style.color=info.color;
   bub.style.setProperty('--bc',info.color);
   bub.classList.add('show');setSpotlight(info.side);startMouth(charEl);disableClick();
-  typeText(bub.querySelector('.b-text'),text,18,function(){stopMouth();enableClick();state.pendingCb=cb;});
+  var gender = who==='DURAND' ? 'female' : 'male';
+  var done = {type:false, speak:false};
+  function check(){ if(done.type && done.speak){ stopMouth(); enableClick(); state.pendingCb=cb; } }
+  typeText(bub.querySelector('.b-text'),text,18,function(){ done.type=true; check(); });
+  speak(text, gender, function(){ done.speak=true; check(); });
 }
 clicker.addEventListener('click',function(){
   if(typeTimer&&typeTarget){
     clearTimeout(typeTimer);typeTimer=null;
     typeTarget.textContent=typeFullText;typeTarget=null;
-    var c=typeCb;typeCb=null;stopMouth();enableClick();if(c)c();return;
+    var c=typeCb;typeCb=null;stopMouth();stopSpeak();enableClick();if(c)c();return;
   }
-  if(state.pendingCb){var cb=state.pendingCb;state.pendingCb=null;disableClick();cb();}
+  if(state.pendingCb){var cb=state.pendingCb;state.pendingCb=null;disableClick();stopSpeak();cb();}
 });
 
 /* ══ SCENE RUNNER ══ */
@@ -1079,9 +1370,7 @@ $('th-next').addEventListener('click',function(){
   else{$('theory-overlay').classList.remove('on');if(theoryCb)theoryCb();}
 });
 
-/* ══ QCM DATA — axés sur CE QUE LE COMMERCIAL DOIT FAIRE ══ */
-
-/* Question piège intro — pas de points, juste pour accrocher */
+/* ══ QCM DATA ══ */
 var TRAP=[
   "Il réalise que votre offre est objectivement hors de son budget.",
   "Son cerveau active un mécanisme de résistance automatique — indépendamment du prix.",
@@ -1093,7 +1382,6 @@ var REVEALS=[
   "<p><b>Rarement.</b> La majorité des « c'est trop cher » sont sincères — le prospect ressent un vrai blocage. Le problème n'est pas dans ce qu'il dit, c'est dans la façon dont vous y répondez. Et la réaction naturelle est presque toujours la mauvaise.</p>"
 ];
 
-/* Q1 — scène 1 analyse : qu'aurait dû faire Lucas ? */
 var D1={
   idx:0,q:"Mme Durand dit : « 18 000 euros, c'est trop cher pour nous. » Lucas répond : « Je comprends, mais si on calcule sur 25 ans… » — Elle se ferme immédiatement. Quelle est l'erreur ?",
   correct:0,pts:3,skill:'Posture',rep:'posture',
@@ -1105,7 +1393,6 @@ var D1={
   ]
 };
 
-/* Q2 — que dire immédiatement après "c'est trop cher" */
 var D2={
   idx:1,q:"Même situation. Mme Durand vient de dire « c'est trop cher ». Vous avez 3 secondes. Que dites-vous ?",
   correct:2,pts:3,skill:'Cadre',rep:'cadre',
@@ -1117,7 +1404,6 @@ var D2={
   ]
 };
 
-/* Q3 — temps 2 de la méthode : question de réflexion */
 var D3={
   idx:2,q:"Mme Durand répond : « C'est un gros montant d'un coup. Et si on revend la maison dans 8 ans… » Vous êtes au temps 2 de la méthode. Quelle est votre prochaine phrase ?",
   correct:1,pts:3,skill:'Cadre',rep:'cadre',
@@ -1129,7 +1415,6 @@ var D3={
   ]
 };
 
-/* Q4 — temps 3 : l'image */
 var D4={
   idx:3,q:"Mme Durand réfléchit et dit : « Non… si on reste, c'est clairement un choix. Mais c'est l'incertitude sur l'avenir qui me freine. » Vous êtes au temps 3. Que faites-vous ?",
   correct:0,pts:3,skill:'Connexion',rep:'conn',
@@ -1141,7 +1426,6 @@ var D4={
   ]
 };
 
-/* Q5 — piège de l'exécution mécanique */
 var D5={
   idx:4,q:"Lucas applique la méthode en 3 temps — mais mécaniquement, comme un script récité. Mme Durand s'en rend compte et dit : « Vous me posez ces questions parce qu'on vous a dit de les poser, non ? » Que répond Lucas ?",
   correct:2,pts:3,skill:'Authenticité',rep:'auth',
@@ -1326,24 +1610,19 @@ function launchConfetti(){
   }
 }
 
-/* ══ CLIFFHANGER FINAL — animation score + transition ══ */
+/* ══ CLIFFHANGER ══ */
 function showFinalWithScore(){
   $('ov-final').classList.add('on');
   statusLbl.textContent='FIN';setStep(7);
-  /* Score reveal animé au centre, puis disparaît */
   var wrap=document.querySelector('.cliff-wrap');
   var scoreEl=document.createElement('div');
   scoreEl.className='cliff-score-reveal';
   scoreEl.innerHTML='<div class="cliff-score-number">'+state.score+'/15</div><div class="cliff-score-sub">SCORE FINAL</div>';
   wrap.appendChild(scoreEl);
-  /* Après 2.5s : score disparaît, épisode end apparaît */
   setTimeout(function(){
     scoreEl.style.animation='cliff-score-in 0.6s ease reverse forwards';
-    setTimeout(function(){
-      if(scoreEl.parentNode)scoreEl.parentNode.removeChild(scoreEl);
-    },600);
+    setTimeout(function(){if(scoreEl.parentNode)scoreEl.parentNode.removeChild(scoreEl);},600);
   },2500);
-  /* Toast de fin */
   setTimeout(function(){
     var toast=document.createElement('div');
     toast.className='streak-toast';
@@ -1357,7 +1636,6 @@ function showFinalWithScore(){
 /* ══ INTRO CINEMA ══ */
 function startIntro(){
   $('intro-cinema').classList.remove('hidden');
-  /* Auto-skip après 4s */
   setTimeout(skipIntro,4200);
 }
 function skipIntro(){
@@ -1368,11 +1646,369 @@ function skipIntro(){
   setTimeout(function(){
     cin.classList.add('hidden');
     cin.style.opacity='';cin.style.transition='';
-    /* Lance la question piège */
     showTrap();
   },600);
 }
 $('btn-skip-intro').addEventListener('click',skipIntro);
+
+/* ══════════════════════════════════════════
+   COUCHE VOCALE — WEB SPEECH API
+   Activée uniquement en phase pratique (mid et end)
+   Jamais sur les QCM scénarisés.
+   ══════════════════════════════════════════ */
+
+var SR = window.SpeechRecognition || window.webkitSpeechRecognition || null;
+var voiceSupported = !!SR;
+
+/* ── Analyse sémantique légère ──
+   Détecte les 3 marqueurs de la méthode sans IA externe.
+   Retourne un objet {t1, t2, t3, partial} pour le feedback. */
+function analyseVoiceResponse(text, mode) {
+  var t = text.toLowerCase();
+  /* Marqueurs temps 1 : question de clarification */
+  var t1 = /qu(e|')\s*(est|est-ce)\s*(qui|que)|pourquoi|qu'est-ce|pouvez.vous\s+préciser|c'est.à.dire|vous\s+voulez\s+dire/i.test(text);
+  /* Marqueurs temps 2 : question conditionnelle / réflexion */
+  var t2 = /si\s+vous\s+étiez|si\s+vous\s+deviez|ce\s+serait|un\s+choix|une\s+décision|imagin|dans\s+\d+ ans|sur\s+le\s+long/i.test(text);
+  /* Marqueurs temps 3 : image / analogie */
+  var t3 = /comme\s+(si|un|une|planter|semer|invest)|c'est\s+un\s+peu\s+comme|image|verger|arbre|planter|récolter|semer|jardiner|analogi/i.test(text);
+  /* Mode "mid" : on cherche juste T1 */
+  if (mode === 'mid') {
+    var hasQuestion = /\?/.test(text) || t1;
+    var hasArg = /mais|cependant|pourtant|en\s+revanche|or\s+/i.test(text);
+    return { t1: t1 || hasQuestion, t2: false, t3: false, hasArg: hasArg };
+  }
+  return { t1: t1, t2: t2, t3: t3, hasArg: false };
+}
+
+/* ── Feedback vocal ── */
+function buildFeedbackMid(analysis, rawText) {
+  if (!rawText || rawText.trim().length < 3) {
+    return { label: 'RIEN CAPTÉ', cls: 'partial', text: 'Aucun texte capté. Réessayez, ou tapez votre réponse ci-dessous.' };
+  }
+  if (analysis.hasArg && !analysis.t1) {
+    return { label: 'RÉACTANCE DÉTECTÉE', cls: 'partial', text: 'Vous avez argumenté. Le prospect vient d\'activer son bouclier. La bonne ouverture : une question — pas une affirmation. Essayez : « Qu\'est-ce qui vous fait dire ça ? »' };
+  }
+  if (analysis.t1) {
+    return { label: 'BONNE OUVERTURE', cls: '', text: 'Vous avez ouvert par une question. C\'est exactement ça — le cerveau du prospect enregistre une écoute, pas une attaque. Le mur commence à descendre.' };
+  }
+  return { label: 'NEUTRE', cls: 'partial', text: 'Votre réponse ne déclenche pas la réactance — mais elle ne l\'éteint pas non plus. L\'objectif : une question de clarification qui invite à développer.' };
+}
+
+function buildFeedbackEnd(analysis, rawText) {
+  if (!rawText || rawText.trim().length < 3) {
+    return { label: 'RIEN CAPTÉ', cls: 'partial', text: 'Aucun texte capté. Réessayez, ou tapez votre réponse ci-dessous.' };
+  }
+  var score3 = (analysis.t1 ? 1 : 0) + (analysis.t2 ? 1 : 0) + (analysis.t3 ? 1 : 0);
+  if (score3 === 3) {
+    return { label: 'MÉTHODE COMPLÈTE ✓', cls: '', text: 'Les 3 temps sont là : clarification, question de réflexion, image concrète. Exactement ce que Bruno attendait. Vous n\'avez pas argumenté — vous avez déplacé le cadre.' };
+  }
+  var missing = [];
+  if (!analysis.t1) missing.push('Temps 1 (clarifier : « Qu\'est-ce qui vous fait dire ça ? »)');
+  if (!analysis.t2) missing.push('Temps 2 (faire réfléchir : « Si… ce serait un choix ou une dépense ? »)');
+  if (!analysis.t3) missing.push('Temps 3 (une image concrète — pas un chiffre)');
+  var msg = score3 > 0
+    ? 'Vous avez ' + score3 + ' temps sur 3. Il manque : ' + missing.join(' — ') + '.'
+    : 'Aucun des 3 temps détecté. Essayez d\'enchaîner : une question → une question conditionnelle → une image.';
+  return { label: score3 > 0 ? 'PARTIEL — '+score3+'/3' : '0/3 TEMPS', cls: 'partial', text: msg };
+}
+
+/* ── Afficher le feedback ── */
+function showVoiceFeedback(fbEl, labelEl, textEl, actionsEl, fb, onContinue) {
+  fbEl.className = 'va-feedback show' + (fb.cls ? ' ' + fb.cls : '');
+  labelEl.textContent = fb.label;
+  textEl.textContent = fb.text;
+  actionsEl.innerHTML = '';
+  var cont = document.createElement('button');
+  cont.className = 'btn-go';
+  cont.textContent = 'Continuer →';
+  cont.addEventListener('click', onContinue);
+  actionsEl.appendChild(cont);
+}
+
+/* ── Moteur Recognition réutilisable ── */
+function buildRecognizer(onResult, onEnd) {
+  if (!voiceSupported) return null;
+  var rec = new SR();
+  rec.lang = 'fr-FR';
+  rec.continuous = false;
+  rec.interimResults = true;
+  rec.maxAlternatives = 1;
+  rec.onresult = onResult;
+  rec.onend = onEnd;
+  rec.onerror = function(e) {
+    if (e.error === 'no-speech') onEnd();
+    else onEnd();
+  };
+  return rec;
+}
+
+/* ── UI helpers ── */
+function setOrbState(orb, label, state_) {
+  orb.className = 'va-mic-orb ' + state_;
+  var states = { idle: 'Appuyez pour parler', listening: 'Je vous écoute…', done: 'Analysé ✓' };
+  if (label) label.textContent = states[state_] || '';
+}
+
+function showEl(el) { if(el) el.style.display = ''; }
+function hideEl(el) { if(el) el.style.display = 'none'; }
+
+/* ══ VOICE ARENA MID ══
+   Situation simple : l'objection est visible dès le départ.
+   L'utilisateur doit formuler sa première phrase (Temps 1).
+*/
+function initVoiceArenaMid() {
+  var orb       = $('va-orb-mid');
+  var label     = $('va-label-mid');
+  var waveEl    = $('va-wave-mid');
+  var transcript= $('va-transcript-mid');
+  var noSupport = $('va-nosupport-mid');
+  var kbFallback= $('va-kb-mid');
+  var kbInput   = $('va-kb-input-mid');
+  var kbSend    = $('va-kb-send-mid');
+  var fbEl      = $('va-fb-mid');
+  var fbLabel   = $('va-fb-label-mid');
+  var fbText    = $('va-fb-text-mid');
+  var fbActions = $('va-fb-actions-mid');
+  var contBtn   = $('mode-keyboard-mid');
+
+  if (!voiceSupported) {
+    noSupport.textContent = '🎙 Microphone non disponible sur ce navigateur. Tapez votre réponse ci-dessous.';
+    noSupport.classList.add('show');
+    hideEl(orb); hideEl(label); hideEl(waveEl);
+  }
+
+  var rec = null;
+  var finalText = '';
+  var listening = false;
+
+  function startListening() {
+    if (listening) return;
+    finalText = '';
+    transcript.innerHTML = '';
+    fbEl.classList.remove('show');
+    listening = true;
+    setOrbState(orb, label, 'listening');
+    waveEl.classList.add('active');
+
+    rec = buildRecognizer(
+      function(e) {
+        var interim = '', final_ = '';
+        for (var i = e.resultIndex; i < e.results.length; i++) {
+          if (e.results[i].isFinal) final_ += e.results[i][0].transcript;
+          else interim += e.results[i][0].transcript;
+        }
+        if (final_) finalText += final_;
+        transcript.textContent = (finalText + interim) || '';
+        if (transcript.querySelector('.va-transcript-placeholder'))
+          transcript.querySelector('.va-transcript-placeholder').remove();
+      },
+      function() {
+        listening = false;
+        setOrbState(orb, label, 'done');
+        waveEl.classList.remove('active');
+        if (finalText.trim()) {
+          processAnswerMid(finalText.trim());
+        } else {
+          setOrbState(orb, label, 'idle');
+        }
+      }
+    );
+    if (rec) rec.start();
+  }
+
+  function processAnswerMid(text) {
+    var analysis = analyseVoiceResponse(text, 'mid');
+    var fb = buildFeedbackMid(analysis, text);
+    showVoiceFeedback(fbEl, fbLabel, fbText, fbActions, fb, function() {
+      fbEl.classList.remove('show');
+      contBtn.style.display = '';
+    });
+    /* +1 pt bonus si bonne première phrase — réflexe bien ancré */
+    if (analysis.t1 && !analysis.hasArg) {
+      state.score = Math.min(15, state.score + 1);
+      scoreVal.textContent = state.score;
+      state.rep.cadre = Math.min(100, (state.rep.cadre || 0) + 20);
+      updateRep();
+      ptsPopup(1);
+    }
+  }
+
+  /* Orb : clic ou entrée clavier */
+  orb.addEventListener('click', function() {
+    if (!voiceSupported) return;
+    if (listening && rec) { rec.stop(); return; }
+    startListening();
+  });
+  orb.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); orb.click(); }
+  });
+
+  /* Repli clavier */
+  kbSend.addEventListener('click', function() {
+    var txt = kbInput.value.trim();
+    if (!txt) return;
+    transcript.textContent = txt;
+    processAnswerMid(txt);
+    kbInput.value = '';
+  });
+  kbInput.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); kbSend.click(); }
+  });
+
+  /* Bouton continuer */
+  contBtn.addEventListener('click', function() {
+    $('ov-practice-mid').classList.remove('on');
+    clearInteraction();hideAllBubbles();disableClick();
+    cLucas.style.opacity='0';cDurand.style.opacity='0';
+    setExpr('LUCAS','neutral');
+    statusLbl.textContent='REJEU — LA MÉTHODE';setStep(4);
+    runScene(SCENE2, function() { setStep(6); showBilan(); });
+  });
+}
+
+/* ══ VOICE ARENA END — MÉCANIQUE SURPRISE ══
+   Principe : l'objection est masquée (blur).
+   Après 1.8s, "le prospect parle", l'objection se révèle et le micro s'active automatiquement.
+   Effet : le commercial doit répondre dans la foulée — proche des conditions réelles.
+   Ressort : "variable reward" — on ne sait pas si on sera prêt.
+*/
+function initVoiceArenaEnd() {
+  var thinkingEl  = $('va-thinking-end');
+  var prospectEl  = $('va-prospect-end');
+  var objectionEl = $('va-objection-end');
+  var yourTurnEl  = $('va-yourturn-end');
+  var orb         = $('va-orb-end');
+  var label       = $('va-label-end');
+  var waveEl      = $('va-wave-end');
+  var transcript  = $('va-transcript-end');
+  var noSupport   = $('va-nosupport-end');
+  var kbFallback  = $('va-kb-end');
+  var kbInput     = $('va-kb-input-end');
+  var kbSend      = $('va-kb-send-end');
+  var fbEl        = $('va-fb-end');
+  var fbLabel     = $('va-fb-label-end');
+  var fbText      = $('va-fb-text-end');
+  var fbActions   = $('va-fb-actions-end');
+  var surpriseToast = $('surprise-toast');
+
+  var revealed = false;
+  var rec = null;
+  var finalText = '';
+  var listening = false;
+
+  /* Phase 1 : le prospect "réfléchit" (1.8s) */
+  thinkingEl.classList.add('show');
+
+  setTimeout(function() {
+    /* Révélation de l'objection */
+    thinkingEl.classList.remove('show');
+    showEl(prospectEl);
+
+    /* Toast surprise — signal d'urgence sans être agressif */
+    surpriseToast.classList.add('show');
+    setTimeout(function() { surpriseToast.classList.remove('show'); }, 2000);
+
+    /* Dé-flou progressif de l'objection */
+    setTimeout(function() {
+      objectionEl.classList.add('revealed');
+      revealed = true;
+    }, 400);
+
+    /* Révéler les contrôles après que le texte soit lisible */
+    setTimeout(function() {
+      showEl(yourTurnEl);
+      showEl(orb);
+      showEl(label);
+      showEl(waveEl);
+      showEl(transcript);
+      showEl(kbFallback);
+
+      if (!voiceSupported) {
+        noSupport.textContent = '🎙 Microphone non disponible. Tapez votre réponse en 3 temps ci-dessous.';
+        noSupport.classList.add('show');
+        hideEl(orb); hideEl(label); hideEl(waveEl);
+      } else {
+        /* Auto-démarrage de l'écoute — l'utilisateur n'a pas à cliquer */
+        autoStartListening();
+      }
+    }, 700);
+
+  }, 1800);
+
+  function autoStartListening() {
+    if (listening) return;
+    finalText = '';
+    transcript.innerHTML = '';
+    listening = true;
+    setOrbState(orb, label, 'listening');
+    waveEl.classList.add('active');
+
+    rec = buildRecognizer(
+      function(e) {
+        var interim = '', final_ = '';
+        for (var i = e.resultIndex; i < e.results.length; i++) {
+          if (e.results[i].isFinal) final_ += e.results[i][0].transcript;
+          else interim += e.results[i][0].transcript;
+        }
+        if (final_) finalText += final_;
+        var display = (finalText + interim) || '';
+        if (display) transcript.textContent = display;
+      },
+      function() {
+        listening = false;
+        setOrbState(orb, label, 'done');
+        waveEl.classList.remove('active');
+        if (finalText.trim()) processAnswerEnd(finalText.trim());
+        else setOrbState(orb, label, 'idle');
+      }
+    );
+    if (rec) rec.start();
+  }
+
+  /* Clic sur l'orbe pour relancer manuellement */
+  orb.addEventListener('click', function() {
+    if (!voiceSupported) return;
+    if (listening && rec) { rec.stop(); return; }
+    finalText = '';
+    transcript.innerHTML = '';
+    fbEl.classList.remove('show');
+    autoStartListening();
+  });
+  orb.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); orb.click(); }
+  });
+
+  function processAnswerEnd(text) {
+    var analysis = analyseVoiceResponse(text, 'end');
+    var fb = buildFeedbackEnd(analysis, text);
+    showVoiceFeedback(fbEl, fbLabel, fbText, fbActions, fb, function() {
+      fbEl.classList.remove('show');
+      showFinalWithScore();
+    });
+    /* Bonus : +1 pt si les 3 temps détectés */
+    if (analysis.t1 && analysis.t2 && analysis.t3) {
+      state.score = Math.min(15, state.score + 1);
+      scoreVal.textContent = state.score;
+      state.rep.auth = Math.min(100, (state.rep.auth || 0) + 25);
+      updateRep();
+      ptsPopup(1);
+      showStreakToast(0);
+    }
+  }
+
+  /* Repli clavier */
+  kbSend.addEventListener('click', function() {
+    var txt = kbInput.value.trim();
+    if (!txt) return;
+    if (listening && rec) { try{ rec.stop(); }catch(e){} listening = false; }
+    transcript.textContent = txt;
+    processAnswerEnd(txt);
+    kbInput.value = '';
+  });
+  kbInput.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); kbSend.click(); }
+  });
+}
 
 /* ══ FLOW PRINCIPAL ══ */
 $('btn-enter-scene').addEventListener('click',function(){
@@ -1382,29 +2018,16 @@ $('btn-enter-scene').addEventListener('click',function(){
   runScene(SCENE1,function(){
     setStep(3);showTheory(function(){
       $('ov-practice-mid').classList.add('on');
+      initVoiceArenaMid();
     });
-  });
-});
-
-$('mode-keyboard-mid').addEventListener('click',function(){
-  $('ov-practice-mid').classList.remove('on');
-  clearInteraction();hideAllBubbles();disableClick();
-  cLucas.style.opacity='0';cDurand.style.opacity='0';
-  setExpr('LUCAS','neutral');
-  statusLbl.textContent='REJEU — LA MÉTHODE';setStep(4);
-  runScene(SCENE2,function(){
-    setStep(6);showBilan();
   });
 });
 
 $('btn-to-practice-end').addEventListener('click',function(){
   $('ov-bilan').classList.remove('on');
-  $('ov-practice-end').classList.add('on');setStep(6);
-});
-
-$('mode-keyboard-end').addEventListener('click',function(){
-  $('ov-practice-end').classList.remove('on');
-  showFinalWithScore();
+  $('ov-practice-end').classList.add('on');
+  setStep(6);
+  initVoiceArenaEnd();
 });
 
 $('cliff-notify').addEventListener('click',function(){
@@ -1414,7 +2037,12 @@ $('cliff-notify').addEventListener('click',function(){
 });
 
 /* ══ INIT ══ */
-initChars();setSpotlight('none');updateRep();setStep(0);
+initChars();setSpotlight('none');updateRep();setStep(0);updateTtsBtn();
+$('btn-tts').addEventListener('click',function(){
+  ttsEnabled = !ttsEnabled;
+  if(!ttsEnabled) stopSpeak();
+  updateTtsBtn();
+});
 startIntro();
 
 })();
